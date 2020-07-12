@@ -5,12 +5,12 @@
     <description>Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 16 Jun 2020 01:03:23 +0800</pubDate>
-    <lastBuildDate>Tue, 16 Jun 2020 01:03:23 +0800</lastBuildDate>
+    <pubDate>Sun, 12 Jul 2020 15:09:55 +0800</pubDate>
+    <lastBuildDate>Sun, 12 Jul 2020 15:09:55 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
-        <title>使用 jekyll搭建博客总结</title>
+        <title>使用 jekyll 搭建博客总结</title>
         <description>&lt;p&gt;首先感谢喵神分享的模板. 自己的博客终于搭建完成了.
 开博客的目的其一是为了记录下自己的学习历程，其二为了写一些自己感兴趣的东西.
 书归正传, 开始搭建步骤:&lt;/p&gt;
@@ -48,8 +48,8 @@
 
 </description>
         <pubDate>Mon, 15 Jun 2020 23:20:26 +0800</pubDate>
-        <link>http://localhost:4000/2020/06/%E4%BD%BF%E7%94%A8-jekyll%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E6%80%BB%E7%BB%93/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/06/%E4%BD%BF%E7%94%A8-jekyll%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E6%80%BB%E7%BB%93/</guid>
+        <link>http://localhost:4000/2020/06/%E4%BD%BF%E7%94%A8-jekyll-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E6%80%BB%E7%BB%93/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/06/%E4%BD%BF%E7%94%A8-jekyll-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E6%80%BB%E7%BB%93/</guid>
         
         
       </item>
