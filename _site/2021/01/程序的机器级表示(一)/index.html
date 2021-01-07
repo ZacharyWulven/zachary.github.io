@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>程序的机器级表示(一)</title>
+  <meta name="description" content="机器代码有时指目标代码，有时指文本格式的汇编代码。ARM 是 Acorn RISC Machine 的缩写。RISC 精简指令集计算机。汇编代码表示非常接近机器代码 与机器代码的二进制相比 具有更好的可读性文本格式对机器编程来说其中两种抽象尤为重要：  由指令集体系结构或指令架构(Instruction Set ...">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="程序的机器级表示(一)">
+  <meta name="twitter:description" content="机器代码有时指目标代码，有时指文本格式的汇编代码。ARM 是 Acorn RISC Machine 的缩写。RISC 精简指令集计算机。汇编代码表示非常接近机器代码 与机器代码的二进制相比 具有更好的可读性文本格式对机器编程来说其中两种抽象尤为重要：  由指令集体系结构或指令架构(Instruction Set ...">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="程序的机器级表示(一)">
+  <meta property="og:description" content="机器代码有时指目标代码，有时指文本格式的汇编代码。ARM 是 Acorn RISC Machine 的缩写。RISC 精简指令集计算机。汇编代码表示非常接近机器代码 与机器代码的二进制相比 具有更好的可读性文本格式对机器编程来说其中两种抽象尤为重要：  由指令集体系结构或指令架构(Instruction Set ...">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2021/01/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%B8%80)/">
+  <link rel="alternate" type="application/rss+xml" title="Zachary" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Zachary 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Zachary logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Zachary" class="blog-button">Zachary</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">生于忧患，死于安乐</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description">这里不限于谈论技术，同时也会涉及个人兴趣爱好，如魂系列游戏、克苏鲁文学等。</p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+
+  
+  
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:poisontusk@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-slate"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2021-01-07 21:45:30 +0800" itemprop="datePublished" class="post-meta__date date">2021-01-07</time> &#8226; <span class="post-meta__tags tags">iOS CSApp</span>
+    </div>
+    <h1 class="post-title">程序的机器级表示(一)</h1>
+  </header>
+
+  <section class="post">
+    <h3 id="机器代码">机器代码</h3>
+<p>有时指目标代码，有时指文本格式的汇编代码。ARM 是 Acorn RISC Machine 的缩写。RISC 精简指令集计算机。
+汇编代码表示非常接近机器代码 与机器代码的二进制相比 具有更好的可读性文本格式</p>
+<h4 id="对机器编程来说其中两种抽象尤为重要">对机器编程来说其中两种抽象尤为重要：</h4>
+<ol>
+  <li>由指令集体系结构或指令架构(Instruction Set Architecture，ISA) 来定义机器级程序的格式和行为，它定义了处理器状态，指令的格式以及每条指令对状态的影响，大多数 ISA 将程序的行为描述成好像每条指令都是按顺序执行的，一条指令结束下一条再开始。处理器硬件远比描述的精细复杂，他们并发地执行许多指，但是可以采取措施保证整体行为与 ISA 指定的顺序完全一致</li>
+  <li>机器级程序使用的内存地址是虚拟地址，提供的内存模型看上去是一个非常大的字节数组</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="mi">1</span> <span class="err">机器编程的基本原理主要思想是通过访问寄存器到的一些状态</span>
+<span class="mi">2</span> <span class="err">其实</span> <span class="n">cc</span> <span class="err">就是</span> <span class="no">GCC</span> <span class="err">编译器，可以用</span> <span class="n">cc</span> <span class="err">启动</span></code></pre></figure>
+
+<h3 id="处理器状态">处理器状态</h3>
+<ol>
+  <li>程序计数器（通常称为 PC）在 x86-64 中用 %rip 表示，给出将要执行的下一条指令在内存中的地址</li>
+  <li>整数寄存器文件包含 16 个命名位置，分别存储 64 位的值，这些寄存器可以存储地址(类似 c 指针)或整数数据，
+有些寄存器用来记录某些重要的程序状态
+其他的寄存器用来保存临时数据，如过程的参数和局部变量 以及函数返回值</li>
+  <li>条件码寄存器保存着最近执行的算术或逻辑指令的状态和信息，用来实现控制或数据流中的条件变化 如 if、while</li>
+  <li>一组向量寄存器可以存放一个或多个整数或浮点数的值</li>
+</ol>
+
+<h3 id="内存">内存</h3>
+<p>内存实际是用不同方式实现的虚构对象，操作系统和硬件之间存在一种协作称为虚拟内存，让每个程序看起来像有自己独立的字节数组</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="mi">1</span> <span class="err">没有操作缓存的指令，你无法之间访问缓存</span>
+<span class="mi">2</span> <span class="err">内存是你可以逻辑的认为只是一个字节数组，这就是机器级程序员看到的</span></code></pre></figure>
+
+<h3 id="生成程序的过程">生成程序的过程</h3>
+<ol>
+  <li>采用 C 并实际生成汇编代码 （编译 gcc -Og -S）</li>
+  <li>通过汇编程序运行它，接受文本表示的指令并将其转换为实际的字节形式 （汇编 gcc or as）</li>
+  <li>链接器将不同文件融合在一起，包含你的单独文件 （Linker gcc or ld）</li>
+  <li>实际运行程序时，有一些库在程序首次开始时动态导入</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">机器代码重要的一点就是程序计数器</span> <span class="no">PC</span> <span class="err">告诉你</span><span class="p">:</span>
+<span class="mi">1</span> <span class="err">下一个指令是什么</span>
+<span class="mi">2</span> <span class="err">下一个指令在内存中的位置</span>
+<span class="err">然后有一组寄存器供使用，可以把它们看成非常小的内存位置</span></code></pre></figure>
+
+<h3 id="介绍几个指令">介绍几个指令</h3>
+<ol>
+  <li>pushq 将东西推到栈中</li>
+  <li>mov 将它从一个地方复制到另一个地方</li>
+  <li>call 调用</li>
+  <li>pop pushq 的反操作</li>
+  <li>ret 从一个函数返回</li>
+</ol>
+
+<h3 id="生成汇编">生成汇编</h3>
+<p>$ gcc -Og -S sum.c （将 c 代码转化为汇编生成 sum.s 调用 gcc 是调用整个编译序列）</p>
+<h4 id="参数">参数：</h4>
+<ol>
+  <li>-S stop 只做第一部，把 c 转为汇编</li>
+  <li>-Og 告诉编译器做什么优化规范，如果什么都不加 会产出无优化过的代码，非常难读</li>
+  <li>-O1 打开优化器</li>
+  <li>-O2 打开优化器</li>
+  <li>-O Optimize</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">.</span><span class="nf">s</span> <span class="err">都是汇编文件</span>
+<span class="n">d</span> <span class="err">后缀是反汇编文件</span></code></pre></figure>
+
+<h3 id="汇编与-c-有什么不同">汇编与 C 有什么不同？</h3>
+<ol>
+  <li>汇编有很多不同类型的整数数据类型，有 1、2、4、8 字节的</li>
+  <li>在整数数据类型中它们不区分有符号与无符号的存储方式，甚至地址或指针都是以数字形式在计算机中存储的</li>
+  <li>浮点数以非常不同的方式处理事宜不同的寄存器组</li>
+  <li>x86 下有的指令只有 1 个字节，有的可能最多 15 字节</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">数组和结构体不存在于机器语言</span></code></pre></figure>
+
+<h3 id="反汇编">反汇编</h3>
+<p>将工程从目标代码转回到汇编代码，会有所丢失跟正常的汇编代码有些不同</p>
+<h4 id="-gcc--og-sumc--o-sum-sum-是一个二进制">$ gcc -Og sum.c -o sum (sum 是一个二进制)</h4>
+<h4 id="-objdump--d-sum--sumd-会输出程序的反汇编结果">$ objdump -d sum &gt; sum.d (会输出程序的反汇编结果)</h4>
+<h4 id="所有以开头的行都是指导汇编器和链接器工作的伪指令-可以忽略">所有以“.”开头的行都是指导汇编器和链接器工作的伪指令 可以忽略</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">push</span>    <span class="o">%</span><span class="n">rbx</span>
+<span class="n">mov</span>     <span class="o">%</span><span class="n">rdx</span><span class="p">,</span> <span class="o">%</span><span class="n">rbx</span>
+<span class="n">callq</span>   <span class="mi">9</span> <span class="o">&lt;</span><span class="n">multstore</span><span class="o">+</span><span class="mh">0x9</span><span class="o">&gt;</span>
+<span class="n">mov</span>     <span class="o">%</span><span class="n">rax</span><span class="p">,(</span><span class="o">%</span><span class="n">rbx</span><span class="p">)</span>
+<span class="n">pop</span>     <span class="o">%</span><span class="n">rbx</span>
+<span class="n">retq</span></code></pre></figure>
+
+<p>反汇编代码会省略指令后边的 “q” 如 pushq 变成 push，但 call 和 ret 指令后会加 “q” 变成 callq，retq</p>
+
+<h3 id="链接器">链接器</h3>
+<p>链接器将地址显示了出来 如第四行</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">push</span>    <span class="o">%</span><span class="n">rbx</span>
+<span class="n">mov</span>     <span class="o">%</span><span class="n">rdx</span><span class="p">,</span> <span class="o">%</span><span class="n">rbx</span>
+<span class="n">callq</span>   <span class="mi">40058</span><span class="n">b</span> <span class="o">&lt;</span><span class="n">mult2</span><span class="o">&gt;</span>
+<span class="n">mov</span>     <span class="o">%</span><span class="n">rax</span><span class="p">,(</span><span class="o">%</span><span class="n">rbx</span><span class="p">)</span>
+<span class="n">pop</span>     <span class="o">%</span><span class="n">rbx</span>
+<span class="n">retq</span>
+<span class="n">nop</span>
+<span class="n">nop</span></code></pre></figure>
+
+<h4 id="链接器的作用之一就是为函数调用找到匹配的函数可执行代码的位置">链接器的作用之一就是为函数调用找到匹配的函数可执行代码的位置</h4>
+<h4 id="反汇编可能生成-nop-指令-但如果在-ret-后就不影响-因为函数已经-return-如第-89行">反汇编可能生成 nop 指令 但如果在 ret 后就不影响 因为函数已经 return 如第 8、9行</h4>
+
+<h3 id="gdb-调试">GDB 调试</h3>
+<p>(gdb)disassemble sumstore （sumstore 是个函数，输出 sumstore 反汇编代码，multstore.o 文件）</p>
+<h4 id="x14xb-sumstore">x/14xb sumstore</h4>
+<h4 id="x-表示从函数-multstore-所处的地址开始的-14-个十六进制格式表示-简写-x的字节简写-b">x 表示从函数 multstore 所处的地址开始的 14 个十六进制格式表示 (简写 x)的字节(简写 b)</h4>
+
+<h3 id="寄存器">寄存器</h3>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="mi">1</span> <span class="err">使用</span> <span class="o">%</span><span class="n">r</span> <span class="err">版本将得到</span> <span class="mi">64</span> <span class="err">位</span>
+<span class="mi">2</span> <span class="err">使用</span> <span class="o">%</span><span class="n">e</span> <span class="err">版本将得到</span> <span class="mi">32</span> <span class="err">位，</span><span class="o">%</span><span class="n">e</span> <span class="err">版本只是</span> <span class="o">%</span><span class="n">r</span> <span class="err">版本的实体的低</span> <span class="mi">32</span> <span class="err">位</span>
+<span class="mi">3</span> <span class="o">%</span><span class="n">rsp</span> <span class="err">是栈指针</span> <span class="p">,</span> <span class="err">不把它作为任何旧用途</span>
+<span class="mi">4</span> <span class="no">PC</span> <span class="err">是</span> <span class="o">%</span><span class="n">rip</span></code></pre></figure>
+
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2020/11/Advancements-in-the-Objective-C-runtime/" title="link to Advancements in the objective C runtime">Advancements in the objective C runtime</a></h2>
+       <p class="excerpt">距离 WWDC2020 过了也快小半年，换了新工作，由于前段时间项目比较忙事情比较多也没有太多时间更新。不过最近节奏还可以抽空把 WWDC2020 自己感兴趣的内容记录一下。书归正传, 开始今天的话题，也就是 Objective-C runtime 变化。一、三大变化1 类的运行时数据结构变化2 方法列表变化3 Tagged Pointer 格式变化二、clean memory 和 dirty memory这次优化都是围绕 clean memory 和 dirty memoryclean ...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2020-11-15 21:23:30 +0800" class="post-list__meta--date date">2020-11-15</time> &#8226; <span class="post-list__meta--tags tags">iOS WWDC</span><a class="btn-border-small" href=/2020/11/Advancements-in-the-Objective-C-runtime/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2021/01/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%B8%80)/";
+        this.page.identifier = "/2021/01/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%B8%80)/";
+    };
+
+    var disqus_shortname = 'Zachary';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-01-08 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2021</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>
