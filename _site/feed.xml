@@ -5,8 +5,8 @@
     <description>Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 28 Jan 2021 00:30:41 +0800</pubDate>
-    <lastBuildDate>Thu, 28 Jan 2021 00:30:41 +0800</lastBuildDate>
+    <pubDate>Thu, 28 Jan 2021 00:36:39 +0800</pubDate>
+    <lastBuildDate>Thu, 28 Jan 2021 00:36:39 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -311,7 +311,7 @@ popq %rdx ，首先从内存读出 0x123 的值，再写到寄存器 rdx，然�
     
       <item>
         <title>Advancements in the objective C runtime</title>
-        <description>&lt;p&gt;距离 WWDC2020 过了也快小半年，换了新工作，由于前段时间项目比较忙事情比较多也没有太多时间更新。
+        <description>&lt;p&gt;距离 WWDC2020 过了也快小半年，由于前段时间项目比较忙事情比较多也没有太多时间更新。
 不过最近节奏还可以抽空把 WWDC2020 自己感兴趣的内容记录一下。
 书归正传, 开始今天的话题，也就是 Objective-C runtime 变化。&lt;/p&gt;
 
