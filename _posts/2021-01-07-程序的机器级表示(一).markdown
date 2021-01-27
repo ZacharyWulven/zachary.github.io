@@ -2,7 +2,7 @@
 layout: post
 title: ### 程序的机器级表示(一
 date: 2021-01-07 22:45:30.000000000 +09:00
-tag: iOS CSApp
+tag: CSApp
 ---
 ### 机器代码
 有时指目标代码，有时指文本格式的汇编代码。ARM 是 Acorn RISC Machine 的缩写。RISC 精简指令集计算机。
