@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>设计模式之生成器(对象创建)</title>
+  <meta name="description" content="何为生成器把构建对象分解为客户 - 指导者 (Director) - 生成器 (Builder)。将一个复杂对象的构建与它的表现分类 使得同样的构建过程可以创建不同表现客户-指导者-生成器Client-Director-Builder">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="设计模式之生成器(对象创建)">
+  <meta name="twitter:description" content="何为生成器把构建对象分解为客户 - 指导者 (Director) - 生成器 (Builder)。将一个复杂对象的构建与它的表现分类 使得同样的构建过程可以创建不同表现客户-指导者-生成器Client-Director-Builder">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="设计模式之生成器(对象创建)">
+  <meta property="og:description" content="何为生成器把构建对象分解为客户 - 指导者 (Director) - 生成器 (Builder)。将一个复杂对象的构建与它的表现分类 使得同样的构建过程可以创建不同表现客户-指导者-生成器Client-Director-Builder">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2021/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%94%9F%E6%88%90%E5%99%A8(%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA)/">
+  <link rel="alternate" type="application/rss+xml" title="Zachary" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Zachary 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Zachary logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Zachary" class="blog-button">Zachary</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">生于忧患，死于安乐</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description">这里不限于谈论技术，同时也会涉及个人兴趣爱好，如魂系列游戏、克苏鲁文学等。</p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+
+  
+  
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:poisontusk@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-slate"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2021-01-28 21:45:30 +0800" itemprop="datePublished" class="post-meta__date date">2021-01-28</time> &#8226; <span class="post-meta__tags tags">设计模式 iOS</span>
+    </div>
+    <h1 class="post-title">设计模式之生成器(对象创建)</h1>
+  </header>
+
+  <section class="post">
+    <h4 id="何为生成器">何为生成器</h4>
+<p>把构建对象分解为客户 - 指导者 (Director) - 生成器 (Builder)。将一个复杂对象的构建与它的表现分类 使得同样的构建过程可以创建不同表现
+客户-指导者-生成器
+Client-Director-Builder</p>
+
+<h4 id="何时使用">何时使用</h4>
+<ol>
+  <li>需要创建各个部件的复杂对象</li>
+  <li>构建过程需要不同方式</li>
+</ol>
+
+<h4 id="builder-与抽象工厂区别">Builder 与抽象工厂区别</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Builder</span>                       <span class="err">抽象工厂</span>
+<span class="err">构建复杂对象</span>                    <span class="err">构建复杂或简单对象</span>
+<span class="err">以多步骤构建</span>                    <span class="err">以单一步骤构建</span>
+<span class="err">以多种方式构建</span>                  <span class="err">以单一方式构建</span>
+<span class="err">在创建过程最后一步返回产品</span>        <span class="err">在创建过程立即返回</span>
+<span class="err">专注一个特定产品</span>                 <span class="err">强调一套产品</span></code></pre></figure>
+
+<h4 id="代码示例">代码示例</h4>
+<p>创建的最终对象</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="vi">@interface</span> <span class="no">Character</span> <span class="p">:</span> <span class="no">NSObject</span> 
+<span class="p">{</span>
+  <span class="vi">@private</span>
+  <span class="n">float</span> <span class="n">protection_</span><span class="p">;</span>
+  <span class="n">float</span> <span class="n">power_</span><span class="p">;</span>
+  <span class="n">float</span> <span class="n">strength_</span><span class="p">;</span>
+  <span class="n">float</span> <span class="n">stamina_</span><span class="p">;</span>
+  <span class="n">float</span> <span class="n">intelligence_</span><span class="p">;</span>
+  <span class="n">float</span> <span class="n">agility_</span><span class="p">;</span>
+  <span class="n">float</span> <span class="n">aggressiveness_</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="vi">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">float</span> <span class="n">protection</span><span class="p">;</span>
+<span class="vi">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">float</span> <span class="n">power</span><span class="p">;</span>
+<span class="vi">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">float</span> <span class="n">strength</span><span class="p">;</span>
+<span class="vi">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">float</span> <span class="n">stamina</span><span class="p">;</span>
+<span class="vi">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">float</span> <span class="n">intelligence</span><span class="p">;</span>
+<span class="vi">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">float</span> <span class="n">agility</span><span class="p">;</span>
+<span class="vi">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">float</span> <span class="n">aggressiveness</span><span class="p">;</span>
+
+<span class="vi">@end</span>
+
+<span class="c1">#import "Character.h"</span>
+
+
+<span class="vi">@implementation</span> <span class="no">Character</span>
+
+<span class="vi">@synthesize</span> <span class="n">protection</span><span class="o">=</span><span class="n">protection_</span><span class="p">;</span>
+<span class="vi">@synthesize</span> <span class="n">power</span><span class="o">=</span><span class="n">power_</span><span class="p">;</span>
+<span class="vi">@synthesize</span> <span class="n">strength</span><span class="o">=</span><span class="n">strength_</span><span class="p">;</span>
+<span class="vi">@synthesize</span> <span class="n">stamina</span><span class="o">=</span><span class="n">stamina_</span><span class="p">;</span>
+<span class="vi">@synthesize</span> <span class="n">intelligence</span><span class="o">=</span><span class="n">intelligence_</span><span class="p">;</span>
+<span class="vi">@synthesize</span> <span class="n">agility</span><span class="o">=</span><span class="n">agility_</span><span class="p">;</span>
+<span class="vi">@synthesize</span> <span class="n">aggressiveness</span><span class="o">=</span><span class="n">aggressiveness_</span><span class="p">;</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="n">init</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nb">self</span> <span class="o">=</span> <span class="p">[</span><span class="k">super</span> <span class="n">init</span><span class="p">])</span>
+  <span class="p">{</span>
+    <span class="n">protection_</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
+    <span class="n">power_</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
+    <span class="n">strength_</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
+    <span class="n">stamina_</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
+    <span class="n">intelligence_</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
+    <span class="n">agility_</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
+    <span class="n">aggressiveness_</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
+  <span class="p">}</span>
+  
+  <span class="k">return</span> <span class="nb">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="vi">@end</span></code></pre></figure>
+
+<p>Builder</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="vi">@interface</span> <span class="no">CharacterBuilder</span> <span class="p">:</span> <span class="no">NSObject</span> 
+<span class="p">{</span>
+  <span class="vi">@protected</span>
+  <span class="no">Character</span> <span class="o">*</span><span class="n">character_</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="vi">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="no">Character</span> <span class="o">*</span><span class="n">character</span><span class="p">;</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildNewCharacter</span><span class="p">;</span>
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildStrength</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span><span class="p">;</span>
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildStamina</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span><span class="p">;</span>
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildIntelligence</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span><span class="p">;</span>
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildAgility</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span><span class="p">;</span>
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildAggressiveness</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span><span class="p">;</span>
+
+<span class="vi">@end</span>
+
+<span class="c1">#import "CharacterBuilder.h"</span>
+
+
+<span class="vi">@implementation</span> <span class="no">CharacterBuilder</span>
+
+<span class="vi">@synthesize</span> <span class="n">character</span><span class="o">=</span><span class="n">character_</span><span class="p">;</span>
+
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildNewCharacter</span>
+<span class="p">{</span>
+  <span class="sr">//</span> <span class="n">autorelease</span> <span class="n">the</span> <span class="n">previous</span> <span class="n">character</span>
+  <span class="sr">//</span> <span class="n">before</span> <span class="n">creating</span> <span class="n">a</span> <span class="n">new</span> <span class="n">one</span>
+  <span class="p">[</span><span class="n">character_</span> <span class="n">autorelease</span><span class="p">];</span>
+  <span class="n">character_</span> <span class="o">=</span> <span class="p">[[</span><span class="no">Character</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+  
+  <span class="k">return</span> <span class="nb">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildStrength</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span>
+<span class="p">{</span>
+  <span class="n">character_</span><span class="p">.</span><span class="nf">strength</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nb">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildStamina</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span>
+<span class="p">{</span>
+  <span class="n">character_</span><span class="p">.</span><span class="nf">stamina</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nb">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildIntelligence</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span>
+<span class="p">{</span>
+  <span class="n">character_</span><span class="p">.</span><span class="nf">intelligence</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nb">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildAgility</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span>
+<span class="p">{</span>
+  <span class="n">character_</span><span class="p">.</span><span class="nf">agility</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nb">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildAggressiveness</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span>
+<span class="p">{</span>
+  <span class="n">character_</span><span class="p">.</span><span class="nf">aggressiveness</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nb">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span> <span class="n">dealloc</span>
+<span class="p">{</span>
+  <span class="p">[</span><span class="n">character_</span> <span class="n">autorelease</span><span class="p">];</span>
+  <span class="p">[</span><span class="k">super</span> <span class="n">dealloc</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="vi">@end</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="vi">@interface</span> <span class="no">StandardCharacterBuilder</span> <span class="p">:</span> <span class="no">CharacterBuilder</span> 
+<span class="p">{</span>
+
+<span class="p">}</span>
+
+<span class="sr">//</span> <span class="n">overriden</span> <span class="nb">methods</span> <span class="n">from</span> <span class="n">the</span> <span class="n">abstract</span> <span class="no">CharacterBuilder</span>
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildStrength</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span><span class="p">;</span>
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildStamina</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span><span class="p">;</span>
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildIntelligence</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span><span class="p">;</span>
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildAgility</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span><span class="p">;</span>
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildAggressiveness</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span><span class="p">;</span>
+
+<span class="vi">@end</span>
+
+<span class="c1">#import "StandardCharacterBuilder.h"</span>
+
+
+<span class="vi">@implementation</span> <span class="no">StandardCharacterBuilder</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildStrength</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span>
+<span class="p">{</span>
+  <span class="sr">//</span> <span class="n">update</span> <span class="n">the</span> <span class="n">protection</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">character</span>
+  <span class="n">character_</span><span class="p">.</span><span class="nf">protection</span> <span class="o">*=</span> <span class="n">value</span><span class="p">;</span>
+  
+  <span class="sr">//</span> <span class="n">update</span> <span class="n">the</span> <span class="n">power</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">character</span>
+  <span class="n">character_</span><span class="p">.</span><span class="nf">power</span> <span class="o">*=</span> <span class="n">value</span><span class="p">;</span>
+  
+  <span class="sr">//</span> <span class="n">finally</span> <span class="n">set</span> <span class="n">the</span> <span class="n">strength</span> <span class="n">value</span> <span class="n">and</span> <span class="k">return</span> <span class="n">this</span> <span class="n">builder</span>
+  <span class="k">return</span> <span class="p">[</span><span class="k">super</span> <span class="n">buildStrength</span><span class="ss">:value</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildStamina</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span>
+<span class="p">{</span>
+  <span class="sr">//</span> <span class="n">update</span> <span class="n">the</span> <span class="n">protection</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">character</span>
+  <span class="n">character_</span><span class="p">.</span><span class="nf">protection</span> <span class="o">*=</span> <span class="n">value</span><span class="p">;</span>
+  
+  <span class="sr">//</span> <span class="n">update</span> <span class="n">the</span> <span class="n">power</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">character</span>
+  <span class="n">character_</span><span class="p">.</span><span class="nf">power</span> <span class="o">*=</span> <span class="n">value</span><span class="p">;</span>
+  
+  <span class="sr">//</span> <span class="n">finally</span> <span class="n">set</span> <span class="n">the</span> <span class="n">strength</span> <span class="n">value</span> <span class="n">and</span> <span class="k">return</span> <span class="n">this</span> <span class="n">builder</span>
+  <span class="k">return</span> <span class="p">[</span><span class="k">super</span> <span class="n">buildStamina</span><span class="ss">:value</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildIntelligence</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span>
+<span class="p">{</span>
+  <span class="sr">//</span> <span class="n">update</span> <span class="n">the</span> <span class="n">protection</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">character</span>
+  <span class="n">character_</span><span class="p">.</span><span class="nf">protection</span> <span class="o">*=</span> <span class="n">value</span><span class="p">;</span>
+  
+  <span class="sr">//</span> <span class="n">update</span> <span class="n">the</span> <span class="n">power</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">character</span>
+  <span class="n">character_</span><span class="p">.</span><span class="nf">power</span> <span class="o">/=</span> <span class="n">value</span><span class="p">;</span>
+  
+  <span class="sr">//</span> <span class="n">finally</span> <span class="n">set</span> <span class="n">the</span> <span class="n">strength</span> <span class="n">value</span> <span class="n">and</span> <span class="k">return</span> <span class="n">this</span> <span class="n">builder</span>
+  <span class="k">return</span> <span class="p">[</span><span class="k">super</span> <span class="n">buildIntelligence</span><span class="ss">:value</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildAgility</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span>
+<span class="p">{</span>
+  <span class="sr">//</span> <span class="n">update</span> <span class="n">the</span> <span class="n">protection</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">character</span>
+  <span class="n">character_</span><span class="p">.</span><span class="nf">protection</span> <span class="o">*=</span> <span class="n">value</span><span class="p">;</span>
+  
+  <span class="sr">//</span> <span class="n">update</span> <span class="n">the</span> <span class="n">power</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">character</span>
+  <span class="n">character_</span><span class="p">.</span><span class="nf">power</span> <span class="o">/=</span> <span class="n">value</span><span class="p">;</span>
+  
+  <span class="sr">//</span> <span class="n">finally</span> <span class="n">set</span> <span class="n">the</span> <span class="n">strength</span> <span class="n">value</span> <span class="n">and</span> <span class="k">return</span> <span class="n">this</span> <span class="n">builder</span>
+  <span class="k">return</span> <span class="p">[</span><span class="k">super</span> <span class="n">buildAgility</span><span class="ss">:value</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">buildAggressiveness</span><span class="p">:(</span><span class="n">float</span><span class="p">)</span> <span class="n">value</span>
+<span class="p">{</span>
+  <span class="sr">//</span> <span class="n">update</span> <span class="n">the</span> <span class="n">protection</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">character</span>
+  <span class="n">character_</span><span class="p">.</span><span class="nf">protection</span> <span class="o">/=</span> <span class="n">value</span><span class="p">;</span>
+  
+  <span class="sr">//</span> <span class="n">update</span> <span class="n">the</span> <span class="n">power</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">character</span>
+  <span class="n">character_</span><span class="p">.</span><span class="nf">power</span> <span class="o">*=</span> <span class="n">value</span><span class="p">;</span>
+  
+  <span class="sr">//</span> <span class="n">finally</span> <span class="n">set</span> <span class="n">the</span> <span class="n">strength</span> <span class="n">value</span> <span class="n">and</span> <span class="k">return</span> <span class="n">this</span> <span class="n">builder</span>
+  <span class="k">return</span> <span class="p">[</span><span class="k">super</span> <span class="n">buildAggressiveness</span><span class="ss">:value</span><span class="p">];</span>
+<span class="p">}</span>
+
+
+<span class="vi">@end</span></code></pre></figure>
+
+<p>Director</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#import &lt;Foundation/Foundation.h&gt;</span>
+<span class="c1">#import "StandardCharacterBuilder.h"</span>
+
+<span class="vi">@interface</span> <span class="no">ChasingGame</span> <span class="p">:</span> <span class="no">NSObject</span> 
+<span class="p">{</span>
+
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">Character</span> <span class="o">*</span><span class="p">)</span> <span class="n">createPlayer</span><span class="p">:(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">builder</span><span class="p">;</span>
+<span class="o">-</span> <span class="p">(</span><span class="no">Character</span> <span class="o">*</span><span class="p">)</span> <span class="n">createEnemy</span><span class="p">:(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">builder</span><span class="p">;</span>
+
+<span class="vi">@end</span>
+
+
+<span class="vi">@implementation</span> <span class="no">ChasingGame</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">Character</span> <span class="o">*</span><span class="p">)</span> <span class="n">createPlayer</span><span class="p">:(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">builder</span>
+<span class="p">{</span>
+  <span class="p">[</span><span class="n">builder</span> <span class="n">buildNewCharacter</span><span class="p">];</span>
+  <span class="p">[</span><span class="n">builder</span> <span class="n">buildStrength</span><span class="p">:</span><span class="mf">50.0</span><span class="p">];</span>
+  <span class="p">[</span><span class="n">builder</span> <span class="n">buildStamina</span><span class="p">:</span><span class="mf">25.0</span><span class="p">];</span>
+  <span class="p">[</span><span class="n">builder</span> <span class="n">buildIntelligence</span><span class="p">:</span><span class="mf">75.0</span><span class="p">];</span>
+  <span class="p">[</span><span class="n">builder</span> <span class="n">buildAgility</span><span class="p">:</span><span class="mf">65.0</span><span class="p">];</span>
+  <span class="p">[</span><span class="n">builder</span> <span class="n">buildAggressiveness</span><span class="p">:</span><span class="mf">35.0</span><span class="p">];</span>
+  
+  <span class="sr">//</span> <span class="n">an</span> <span class="n">alternative</span> <span class="n">way</span> <span class="n">to</span> <span class="n">build</span> <span class="n">a</span> <span class="n">character</span>
+  <span class="p">[[[[[[</span><span class="n">builder</span> <span class="n">buildNewCharacter</span><span class="p">]</span>
+       <span class="n">buildStrength</span><span class="p">:</span><span class="mf">50.0</span><span class="p">]</span>
+      <span class="n">buildStamina</span><span class="p">:</span><span class="mf">25.0</span><span class="p">]</span>
+     <span class="n">buildIntelligence</span><span class="p">:</span><span class="mf">75.0</span><span class="p">]</span>
+    <span class="n">buildAgility</span><span class="p">:</span><span class="mf">65.0</span><span class="p">]</span>
+   <span class="n">buildAggressiveness</span><span class="p">:</span><span class="mf">35.0</span><span class="p">];</span>
+  
+  <span class="k">return</span> <span class="p">[</span><span class="n">builder</span> <span class="n">character</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">Character</span> <span class="o">*</span><span class="p">)</span> <span class="n">createEnemy</span><span class="p">:(</span><span class="no">CharacterBuilder</span> <span class="o">*</span><span class="p">)</span> <span class="n">builder</span>
+<span class="p">{</span>
+  <span class="p">[</span><span class="n">builder</span> <span class="n">buildNewCharacter</span><span class="p">];</span>
+  <span class="p">[</span><span class="n">builder</span> <span class="n">buildStrength</span><span class="p">:</span><span class="mf">80.0</span><span class="p">];</span>
+  <span class="p">[</span><span class="n">builder</span> <span class="n">buildStamina</span><span class="p">:</span><span class="mf">65.0</span><span class="p">];</span>
+  <span class="p">[</span><span class="n">builder</span> <span class="n">buildIntelligence</span><span class="p">:</span><span class="mf">35.0</span><span class="p">];</span>
+  <span class="p">[</span><span class="n">builder</span> <span class="n">buildAgility</span><span class="p">:</span><span class="mf">25.0</span><span class="p">];</span>
+  <span class="p">[</span><span class="n">builder</span> <span class="n">buildAggressiveness</span><span class="p">:</span><span class="mf">95.0</span><span class="p">];</span>
+  
+  <span class="k">return</span> <span class="p">[</span><span class="n">builder</span> <span class="n">character</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="vi">@end</span></code></pre></figure>
+
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2021/01/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%BA%8C)/" title="link to 程序的机器级表示(二)">程序的机器级表示(二)</a></h2>
+       <p class="excerpt">数据格式Intel 术语：8  位为 字节（b）16 位数据类型为字（w）32 位为双字（l）64 位为四字（q）C 声明          |    Intel 数据类型     |        汇编代码后缀         |     大小（字节）char      字节                   b            1short     字                     w            2int       双字                 ...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2021-01-27 22:45:30 +0800" class="post-list__meta--date date">2021-01-27</time> &#8226; <span class="post-list__meta--tags tags">CSApp</span><a class="btn-border-small" href=/2021/01/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%BA%8C)/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2021/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%94%9F%E6%88%90%E5%99%A8(%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA)/";
+        this.page.identifier = "/2021/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%94%9F%E6%88%90%E5%99%A8(%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA)/";
+    };
+
+    var disqus_shortname = 'Zachary';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-01-29 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2021</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

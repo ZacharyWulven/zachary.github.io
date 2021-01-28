@@ -1,0 +1,297 @@
+---
+layout: post
+title: ### 设计模式之生成器(对象创建)
+date: 2021-01-28 22:45:30.000000000 +09:00
+tag: 设计模式 iOS
+---
+#### 何为生成器
+把构建对象分解为客户 - 指导者 (Director) - 生成器 (Builder)。将一个复杂对象的构建与它的表现分类 使得同样的构建过程可以创建不同表现
+客户-指导者-生成器
+Client-Director-Builder
+
+#### 何时使用
+1. 需要创建各个部件的复杂对象
+2. 构建过程需要不同方式
+
+#### Builder 与抽象工厂区别
+{% highlight ruby %}
+Builder                       抽象工厂
+构建复杂对象                    构建复杂或简单对象
+以多步骤构建                    以单一步骤构建
+以多种方式构建                  以单一方式构建
+在创建过程最后一步返回产品        在创建过程立即返回
+专注一个特定产品                 强调一套产品
+{% endhighlight %}
+
+#### 代码示例
+创建的最终对象
+{% highlight ruby %}
+@interface Character : NSObject 
+{
+  @private
+  float protection_;
+  float power_;
+  float strength_;
+  float stamina_;
+  float intelligence_;
+  float agility_;
+  float aggressiveness_;
+}
+
+@property (nonatomic, assign) float protection;
+@property (nonatomic, assign) float power;
+@property (nonatomic, assign) float strength;
+@property (nonatomic, assign) float stamina;
+@property (nonatomic, assign) float intelligence;
+@property (nonatomic, assign) float agility;
+@property (nonatomic, assign) float aggressiveness;
+
+@end
+
+#import "Character.h"
+
+
+@implementation Character
+
+@synthesize protection=protection_;
+@synthesize power=power_;
+@synthesize strength=strength_;
+@synthesize stamina=stamina_;
+@synthesize intelligence=intelligence_;
+@synthesize agility=agility_;
+@synthesize aggressiveness=aggressiveness_;
+
+- (id) init
+{
+  if (self = [super init])
+  {
+    protection_ = 1.0;
+    power_ = 1.0;
+    strength_ = 1.0;
+    stamina_ = 1.0;
+    intelligence_ = 1.0;
+    agility_ = 1.0;
+    aggressiveness_ = 1.0;
+  }
+  
+  return self;
+}
+
+@end
+
+{% endhighlight %}
+
+Builder
+{% highlight ruby %}
+@interface CharacterBuilder : NSObject 
+{
+  @protected
+  Character *character_;
+}
+
+@property (nonatomic, readonly) Character *character;
+
+- (CharacterBuilder *) buildNewCharacter;
+- (CharacterBuilder *) buildStrength:(float) value;
+- (CharacterBuilder *) buildStamina:(float) value;
+- (CharacterBuilder *) buildIntelligence:(float) value;
+- (CharacterBuilder *) buildAgility:(float) value;
+- (CharacterBuilder *) buildAggressiveness:(float) value;
+
+@end
+
+#import "CharacterBuilder.h"
+
+
+@implementation CharacterBuilder
+
+@synthesize character=character_;
+
+
+- (CharacterBuilder *) buildNewCharacter
+{
+  // autorelease the previous character
+  // before creating a new one
+  [character_ autorelease];
+  character_ = [[Character alloc] init];
+  
+  return self;
+}
+
+- (CharacterBuilder *) buildStrength:(float) value
+{
+  character_.strength = value;
+  return self;
+}
+
+- (CharacterBuilder *) buildStamina:(float) value
+{
+  character_.stamina = value;
+  return self;
+}
+
+- (CharacterBuilder *) buildIntelligence:(float) value
+{
+  character_.intelligence = value;
+  return self;
+}
+
+- (CharacterBuilder *) buildAgility:(float) value
+{
+  character_.agility = value;
+  return self;
+}
+
+- (CharacterBuilder *) buildAggressiveness:(float) value
+{
+  character_.aggressiveness = value;
+  return self;
+}
+
+- (void) dealloc
+{
+  [character_ autorelease];
+  [super dealloc];
+}
+
+@end
+
+{% endhighlight %}
+
+{% highlight ruby %}
+@interface StandardCharacterBuilder : CharacterBuilder 
+{
+
+}
+
+// overriden methods from the abstract CharacterBuilder
+- (CharacterBuilder *) buildStrength:(float) value;
+- (CharacterBuilder *) buildStamina:(float) value;
+- (CharacterBuilder *) buildIntelligence:(float) value;
+- (CharacterBuilder *) buildAgility:(float) value;
+- (CharacterBuilder *) buildAggressiveness:(float) value;
+
+@end
+
+#import "StandardCharacterBuilder.h"
+
+
+@implementation StandardCharacterBuilder
+
+- (CharacterBuilder *) buildStrength:(float) value
+{
+  // update the protection value of the character
+  character_.protection *= value;
+  
+  // update the power value of the character
+  character_.power *= value;
+  
+  // finally set the strength value and return this builder
+  return [super buildStrength:value];
+}
+
+- (CharacterBuilder *) buildStamina:(float) value
+{
+  // update the protection value of the character
+  character_.protection *= value;
+  
+  // update the power value of the character
+  character_.power *= value;
+  
+  // finally set the strength value and return this builder
+  return [super buildStamina:value];
+}
+
+- (CharacterBuilder *) buildIntelligence:(float) value
+{
+  // update the protection value of the character
+  character_.protection *= value;
+  
+  // update the power value of the character
+  character_.power /= value;
+  
+  // finally set the strength value and return this builder
+  return [super buildIntelligence:value];
+}
+
+- (CharacterBuilder *) buildAgility:(float) value
+{
+  // update the protection value of the character
+  character_.protection *= value;
+  
+  // update the power value of the character
+  character_.power /= value;
+  
+  // finally set the strength value and return this builder
+  return [super buildAgility:value];
+}
+
+- (CharacterBuilder *) buildAggressiveness:(float) value
+{
+  // update the protection value of the character
+  character_.protection /= value;
+  
+  // update the power value of the character
+  character_.power *= value;
+  
+  // finally set the strength value and return this builder
+  return [super buildAggressiveness:value];
+}
+
+
+@end
+{% endhighlight %}
+
+Director
+{% highlight ruby %}
+#import <Foundation/Foundation.h>
+#import "StandardCharacterBuilder.h"
+
+@interface ChasingGame : NSObject 
+{
+
+}
+
+- (Character *) createPlayer:(CharacterBuilder *) builder;
+- (Character *) createEnemy:(CharacterBuilder *) builder;
+
+@end
+
+
+@implementation ChasingGame
+
+- (Character *) createPlayer:(CharacterBuilder *) builder
+{
+  [builder buildNewCharacter];
+  [builder buildStrength:50.0];
+  [builder buildStamina:25.0];
+  [builder buildIntelligence:75.0];
+  [builder buildAgility:65.0];
+  [builder buildAggressiveness:35.0];
+  
+  // an alternative way to build a character
+  [[[[[[builder buildNewCharacter]
+       buildStrength:50.0]
+      buildStamina:25.0]
+     buildIntelligence:75.0]
+    buildAgility:65.0]
+   buildAggressiveness:35.0];
+  
+  return [builder character];
+}
+
+- (Character *) createEnemy:(CharacterBuilder *) builder
+{
+  [builder buildNewCharacter];
+  [builder buildStrength:80.0];
+  [builder buildStamina:65.0];
+  [builder buildIntelligence:35.0];
+  [builder buildAgility:25.0];
+  [builder buildAggressiveness:95.0];
+  
+  return [builder character];
+}
+
+@end
+
+{% endhighlight %}
