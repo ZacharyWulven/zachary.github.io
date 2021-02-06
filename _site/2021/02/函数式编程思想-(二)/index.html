@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>函数式编程思想 (二)</title>
+  <meta name="description" content="一、权责让渡函数式思维的好处之一，是能够将底层次细节（如垃圾机制）的控制权移交给运行时，从而消除一大批注定会发生的程序错误。下面将讲述向语言和运行时让渡控制权的五各种途径。">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="函数式编程思想 (二)">
+  <meta name="twitter:description" content="一、权责让渡函数式思维的好处之一，是能够将底层次细节（如垃圾机制）的控制权移交给运行时，从而消除一大批注定会发生的程序错误。下面将讲述向语言和运行时让渡控制权的五各种途径。">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="函数式编程思想 (二)">
+  <meta property="og:description" content="一、权责让渡函数式思维的好处之一，是能够将底层次细节（如垃圾机制）的控制权移交给运行时，从而消除一大批注定会发生的程序错误。下面将讲述向语言和运行时让渡控制权的五各种途径。">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%BA%8C)/">
+  <link rel="alternate" type="application/rss+xml" title="Zachary" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Zachary 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Zachary logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Zachary" class="blog-button">Zachary</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">生于忧患，死于安乐</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description">这里不限于谈论技术，同时也会涉及个人兴趣爱好，如魂系列游戏、克苏鲁文学等。</p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+
+  
+  
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:poisontusk@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-slate"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2021-02-06 17:14:30 +0800" itemprop="datePublished" class="post-meta__date date">2021-02-06</time> &#8226; <span class="post-meta__tags tags">函数式编程 Swift</span>
+    </div>
+    <h1 class="post-title">函数式编程思想 (二)</h1>
+  </header>
+
+  <section class="post">
+    <h3 id="一权责让渡">一、权责让渡</h3>
+<p>函数式思维的好处之一，是能够将底层次细节（如垃圾机制）的控制权移交给运行时，从而消除一大批注定会发生的程序错误。
+下面将讲述向语言和运行时让渡控制权的五各种途径。</p>
+
+<h4 id="迭代让位于高阶函数">迭代让位于高阶函数</h4>
+<p>用 map 等函数替换了迭代。用高阶函数把希望之星的操作表达出来，语言将会把操作安排得更高效。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">理解掌握的抽象层次永远要比日常使用的抽象层次更深一层</span></code></pre></figure>
+
+<h4 id="二闭包-closure">二、闭包 closure</h4>
+<p>闭包是所有函数式语言都具备的一项平等特性。所谓闭包实际上是一种特殊的函数，它在暗地里绑定了函数内部引用的所有变量。
+换句话说，这种函数把它引用的所有东西都放在一个上下文里“包”了起来。</p>
+
+<p>闭包这个名字来源于创建封闭上下文的行为。虽然局部变量不是在代码块里定义的，但是只要代码块引用了改变量，两者就绑定在一起了，
+这个联系在代码块实例的全生命周期都一直保持。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">func</span> <span class="n">makeAdd</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="no">Int</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">func</span> <span class="n">add</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="no">Int</span> <span class="p">{</span>
+      <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="k">return</span> <span class="n">x</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">add</span>
+<span class="p">}</span>
+<span class="n">var</span> <span class="n">c1</span> <span class="o">=</span> <span class="n">makeAdd</span><span class="p">()</span>
+<span class="n">c1</span><span class="p">()</span>
+<span class="n">c1</span><span class="p">()</span>
+<span class="n">var</span> <span class="n">c2</span> <span class="o">=</span> <span class="n">makeAdd</span><span class="p">()</span>
+<span class="n">c2</span><span class="p">()</span>
+<span class="n">c1</span> <span class="n">is</span> <span class="mi">3</span>
+<span class="n">c2</span> <span class="n">is</span> <span class="mi">2</span></code></pre></figure>
+
+<p>闭包还是推迟执行原则的绝佳样板。我们把代码绑定到闭包之后，可以推迟到适当的时机再执行闭包。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">抓住上下文，而非状态。</span></code></pre></figure>
+
+<h3 id="三柯里化和函数的部分施用">三、柯里化和函数的部分施用</h3>
+<p>柯里化 （currying） 和函数的部分（partial application）施用都是从数学里借用过来的编程语言技法。这两种技法以不同的面面出现在各种类型的语法里，
+在函数式语言里尤为普遍。</p>
+
+<p>柯里化和函数的部分施用都有能力操纵函数或方法的参数数目，一般是通过向一部分参数代入一个或多个默认值的办法来实现的。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">这部分参数称为</span> <span class="err">“固定参数”。</span></code></pre></figure>
+
+<p>定义与辨析</p>
+
+<p>柯里化是指从一个多参数函数变成一个连串单参数函数的变换。它描述的是变换的过程，不涉及变换后对函数的调用。
+调用者可以决定对多少个参数实施变换，余下部分将衍生位一个参数数目较少的新函数。</p>
+
+<p>部分施用指通过提前代入一部分参数值，使一个多参数得以省略部分参数，从而转换为一个参数数目较少的新函数。
+顾名思义，也就是让函数先作用域其中一些参数，经过部分的求解，结果返回一个由余下参数构成签名的函数。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">volume</span> <span class="o">=</span> <span class="p">{</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">l</span> <span class="o">-&gt;</span> <span class="n">h</span> <span class="o">*</span> <span class="n">w</span> <span class="o">*</span> <span class="n">l</span> <span class="p">}</span>
+<span class="k">def</span> <span class="nf">area</span> <span class="o">=</span> <span class="n">volume</span><span class="p">.</span><span class="nf">curry</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">lengthPA</span> <span class="o">=</span> <span class="n">volume</span><span class="p">.</span><span class="nf">curry</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>             <span class="err">部分实用</span>
+<span class="k">def</span> <span class="nf">lengthC</span> <span class="o">=</span> <span class="n">volume</span><span class="p">.</span><span class="nf">curry</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">curry</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>        <span class="err">柯里化</span></code></pre></figure>
+
+<p>柯里化和部分施用都是在我们提供部分参数值后，产出可以凭借余下参数实施调用的一个函数。
+区别在于：</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">柯里化的结果是返回链条中的下一个函数。</span>
+<span class="err">部分施用是把参数的取值绑定到用户在操作中提供的具体值上。而产生一个“元数（参数数目）”较少的函数。</span></code></pre></figure>
+
+<p>函数式编程赋予我们另一套新的构造单元。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">复合（</span><span class="n">composition</span><span class="err">）是函数式语言拼组这些构造单元的一般方式。</span></code></pre></figure>
+
+<h3 id="四递归">四、递归</h3>
+<p>递归，按照维基百科的定义，是 “以一种自相似的方式来重复事物的过程”。</p>
+
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%B8%80)/" title="link to 函数式编程思想 (一)">函数式编程思想 (一)</a></h2>
+       <p class="excerpt">转变思维命令式编程风格常常迫使我们出于性能考虑，把不同的任务交织起来，以便能用一次循环来完成更多任务。记忆：指运行时自动缓存函数返回值的能力。面向对象编程通过封装不确定因素来使代码能被人理解。函数式编程通过尽量减少不确定因素来使代码能被人理解。命令式编程是按照程序是一系列改变状态命令来建模的一种编程风格。函数式编程将程序描述为表达式和变换，以及数学方程的形式建立模型，并尽量避免可变状态。1 多从结果着眼，少纠结具体的步骤2 多想想哪些问题其实可以归结为这几样基本操作的排列组合三板斧1 筛选...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2021-02-06 15:04:30 +0800" class="post-list__meta--date date">2021-02-06</time> &#8226; <span class="post-list__meta--tags tags">函数式编程 Swift</span><a class="btn-border-small" href=/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%B8%80)/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%BA%8C)/";
+        this.page.identifier = "/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%BA%8C)/";
+    };
+
+    var disqus_shortname = 'Zachary';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-02-06 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2021</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>
