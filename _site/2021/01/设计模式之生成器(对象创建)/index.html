@@ -7,16 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   <title>设计模式之生成器(对象创建)</title>
-  <meta name="description" content="何为生成器把构建对象分解为客户 - 指导者 (Director) - 生成器 (Builder)。将一个复杂对象的构建与它的表现分类 使得同样的构建过程可以创建不同表现客户-指导者-生成器Client-Director-Builder">
+  <meta name="description" content="何为生成器将一个复杂对象的构建与它的表现分离，使得同样的构建过程可以创建不同表现。把构建对象分解为客户(Client) - 指导者(Director) - 生成器(Builder)。">
   <meta name="author" content="Wei Wang">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="设计模式之生成器(对象创建)">
-  <meta name="twitter:description" content="何为生成器把构建对象分解为客户 - 指导者 (Director) - 生成器 (Builder)。将一个复杂对象的构建与它的表现分类 使得同样的构建过程可以创建不同表现客户-指导者-生成器Client-Director-Builder">
+  <meta name="twitter:description" content="何为生成器将一个复杂对象的构建与它的表现分离，使得同样的构建过程可以创建不同表现。把构建对象分解为客户(Client) - 指导者(Director) - 生成器(Builder)。">
   
   <meta property="og:type" content="article">
   <meta property="og:title" content="设计模式之生成器(对象创建)">
-  <meta property="og:description" content="何为生成器把构建对象分解为客户 - 指导者 (Director) - 生成器 (Builder)。将一个复杂对象的构建与它的表现分类 使得同样的构建过程可以创建不同表现客户-指导者-生成器Client-Director-Builder">
+  <meta property="og:description" content="何为生成器将一个复杂对象的构建与它的表现分离，使得同样的构建过程可以创建不同表现。把构建对象分解为客户(Client) - 指导者(Director) - 生成器(Builder)。">
   
   <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
   <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
@@ -123,9 +123,7 @@
 
   <section class="post">
     <h4 id="何为生成器">何为生成器</h4>
-<p>把构建对象分解为客户 - 指导者 (Director) - 生成器 (Builder)。将一个复杂对象的构建与它的表现分类 使得同样的构建过程可以创建不同表现
-客户-指导者-生成器
-Client-Director-Builder</p>
+<p>将一个复杂对象的构建与它的表现分离，使得同样的构建过程可以创建不同表现。把构建对象分解为客户(Client) - 指导者(Director) - 生成器(Builder)。</p>
 
 <h4 id="何时使用">何时使用</h4>
 <ol>
@@ -414,6 +412,14 @@ Client-Director-Builder</p>
 <section class="read-more">
    
    
+   <div class="read-more-item">
+       <span class="read-more-item-dim">最近的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%B8%80)/" title="link to 函数式编程思想 (一)">函数式编程思想 (一)</a></h2>
+       <p class="excerpt">转变思维命令式编程风格常常迫使我们出于性能考虑，把不同的任务交织起来，以便能用一次循环来完成更多任务。记忆：指运行时自动缓存函数返回值的能力。面向对象编程通过封装不确定因素来使代码能被人理解。函数式编程通过尽量减少不确定因素来使代码能被人理解。命令式编程是按照程序是一系列改变状态命令来建模的一种编程风格。函数式编程将程序描述为表达式和变换，以及数学方程的形式建立模型，并尽量避免可变状态。{% highlight ruby %}1 多从结果着眼，少纠结具体的步骤2 多想想哪些问题其实可以归结...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2021-02-06 15:04:30 +0800" class="post-list__meta--date date">2021-02-06</time> &#8226; <span class="post-list__meta--tags tags">函数式编程</span><a class="btn-border-small" href=/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%B8%80)/>继续阅读</a></div>
+   </div>
+   
+   
    
    
    <div class="read-more-item">
@@ -456,7 +462,7 @@ Client-Director-Builder</p>
             <section class="footer">
     <footer>
     	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
-        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-01-29 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-02-06 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
         <span class="footer__copyright">本站采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2021</span>
     </footer>
 </section>

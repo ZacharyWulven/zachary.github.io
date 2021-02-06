@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>函数式编程思想 (一)</title>
+  <meta name="description" content="转变思维命令式编程风格常常迫使我们出于性能考虑，把不同的任务交织起来，以便能用一次循环来完成更多任务。记忆：指运行时自动缓存函数返回值的能力。">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="函数式编程思想 (一)">
+  <meta name="twitter:description" content="转变思维命令式编程风格常常迫使我们出于性能考虑，把不同的任务交织起来，以便能用一次循环来完成更多任务。记忆：指运行时自动缓存函数返回值的能力。">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="函数式编程思想 (一)">
+  <meta property="og:description" content="转变思维命令式编程风格常常迫使我们出于性能考虑，把不同的任务交织起来，以便能用一次循环来完成更多任务。记忆：指运行时自动缓存函数返回值的能力。">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%B8%80)/">
+  <link rel="alternate" type="application/rss+xml" title="Zachary" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Zachary 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Zachary logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Zachary" class="blog-button">Zachary</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">生于忧患，死于安乐</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description">这里不限于谈论技术，同时也会涉及个人兴趣爱好，如魂系列游戏、克苏鲁文学等。</p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+
+  
+  
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:poisontusk@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-slate"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2021-02-06 15:04:30 +0800" itemprop="datePublished" class="post-meta__date date">2021-02-06</time> &#8226; <span class="post-meta__tags tags">函数式编程</span>
+    </div>
+    <h1 class="post-title">函数式编程思想 (一)</h1>
+  </header>
+
+  <section class="post">
+    <h3 id="转变思维">转变思维</h3>
+<p>命令式编程风格常常迫使我们出于性能考虑，把不同的任务交织起来，以便能用一次循环来完成更多任务。记忆：指运行时自动缓存函数返回值的能力。</p>
+
+<p>面向对象编程通过封装不确定因素来使代码能被人理解。
+函数式编程通过尽量减少不确定因素来使代码能被人理解。</p>
+
+<p>命令式编程是按照程序是一系列改变状态命令来建模的一种编程风格。
+函数式编程将程序描述为表达式和变换，以及数学方程的形式建立模型，并尽量避免可变状态。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="mi">1</span> <span class="err">多从结果着眼，少纠结具体的步骤</span>
+<span class="mi">2</span> <span class="err">多想想哪些问题其实可以归结为这几样基本操作的排列组合</span></code></pre></figure>
+
+<h4 id="三板斧">三板斧</h4>
+<p>1 筛选 filter
+需要根据筛选条件来产生一个子集合时候用 filter</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="n">let</span> <span class="n">even</span> <span class="o">=</span> <span class="n">list</span><span class="p">.</span><span class="nf">filter</span> <span class="p">{</span> <span class="vg">$0</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">!=</span> <span class="mi">1</span> <span class="p">}</span></code></pre></figure>
+
+<p>2 映射 map
+需要就地变换一个集合的时候 用 map</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="n">let</span> <span class="n">strList</span> <span class="o">=</span> <span class="n">list</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="no">String</span><span class="p">(</span><span class="vg">$0</span><span class="p">)</span> <span class="p">}</span></code></pre></figure>
+
+<p>各个语言普遍具备用来消除前台的库函数，一般将此操作称为 “展平 (flattening)”。下面例子对一个嵌套的列表执行展平的操作：</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">List</span><span class="p">(</span><span class="no">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="no">List</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="no">List</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span> <span class="n">flatMap</span> <span class="p">(</span><span class="n">_</span><span class="p">.</span><span class="nf">toList</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="no">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span></code></pre></figure>
+
+<p>flatMap() 函数还可以用在一些在传统眼光看来不存在嵌套的数据结构上，例如我们可以把字符串看成一系列嵌套在一起的字符</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">word</span> <span class="n">flatMap</span> <span class="p">(</span><span class="n">_</span><span class="p">.</span><span class="nf">toList</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="no">List</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span></code></pre></figure>
+
+<p>3 折叠/化约
+reduce 和 fold 操作在功能上大致重合，两者都用一个积累量来收集集合元素。reduce 函数一般在需要为积累设定一个初始值的时候使用，而 fold 起始的时候累积量是空的。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="n">let</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">list</span><span class="p">.</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="no">Int</span> <span class="k">in</span> <span class="n">result</span> <span class="o">+</span> <span class="n">x</span> <span class="p">}</span></code></pre></figure>
+
+<p>fold left 含义是用一个二元函数或运算符来结合列表的首元素和累积量的初始值，重复上一步直到列表耗尽，此时累积值的取值为折叠运算结果。
+由于加法交换律，fold left 和 fold right 结果是一样的，但有些运算不能随便调换顺序，这时 fold right 就会派上用场。</p>
+
+<p>在纯函数式语言里，fold left 和 fold right 的实现并不同，fold right 允许操作无限长度的列表，fold left 则不允许
+需要把集合分成一小块来处理的时候用 reduce 或 fold。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="mi">1</span> <span class="err">函数式编程以参数传递和函数的复合作为主要表现手段，我们不需要掌握太多作为</span> <span class="err">“不确定因素”存在的其他语言构造之间的交互规则，这点对于我们学习很重要</span>
+<span class="mi">2</span> <span class="err">懂得什么什么时候应该使用像</span> <span class="err">“</span><span class="n">reduce</span><span class="err">”</span> <span class="err">这样的高层次抽象，是掌握函数式编程的关键所在</span></code></pre></figure>
+
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2021/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%94%9F%E6%88%90%E5%99%A8(%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA)/" title="link to 设计模式之生成器(对象创建)">设计模式之生成器(对象创建)</a></h2>
+       <p class="excerpt">何为生成器将一个复杂对象的构建与它的表现分离，使得同样的构建过程可以创建不同表现。把构建对象分解为客户(Client) - 指导者(Director) - 生成器(Builder)。何时使用  需要创建各个部件的复杂对象  构建过程需要不同方式Builder 与抽象工厂区别Builder                       抽象工厂构建复杂对象                    构建复杂或简单对象以多步骤构建                    以单一步骤构建以多种方式构建 ...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2021-01-28 21:45:30 +0800" class="post-list__meta--date date">2021-01-28</time> &#8226; <span class="post-list__meta--tags tags">设计模式 iOS</span><a class="btn-border-small" href=/2021/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%94%9F%E6%88%90%E5%99%A8(%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA)/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%B8%80)/";
+        this.page.identifier = "/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%B8%80)/";
+    };
+
+    var disqus_shortname = 'Zachary';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-02-06 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2021</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>
