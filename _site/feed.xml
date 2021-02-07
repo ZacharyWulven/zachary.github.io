@@ -5,17 +5,17 @@
     <description>Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 08 Feb 2021 00:26:20 +0800</pubDate>
-    <lastBuildDate>Mon, 08 Feb 2021 00:26:20 +0800</lastBuildDate>
+    <pubDate>Mon, 08 Feb 2021 00:29:19 +0800</pubDate>
+    <lastBuildDate>Mon, 08 Feb 2021 00:29:19 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
         <title>函数式编程思想 (二)</title>
-        <description>&lt;h3 id=&quot;一权责让渡&quot;&gt;一、权责让渡&lt;/h3&gt;
+        <description>&lt;h3 id=&quot;权责让渡&quot;&gt;权责让渡&lt;/h3&gt;
 &lt;p&gt;函数式思维的好处之一，是能够将底层次细节（如垃圾机制）的控制权移交给运行时，从而消除一大批注定会发生的程序错误。
 下面将讲述向语言和运行时让渡控制权的五各种途径。&lt;/p&gt;
 
-&lt;h4 id=&quot;迭代让位于高阶函数&quot;&gt;迭代让位于高阶函数&lt;/h4&gt;
+&lt;h4 id=&quot;一迭代让位于高阶函数&quot;&gt;一、迭代让位于高阶函数&lt;/h4&gt;
 &lt;p&gt;用 map 等函数替换了迭代。用高阶函数把希望之星的操作表达出来，语言将会把操作安排得更高效。&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;理解掌握的抽象层次永远要比日常使用的抽象层次更深一层&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
