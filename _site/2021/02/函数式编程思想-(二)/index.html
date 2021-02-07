@@ -116,7 +116,7 @@
             <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2021-02-06 17:14:30 +0800" itemprop="datePublished" class="post-meta__date date">2021-02-06</time> &#8226; <span class="post-meta__tags tags">函数式编程 Swift</span>
+      <time datetime="2021-02-07 22:14:30 +0800" itemprop="datePublished" class="post-meta__date date">2021-02-07</time> &#8226; <span class="post-meta__tags tags">函数式编程 Swift</span>
     </div>
     <h1 class="post-title">函数式编程思想 (二)</h1>
   </header>
@@ -176,7 +176,7 @@
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">volume</span> <span class="o">=</span> <span class="p">{</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">l</span> <span class="o">-&gt;</span> <span class="n">h</span> <span class="o">*</span> <span class="n">w</span> <span class="o">*</span> <span class="n">l</span> <span class="p">}</span>
 <span class="k">def</span> <span class="nf">area</span> <span class="o">=</span> <span class="n">volume</span><span class="p">.</span><span class="nf">curry</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">lengthPA</span> <span class="o">=</span> <span class="n">volume</span><span class="p">.</span><span class="nf">curry</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>             <span class="err">部分实用</span>
+<span class="k">def</span> <span class="nf">lengthPA</span> <span class="o">=</span> <span class="n">volume</span><span class="p">.</span><span class="nf">curry</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>             <span class="err">部分施用</span>
 <span class="k">def</span> <span class="nf">lengthC</span> <span class="o">=</span> <span class="n">volume</span><span class="p">.</span><span class="nf">curry</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">curry</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>        <span class="err">柯里化</span></code></pre></figure>
 
 <p>柯里化和部分施用都是在我们提供部分参数值后，产出可以凭借余下参数实施调用的一个函数。
@@ -191,6 +191,75 @@
 
 <h3 id="四递归">四、递归</h3>
 <p>递归，按照维基百科的定义，是 “以一种自相似的方式来重复事物的过程”。</p>
+
+<p>在 C 或类 C 语言出身的开发者的头脑中，列表概念通常会被塑造成一个带索引的集合。
+但对于诸多函数式语言来说，它们眼中的列表形象有些不一样。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">他们看到的不是再索引的格子，而是看成由列表的第一个元素（叫做头部）和列表的其余元素（叫做尾部）这两部分组成。</span>
+<span class="err">把列表想象成头部和尾部组合，有利于使用递归方式来组织迭代。</span> </code></pre></figure>
+
+<p>[1, 2, 3, 4, 5, 6], 1 则是头部，2 3 4 5 6 则是尾部</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">func</span> <span class="n">filter</span><span class="p">(</span><span class="ss">list: </span><span class="p">[</span><span class="no">Int</span><span class="p">],</span> <span class="ss">condition: </span><span class="p">(</span><span class="no">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="no">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="no">Int</span><span class="p">]</span> <span class="p">{</span>
+  <span class="n">var</span> <span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="no">Int</span><span class="p">]()</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="k">in</span> <span class="n">list</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">condition</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+          <span class="n">array</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">array</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="n">isEven</span><span class="p">(</span><span class="ss">number: </span><span class="no">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="no">Bool</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="p">}</span>
+
+<span class="n">var</span> <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">filter</span><span class="p">(</span><span class="ss">list: </span><span class="n">nums</span><span class="p">,</span> <span class="ss">condition: </span><span class="n">isEven</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="n">filterFunctional</span><span class="p">(</span><span class="ss">list: </span><span class="p">[</span><span class="no">Int</span><span class="p">],</span> <span class="ss">condition: </span><span class="p">(</span><span class="no">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="no">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="no">Int</span><span class="p">]</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="n">list</span><span class="p">.</span><span class="nf">isEmpty</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">list</span>
+  <span class="p">}</span>
+  <span class="n">let</span> <span class="n">subList</span> <span class="o">=</span> <span class="no">Array</span><span class="p">(</span><span class="n">list</span><span class="p">[</span><span class="mi">1</span><span class="o">..&lt;</span><span class="n">list</span><span class="p">.</span><span class="nf">endIndex</span><span class="p">])</span> <span class="n">as</span> <span class="no">Array</span><span class="o">&lt;</span><span class="no">Int</span><span class="o">&gt;</span>
+  <span class="k">if</span> <span class="n">condition</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="nf">first!</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">[]</span> <span class="o">+</span> <span class="p">[</span><span class="n">list</span><span class="p">.</span><span class="nf">first!</span><span class="p">]</span> <span class="o">+</span> <span class="n">filter</span><span class="p">(</span><span class="ss">list: </span><span class="n">subList</span><span class="p">,</span> <span class="ss">condition: </span><span class="n">isEven</span><span class="p">)</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">filter</span><span class="p">(</span><span class="ss">list: </span><span class="n">subList</span><span class="p">,</span> <span class="ss">condition: </span><span class="n">isEven</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">filterFunctional</span><span class="p">(</span><span class="ss">list: </span><span class="n">nums</span><span class="p">,</span> <span class="ss">condition: </span><span class="n">isEven</span><span class="p">)</span></code></pre></figure>
+
+<p>在 filter 命令式写法中是“我”在管理状态，“我”必须创建一个 array 的列表，“我”负责向新列表中添加元素，“我”负责在筛选后返回列表。
+而在递归写法中，是语言在管理返回值，它从递归栈中收集每次调用的返回结果，构造出最终结果。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">利用递归，把状态的管理责任推给运行时。</span></code></pre></figure>
+
+<h4 id="尾调用优化-tail-call-optimization">尾调用优化 （tail-call optimization）</h4>
+<p>递归没有成为一种平常的操作，其中一个主要原因是栈的增长。递归操作一般的实现都是把中间结果放在栈里，于是没有为递归专门优化的语言就会遇到栈溢出的问题。</p>
+
+<p>开发者也可以在这个问题上出一点力，使用尾调用优化的写法来帮助运行时克服栈增长的问题。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">当递归调用是函数执行的最后一个调用的时候，运行时往往可以在栈里就地更新，而不需要增加新的栈空间。</span></code></pre></figure>
+
+<h3 id="五stream-和作业顺序重排">五、Stream 和作业顺序重排</h3>
+<p>stream 很多方面与集合相似，但它不像集合那样事先就备妥所有的值，而是需要的时候才让数据从源头“流”向目的地。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">func</span> <span class="n">cleanOdd</span><span class="p">(</span><span class="ss">list: </span><span class="p">[</span><span class="no">String</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="no">Int</span> <span class="p">{</span>
+  <span class="n">guard</span> <span class="o">!</span><span class="n">list</span><span class="p">.</span><span class="nf">isEmpty</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">0</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">list</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="no">Int</span><span class="p">(</span><span class="vg">$0</span><span class="p">)</span><span class="o">!</span> <span class="p">}.</span><span class="nf">filter</span> <span class="p">{</span> <span class="vg">$0</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">!=</span> <span class="mi">1</span> <span class="p">}.</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="no">Int</span> <span class="k">in</span> <span class="n">result</span> <span class="o">+</span> <span class="n">x</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">var</span> <span class="n">stringList</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"1"</span><span class="p">,</span> <span class="s2">"2"</span><span class="p">,</span> <span class="s2">"3"</span><span class="p">,</span> <span class="s2">"4"</span><span class="p">,</span> <span class="s2">"5"</span><span class="p">,</span> <span class="s2">"6"</span><span class="p">,</span> <span class="s2">"7"</span><span class="p">,</span> <span class="s2">"8"</span><span class="p">,</span> <span class="s2">"9"</span><span class="p">]</span></code></pre></figure>
+
+<p>上边代码 map 和 filter 都是缓求值（lazy）的操作，它们会被尽量地推迟执行。实际在下游的终结操作“发出要求”前，它们都不会产生任何结果。</p>
+
+<p>我们必须保证传给 filter 等函数块不存在副作用，否则可能导致无法预料的结果。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">允许运行时发挥其优化能力，交出控制权，放弃对繁琐细节掌控，关注问题域，而非关注问题域的实现很重要。</span></code></pre></figure>
 
 
   </section>
@@ -241,7 +310,7 @@
             <section class="footer">
     <footer>
     	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
-        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-02-06 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-02-08 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
         <span class="footer__copyright">本站采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2021</span>
     </footer>
 </section>

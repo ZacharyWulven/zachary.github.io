@@ -1,7 +1,7 @@
 ---
 layout: post
 title: ### 函数式编程思想 (二)
-date: 2021-02-06 18:14:30.00000000 +09:00
+date: 2021-02-07 23:14:30.00000000 +09:00
 tag: 函数式编程 Swift
 ---
 ### 一、权责让渡
@@ -65,7 +65,7 @@ c2 is 2
 {% highlight ruby %}
 def volume = { h, w, l -> h * w * l }
 def area = volume.curry(1)
-def lengthPA = volume.curry(1, 1)             部分实用
+def lengthPA = volume.curry(1, 1)             部分施用
 def lengthC = volume.curry(1).curry(1)        柯里化
 {% endhighlight %}
 
@@ -84,3 +84,79 @@ def lengthC = volume.curry(1).curry(1)        柯里化
 ### 四、递归
 递归，按照维基百科的定义，是 “以一种自相似的方式来重复事物的过程”。
 
+在 C 或类 C 语言出身的开发者的头脑中，列表概念通常会被塑造成一个带索引的集合。
+但对于诸多函数式语言来说，它们眼中的列表形象有些不一样。
+{% highlight ruby %}
+他们看到的不是再索引的格子，而是看成由列表的第一个元素（叫做头部）和列表的其余元素（叫做尾部）这两部分组成。
+把列表想象成头部和尾部组合，有利于使用递归方式来组织迭代。 
+{% endhighlight %}
+
+[1, 2, 3, 4, 5, 6], 1 则是头部，2 3 4 5 6 则是尾部
+
+{% highlight ruby %}
+func filter(list: [Int], condition: (Int) -> Bool) -> [Int] {
+  var array = [Int]()
+    for item in list {
+        if condition(item) {
+          array.append(item)
+        }
+    }
+    return array
+}
+
+func isEven(number: Int) -> Bool {
+    return number % 2 == 0
+}
+
+var nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+filter(list: nums, condition: isEven)
+
+func filterFunctional(list: [Int], condition: (Int) -> Bool) -> [Int] {
+  if list.isEmpty {
+    return list
+  }
+  let subList = Array(list[1..<list.endIndex]) as Array<Int>
+  if condition(list.first!) {
+    return [] + [list.first!] + filter(list: subList, condition: isEven)
+  } else {
+    return filter(list: subList, condition: isEven)
+  }
+}
+
+filterFunctional(list: nums, condition: isEven)
+{% endhighlight %}
+
+在 filter 命令式写法中是“我”在管理状态，“我”必须创建一个 array 的列表，“我”负责向新列表中添加元素，“我”负责在筛选后返回列表。
+而在递归写法中，是语言在管理返回值，它从递归栈中收集每次调用的返回结果，构造出最终结果。
+
+{% highlight ruby %}
+利用递归，把状态的管理责任推给运行时。
+{% endhighlight %}
+
+#### 尾调用优化 （tail-call optimization）
+递归没有成为一种平常的操作，其中一个主要原因是栈的增长。递归操作一般的实现都是把中间结果放在栈里，于是没有为递归专门优化的语言就会遇到栈溢出的问题。
+
+开发者也可以在这个问题上出一点力，使用尾调用优化的写法来帮助运行时克服栈增长的问题。
+{% highlight ruby %}
+当递归调用是函数执行的最后一个调用的时候，运行时往往可以在栈里就地更新，而不需要增加新的栈空间。
+{% endhighlight %}
+
+### 五、Stream 和作业顺序重排
+stream 很多方面与集合相似，但它不像集合那样事先就备妥所有的值，而是需要的时候才让数据从源头“流”向目的地。
+{% highlight ruby %}
+func cleanOdd(list: [String]) -> Int {
+  guard !list.isEmpty else {
+    return 0
+  }
+  return list.map { Int($0)! }.filter { $0 & 1 != 1 }.reduce(0) { (result, x) -> Int in result + x }
+}
+
+var stringList = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+{% endhighlight %}
+
+上边代码 map 和 filter 都是缓求值（lazy）的操作，它们会被尽量地推迟执行。实际在下游的终结操作“发出要求”前，它们都不会产生任何结果。
+
+我们必须保证传给 filter 等函数块不存在副作用，否则可能导致无法预料的结果。
+{% highlight ruby %}
+允许运行时发挥其优化能力，交出控制权，放弃对繁琐细节掌控，关注问题域，而非关注问题域的实现很重要。
+{% endhighlight %}
