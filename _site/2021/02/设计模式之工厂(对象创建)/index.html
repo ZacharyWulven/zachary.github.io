@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>设计模式之工厂(对象创建)</title>
+  <meta name="description" content="何为工厂方法一个类无法预期需要生成哪个类的对象，想让其子类来指定所生成的对象。">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="设计模式之工厂(对象创建)">
+  <meta name="twitter:description" content="何为工厂方法一个类无法预期需要生成哪个类的对象，想让其子类来指定所生成的对象。">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="设计模式之工厂(对象创建)">
+  <meta property="og:description" content="何为工厂方法一个类无法预期需要生成哪个类的对象，想让其子类来指定所生成的对象。">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2021/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%B7%A5%E5%8E%82(%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA)/">
+  <link rel="alternate" type="application/rss+xml" title="Zachary" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Zachary 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Zachary logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Zachary" class="blog-button">Zachary</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">生于忧患，死于安乐</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description">这里不限于谈论技术，同时也会涉及个人兴趣爱好，如魂系列游戏、克苏鲁文学等。</p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+
+  
+  
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:poisontusk@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-slate"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2021-02-08 23:14:30 +0800" itemprop="datePublished" class="post-meta__date date">2021-02-08</time> &#8226; <span class="post-meta__tags tags">设计模式 iOS</span>
+    </div>
+    <h1 class="post-title">设计模式之工厂(对象创建)</h1>
+  </header>
+
+  <section class="post">
+    <h3 id="何为工厂方法">何为工厂方法</h3>
+<p>一个类无法预期需要生成哪个类的对象，想让其子类来指定所生成的对象。</p>
+
+<h3 id="模式">模式</h3>
+<p>定义工厂方法创建对象的接口，让子类决定实例化哪个类。工厂方法使得一个类的实例化延迟到其子类。工厂方法专注于让子类决定创建什么对象。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">有一种变体，抽象类使用工厂方法创建其私有子类或任何其他类的对象。</span></code></pre></figure>
+
+<h3 id="何时使用">何时使用</h3>
+<ol>
+  <li>编译时无法预期要创建的对象的类。</li>
+  <li>类想让其子类决定在运行时创建什么。</li>
+  <li>类有若干子类，而你想返回哪个子类这一信息局部化。</li>
+</ol>
+
+<h3 id="代码">代码</h3>
+<p>Generator</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="vi">@interface</span> <span class="no">CanvasViewGenerator</span> <span class="p">:</span> <span class="no">NSObject</span> 
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CanvasView</span> <span class="o">*</span><span class="p">)</span> <span class="n">canvasViewWithFrame</span><span class="p">:(</span><span class="no">CGRect</span><span class="p">)</span> <span class="n">aFrame</span><span class="p">;</span>
+
+<span class="vi">@end</span>
+
+<span class="vi">@implementation</span> <span class="no">CanvasViewGenerator</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CanvasView</span> <span class="o">*</span><span class="p">)</span> <span class="n">canvasViewWithFrame</span><span class="p">:(</span><span class="no">CGRect</span><span class="p">)</span> <span class="n">aFrame</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="p">[[[</span><span class="no">CanvasView</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithFrame</span><span class="ss">:aFrame</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="vi">@end</span>
+
+
+
+<span class="vi">@interface</span> <span class="no">PaperCanvasViewGenerator</span> <span class="p">:</span> <span class="no">CanvasViewGenerator</span> 
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CanvasView</span> <span class="o">*</span><span class="p">)</span> <span class="n">canvasViewWithFrame</span><span class="p">:(</span><span class="no">CGRect</span><span class="p">)</span> <span class="n">aFrame</span><span class="p">;</span>
+
+<span class="vi">@end</span>
+
+<span class="vi">@implementation</span> <span class="no">PaperCanvasViewGenerator</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CanvasView</span> <span class="o">*</span><span class="p">)</span> <span class="n">canvasViewWithFrame</span><span class="p">:(</span><span class="no">CGRect</span><span class="p">)</span> <span class="n">aFrame</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="p">[[[</span><span class="no">PaperCanvasView</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithFrame</span><span class="ss">:aFrame</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="vi">@end</span>
+
+
+
+<span class="vi">@interface</span> <span class="no">ClothCanvasViewGenerator</span> <span class="p">:</span> <span class="no">CanvasViewGenerator</span>
+<span class="p">{</span>
+
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CanvasView</span> <span class="o">*</span><span class="p">)</span> <span class="n">canvasViewWithFrame</span><span class="p">:(</span><span class="no">CGRect</span><span class="p">)</span> <span class="n">aFrame</span><span class="p">;</span>
+
+<span class="vi">@end</span>
+
+<span class="vi">@implementation</span> <span class="no">ClothCanvasViewGenerator</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="no">CanvasView</span> <span class="o">*</span><span class="p">)</span> <span class="n">canvasViewWithFrame</span><span class="p">:(</span><span class="no">CGRect</span><span class="p">)</span> <span class="n">aFrame</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="p">[[[</span><span class="no">ClothCanvasView</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithFrame</span><span class="ss">:aFrame</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="vi">@end</span></code></pre></figure>
+
+<p>Views</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="vi">@protocol</span> <span class="no">Mark</span><span class="p">;</span>
+
+<span class="vi">@interface</span> <span class="no">CanvasView</span> <span class="p">:</span> <span class="no">UIView</span> 
+<span class="p">{</span>
+  <span class="vi">@private</span>
+  <span class="nb">id</span> <span class="o">&lt;</span><span class="no">Mark</span><span class="o">&gt;</span> <span class="n">mark_</span><span class="p">;</span>  <span class="sr">//</span> <span class="n">the</span> <span class="n">main</span> <span class="n">stroke</span> <span class="n">structure</span>
+<span class="p">}</span>
+
+<span class="vi">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">retain</span><span class="p">)</span> <span class="nb">id</span> <span class="o">&lt;</span><span class="no">Mark</span><span class="o">&gt;</span> <span class="n">mark</span><span class="p">;</span>
+
+<span class="vi">@end</span>
+
+<span class="vi">@implementation</span> <span class="no">CanvasView</span>
+
+<span class="vi">@synthesize</span> <span class="n">mark</span><span class="o">=</span><span class="n">mark_</span><span class="p">;</span>
+
+
+<span class="o">-</span> <span class="p">(</span><span class="nb">id</span><span class="p">)</span><span class="n">initWithFrame</span><span class="p">:(</span><span class="no">CGRect</span><span class="p">)</span><span class="n">frame</span> 
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">((</span><span class="nb">self</span> <span class="o">=</span> <span class="p">[</span><span class="k">super</span> <span class="n">initWithFrame</span><span class="ss">:frame</span><span class="p">]))</span> 
+  <span class="p">{</span>
+    <span class="sr">//</span> <span class="no">Initialization</span> <span class="n">code</span>
+    <span class="p">[</span><span class="nb">self</span> <span class="n">setBackgroundColor</span><span class="p">:[</span><span class="no">UIColor</span> <span class="n">whiteColor</span><span class="p">]];</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nb">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="sr">//</span> <span class="no">Only</span> <span class="n">override</span> <span class="ss">drawRect: </span><span class="k">if</span> <span class="n">you</span> <span class="n">perform</span> <span class="n">custom</span> <span class="n">drawing</span><span class="p">.</span>
+<span class="nf">/</span><span class="o">/</span> <span class="no">An</span> <span class="n">empty</span> <span class="n">implementation</span> <span class="n">adversely</span> <span class="n">affects</span> <span class="n">performance</span> <span class="n">during</span> <span class="n">animation</span><span class="p">.</span>
+<span class="nf">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">drawRect</span><span class="p">:(</span><span class="no">CGRect</span><span class="p">)</span><span class="n">rect</span> 
+<span class="p">{</span>
+  
+  <span class="sr">//</span> <span class="no">Drawing</span> <span class="n">code</span>
+  <span class="no">CGContextRef</span> <span class="n">context</span> <span class="o">=</span> <span class="no">UIGraphicsGetCurrentContext</span><span class="p">();</span>
+  
+  <span class="sr">//</span> <span class="n">create</span> <span class="n">a</span> <span class="n">renderer</span> <span class="n">visitor</span>
+  <span class="no">MarkRenderer</span> <span class="o">*</span><span class="n">markRenderer</span> <span class="o">=</span> <span class="p">[[[</span><span class="no">MarkRenderer</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithCGContext</span><span class="ss">:context</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+  
+  <span class="sr">//</span> <span class="n">pass</span> <span class="n">this</span> <span class="n">renderer</span> <span class="n">along</span> <span class="n">the</span> <span class="n">mark</span> <span class="n">composite</span> <span class="n">structure</span>
+  <span class="p">[</span><span class="n">mark_</span> <span class="n">acceptMarkVisitor</span><span class="ss">:markRenderer</span><span class="p">];</span>
+  
+<span class="p">}</span>
+
+
+
+<span class="vi">@interface</span> <span class="no">ClothCanvasView</span> <span class="p">:</span> <span class="no">CanvasView</span>
+<span class="p">{</span>
+  
+  <span class="sr">//</span> <span class="n">some</span> <span class="kp">private</span> <span class="n">variables</span><span class="o">.</span>
+<span class="p">}</span>
+
+<span class="sr">//</span> <span class="n">some</span> <span class="n">other</span> <span class="n">specific</span> <span class="n">behaviors</span><span class="o">.</span>
+
+<span class="vi">@end</span>
+
+<span class="vi">@implementation</span> <span class="no">ClothCanvasView</span>
+
+
+<span class="o">-</span> <span class="p">(</span><span class="nb">id</span><span class="p">)</span><span class="n">initWithFrame</span><span class="p">:(</span><span class="no">CGRect</span><span class="p">)</span><span class="n">frame</span> 
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">((</span><span class="nb">self</span> <span class="o">=</span> <span class="p">[</span><span class="k">super</span> <span class="n">initWithFrame</span><span class="ss">:frame</span><span class="p">]))</span> 
+  <span class="p">{</span>
+    <span class="sr">//</span> <span class="no">Add</span> <span class="n">a</span> <span class="n">cloth</span> <span class="n">image</span> <span class="n">view</span> <span class="n">on</span> <span class="n">top</span>
+    <span class="sr">//</span> <span class="n">as</span> <span class="n">the</span> <span class="n">canvas</span> <span class="n">background</span>
+    <span class="no">UIImage</span> <span class="o">*</span><span class="n">backgroundImage</span> <span class="o">=</span> <span class="p">[</span><span class="no">UIImage</span> <span class="n">imageNamed</span><span class="p">:</span><span class="err">@</span><span class="s2">"cloth"</span><span class="p">];</span>
+    <span class="no">UIImageView</span> <span class="o">*</span><span class="n">backgroundView</span> <span class="o">=</span> <span class="p">[[[</span><span class="no">UIImageView</span> <span class="n">alloc</span><span class="p">]</span> 
+                                    <span class="n">initWithImage</span><span class="ss">:backgroundImage</span><span class="p">]</span> 
+                                   <span class="n">autorelease</span><span class="p">];</span>
+    <span class="p">[</span><span class="nb">self</span> <span class="n">addSubview</span><span class="ss">:backgroundView</span><span class="p">];</span>
+  <span class="p">}</span>
+  
+  <span class="k">return</span> <span class="nb">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="sr">//</span> <span class="n">implementation</span> <span class="k">for</span> <span class="n">other</span> <span class="n">behaviors</span>
+
+<span class="vi">@end</span>
+
+
+
+<span class="vi">@interface</span> <span class="no">PaperCanvasView</span> <span class="p">:</span> <span class="no">CanvasView</span>
+<span class="p">{</span>
+  <span class="sr">//</span> <span class="n">some</span> <span class="kp">private</span> <span class="n">variables</span><span class="o">.</span>
+<span class="p">}</span>
+
+<span class="sr">//</span> <span class="n">some</span> <span class="n">other</span> <span class="n">specific</span> <span class="n">behaviors</span><span class="o">.</span>
+
+<span class="vi">@end</span>
+
+<span class="vi">@implementation</span> <span class="no">PaperCanvasView</span>
+
+
+<span class="o">-</span> <span class="p">(</span><span class="nb">id</span><span class="p">)</span><span class="n">initWithFrame</span><span class="p">:(</span><span class="no">CGRect</span><span class="p">)</span><span class="n">frame</span> 
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">((</span><span class="nb">self</span> <span class="o">=</span> <span class="p">[</span><span class="k">super</span> <span class="n">initWithFrame</span><span class="ss">:frame</span><span class="p">]))</span> 
+  <span class="p">{</span>
+    <span class="sr">//</span> <span class="no">Add</span> <span class="n">a</span> <span class="n">paper</span> <span class="n">image</span> <span class="n">view</span> <span class="n">on</span> <span class="n">top</span>
+    <span class="sr">//</span> <span class="n">as</span> <span class="n">the</span> <span class="n">canvas</span> <span class="n">background</span>
+    <span class="no">UIImage</span> <span class="o">*</span><span class="n">backgroundImage</span> <span class="o">=</span> <span class="p">[</span><span class="no">UIImage</span> <span class="n">imageNamed</span><span class="p">:</span><span class="err">@</span><span class="s2">"paper"</span><span class="p">];</span>
+    <span class="no">UIImageView</span> <span class="o">*</span><span class="n">backgroundView</span> <span class="o">=</span> <span class="p">[[[</span><span class="no">UIImageView</span> <span class="n">alloc</span><span class="p">]</span> 
+                                    <span class="n">initWithImage</span><span class="ss">:backgroundImage</span><span class="p">]</span> 
+                                   <span class="n">autorelease</span><span class="p">];</span>
+    <span class="p">[</span><span class="nb">self</span> <span class="n">addSubview</span><span class="ss">:backgroundView</span><span class="p">];</span>
+  <span class="p">}</span>
+  
+  <span class="k">return</span> <span class="nb">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="sr">//</span> <span class="n">implementation</span> <span class="k">for</span> <span class="n">other</span> <span class="n">behaviors</span>
+
+<span class="vi">@end</span></code></pre></figure>
+
+<h3 id="nsnumber-类工厂方法">NSNumber 类工厂方法</h3>
+<p>抽象类用它生成具体子类，它们不是被 NSNumber 私有子类重载，而是 NSNumber 创建合适对象的便利方式。</p>
+
+<h3 id="总结">总结</h3>
+<p>工厂方法从代码中消除了对应用程序特有类的耦合。只需要处理创建对象抽象接口。</p>
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%BA%8C)/" title="link to 函数式编程思想 (二)">函数式编程思想 (二)</a></h2>
+       <p class="excerpt">权责让渡函数式思维的好处之一，是能够将底层次细节（如垃圾机制）的控制权移交给运行时，从而消除一大批注定会发生的程序错误。下面将讲述向语言和运行时让渡控制权的五各种途径。一、迭代让位于高阶函数用 map 等函数替换了迭代。用高阶函数把希望之星的操作表达出来，语言将会把操作安排得更高效。理解掌握的抽象层次永远要比日常使用的抽象层次更深一层二、闭包 closure闭包是所有函数式语言都具备的一项平等特性。所谓闭包实际上是一种特殊的函数，它在暗地里绑定了函数内部引用的所有变量。换句话说，这种函数把...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2021-02-07 22:14:30 +0800" class="post-list__meta--date date">2021-02-07</time> &#8226; <span class="post-list__meta--tags tags">函数式编程 Swift</span><a class="btn-border-small" href=/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%BA%8C)/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2021/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%B7%A5%E5%8E%82(%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA)/";
+        this.page.identifier = "/2021/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%B7%A5%E5%8E%82(%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA)/";
+    };
+
+    var disqus_shortname = 'Zachary';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-02-09 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2021</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>
