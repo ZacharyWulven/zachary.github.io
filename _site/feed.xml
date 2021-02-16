@@ -5,8 +5,8 @@
     <description>Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 16 Feb 2021 16:39:01 +0800</pubDate>
-    <lastBuildDate>Tue, 16 Feb 2021 16:39:01 +0800</lastBuildDate>
+    <pubDate>Tue, 16 Feb 2021 17:57:04 +0800</pubDate>
+    <lastBuildDate>Tue, 16 Feb 2021 17:57:04 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -116,6 +116,22 @@ Either 的设计归档了它要么持有“左值”，要么持有“右值”�
 &lt;p&gt;有些语言除了 Either 还存在另一个选项即 Option 。Option 类表示了异常处理中较为简化的一种场景，它的取值要么是 none，表示不存在有效值，要么是 some，表示成功返回。&lt;/p&gt;
 
 &lt;p&gt;Option 类可以近似的看作 Either 类的一个子集，Option 类一般表示成功和失败两种情况，而 Either 可以容纳任意内容。&lt;/p&gt;
+
+&lt;h4 id=&quot;函数式语言中的设计模式&quot;&gt;函数式语言中的设计模式&lt;/h4&gt;
+&lt;p&gt;传统的设计模式在函数式编程的世界里大致有三种归宿&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;模式已被吸收成为语言的一部分。&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;模式中描述的解决方法在函数式范式下依然成立，但实现细节有所变化。&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;由于在新的语言或范式下获得了原本没有的能力，产生了新的解决方案（例如很多问题可以用元编程干净利落的解决）&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;复合&quot;&gt;复合&lt;/h4&gt;
+&lt;p&gt;复合作为一种重用机制，在函数式语言中主要表现为通过参数来传递作为第一等语言成分的函数，各个函数式编程语言都频繁的运用了这种手段。与面向对象语言相比，函数式语言的重用发生于较粗颗粒度级别上，着眼于提取一些共通的运作机制，并参数化地调整其行为。&lt;/p&gt;
+
+&lt;h4 id=&quot;架构&quot;&gt;架构&lt;/h4&gt;
+&lt;p&gt;函数式的架构从根本上贯彻了“值不可变”的思路。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;学会从值不可变的角度去思考，是掌握函数式编程思维方法一条重要途径。&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;值不可变的对象天生就是线程安全的。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 </description>
         <pubDate>Mon, 15 Feb 2021 17:14:30 +0800</pubDate>
