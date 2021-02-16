@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>函数式编程思想 (三)</title>
+  <meta name="description" content="记忆指在函数级别上对需要多次使用的值进行缓存的机制。只有纯函数才可以适用缓存技术。纯函数时没有副作用的函数，它不引用其他值可变的类字段。只有在函数对同一组参数总返回相同结果的前提下，才可以放心的使用缓存技术。">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="函数式编程思想 (三)">
+  <meta name="twitter:description" content="记忆指在函数级别上对需要多次使用的值进行缓存的机制。只有纯函数才可以适用缓存技术。纯函数时没有副作用的函数，它不引用其他值可变的类字段。只有在函数对同一组参数总返回相同结果的前提下，才可以放心的使用缓存技术。">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="函数式编程思想 (三)">
+  <meta property="og:description" content="记忆指在函数级别上对需要多次使用的值进行缓存的机制。只有纯函数才可以适用缓存技术。纯函数时没有副作用的函数，它不引用其他值可变的类字段。只有在函数对同一组参数总返回相同结果的前提下，才可以放心的使用缓存技术。">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%B8%89)/">
+  <link rel="alternate" type="application/rss+xml" title="Zachary" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Zachary 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Zachary logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Zachary" class="blog-button">Zachary</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">生于忧患，死于安乐</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description">这里不限于谈论技术，同时也会涉及个人兴趣爱好，如魂系列游戏、克苏鲁文学等。</p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+
+  
+  
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:poisontusk@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-slate"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2021-02-15 17:14:30 +0800" itemprop="datePublished" class="post-meta__date date">2021-02-15</time> &#8226; <span class="post-meta__tags tags">函数式编程</span>
+    </div>
+    <h1 class="post-title">函数式编程思想 (三)</h1>
+  </header>
+
+  <section class="post">
+    <h3 id="记忆">记忆</h3>
+<p>指在函数级别上对需要多次使用的值进行缓存的机制。只有纯函数才可以适用缓存技术。纯函数时没有副作用的函数，它不引用其他值可变的类字段。只有在函数对同一组参数总返回相同结果的前提下，才可以放心的使用缓存技术。</p>
+
+<p>缓存是用内存换时间的。但需要考虑缓存的最大上限，以免出现内存问题。例如苹果的 NSCache 类是可以设置上限的。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Squares</span> <span class="p">{</span>
+  <span class="n">var</span> <span class="ss">cache: </span><span class="p">[</span><span class="no">Int</span><span class="ss">:Int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:]</span>
+  <span class="n">func</span> <span class="n">perimeter</span><span class="p">(</span><span class="ss">length: </span><span class="no">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="no">Int</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="o">!</span><span class="n">cache</span><span class="p">.</span><span class="nf">contains</span><span class="p">(</span><span class="ss">where: </span><span class="p">{</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="no">Bool</span> <span class="k">in</span>
+      <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="n">length</span>
+    <span class="p">})</span> <span class="p">{</span>
+      <span class="n">cache</span><span class="p">[</span><span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="n">length</span> <span class="o">*</span> <span class="mi">4</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">"length is </span><span class="se">\(</span><span class="s2">length)"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">cache</span><span class="p">[</span><span class="n">length</span><span class="p">]</span><span class="o">!</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>所有跟缓存打交道的方法都不能是静态的。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">被记忆的内容应该是值不可变得，这一点非常重要。</span></code></pre></figure>
+
+<p>请保证所有被记忆的函数：</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="mi">1</span> <span class="err">没有副作用</span>
+<span class="mi">2</span> <span class="err">不依赖任何外部信息</span></code></pre></figure>
+
+<h3 id="缓求值-lazy-evaluation">缓求值 （lazy evaluation）</h3>
+<p>缓求值是函数式编程语言常见的一种特性，指尽可能地推迟求解表达式。缓求值的集合不会预先算好所有结果，而是在用到的时候才计算，这样做的好处：</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="mi">1</span> <span class="err">昂贵的运算只有到了绝对必要的时候才执行</span>
+<span class="mi">2</span> <span class="err">我们可以建立无限大的集合，只有一直接到请求，就一直送出元素</span>
+<span class="mi">3</span> <span class="err">按缓求值的方式来使用映射、筛选等函数式概念，可以产生更高效的代码</span></code></pre></figure>
+
+<h3 id="演化的语言">演化的语言</h3>
+<p>面向对象喜欢大量地建立有很多操作的各种数据结构，函数式语言也有很多的操作，但对应的数据结构却很少。
+函数式语言的重用表现在函数的通用性上，它们鼓励在数据结构上使用各种共通的变换。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="mi">100</span> <span class="err">个函数操作一个数据结构的组合，要好过</span> <span class="mi">10</span> <span class="err">个函数操作</span> <span class="mi">10</span> <span class="err">种数据结构的组合。</span></code></pre></figure>
+
+<p>在 OOP 的世界里，开发者被鼓励针对具体的问题简历专门的数据结构，并以方法的形式，将专门的操作关联在数据结构上。
+函数式语言选择了另一个种重用思路，它们用很少的一组关键数据结构（如 list、set、map）来搭配专为这些数据结构深度优化过的操作。比起在定制类结构上做文章，把封装的单元缩小到函数级别，有利于在更基础的层面上更细粒度地实施重用。</p>
+
+<h4 id="让语言去迎合问题">让语言去迎合问题</h4>
+<p>例如 Ruby 对领域专用语言（DSL）的支持旧比主流语言要强的多。</p>
+
+<h4 id="对分发机制的再考虑">对分发机制的再考虑</h4>
+<p>条件控制，除了很少一些情况适用 switch 语句，大多都离不开 if 语句。</p>
+
+<h4 id="运算符重载">运算符重载</h4>
+<p>是函数式语言常见特性，它允许我们重新定义运算符(如 +、-、*)，使之适用于新的类型，并承载新的行为。</p>
+
+<h4 id="函数式的数据结构">函数式的数据结构</h4>
+<p>异常 违背了大多数函数式语言所遵循的一些前提条件，首先，函数式语言偏好没有副作用的纯函数，抛出异常的行为本身就是一种副作用，会导致程序路径偏离正轨，进入异常的流程。</p>
+
+<p>引用的透明性是函数式语言重视的另一个性质：</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">发出调用的例程不必关心它的访问对象真的是一个值，还是一个返回值函数。可是如果函数有可能抛出异常，用它来代替值就不再是安全的了。</span></code></pre></figure>
+
+<h4 id="either-类">Either 类</h4>
+<p>函数式语言经常会遇到返回两种截然不同的值的需求，它们用来建模这种行为的常用数据结构是 Either 类。
+Either 的设计归档了它要么持有“左值”，妖魔持有“右值”，但绝对不会同时持有两者。这种数据结构也被称为不想交联合体（disjoint union）。C 语言和一些衍生语言中有一种联合体（union）数据结构，能够在同一个位置上容纳不同类型的单个实例。不想交联合体位两种类型实例都准备了位置，但只会持有其中一个种类型的单个实例。</p>
+
+<p>按照函数式编程的传统习惯，异常（如果有的话）置于 Either 类的左值，正常结果则放在右值。</p>
+
+<p>swift 实现 Either</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">struct</span> <span class="no">Either</span><span class="o">&lt;</span><span class="no">T</span><span class="p">,</span> <span class="no">U</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="kp">private</span> <span class="n">var</span> <span class="ss">left_: </span><span class="no">T</span><span class="p">?</span> <span class="o">=</span> <span class="kp">nil</span>
+  <span class="kp">private</span> <span class="n">var</span> <span class="ss">right_: </span><span class="no">U</span><span class="p">?</span> <span class="o">=</span> <span class="kp">nil</span>
+  
+  <span class="n">init</span><span class="p">(</span><span class="ss">left: </span><span class="no">T</span><span class="p">?,</span> <span class="ss">right: </span><span class="no">U</span><span class="p">?)</span> <span class="p">{</span>
+    <span class="n">left_</span> <span class="o">=</span> <span class="n">left</span>
+    <span class="n">right_</span> <span class="o">=</span> <span class="n">right</span>
+  <span class="p">}</span>
+  
+  <span class="n">func</span> <span class="n">left</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="no">T</span><span class="p">?</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">left_</span>
+  <span class="p">}</span>
+  
+  <span class="n">func</span> <span class="n">right</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="no">U</span><span class="p">?</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">right_</span>
+  <span class="p">}</span>
+  
+  <span class="n">func</span> <span class="n">isLeft</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="no">Bool</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">left_</span> <span class="o">!=</span> <span class="kp">nil</span>
+  <span class="p">}</span>
+  
+  <span class="n">func</span> <span class="n">isRight</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="no">Bool</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">right_</span> <span class="o">!=</span> <span class="kp">nil</span>
+  <span class="p">}</span>
+  
+  <span class="n">static</span> <span class="n">func</span> <span class="n">leftInstance</span><span class="p">(</span><span class="ss">left: </span><span class="no">T</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="no">Either</span><span class="o">&lt;</span><span class="no">T</span><span class="p">,</span> <span class="no">U</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="no">Either</span><span class="p">.</span><span class="nf">init</span><span class="p">(</span><span class="ss">left: </span><span class="n">left</span><span class="p">,</span> <span class="ss">right: </span><span class="kp">nil</span><span class="p">)</span>
+  <span class="p">}</span>
+  
+  <span class="n">static</span> <span class="n">func</span> <span class="n">rightInstance</span><span class="p">(</span><span class="ss">right: </span><span class="no">U</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="no">Either</span><span class="o">&lt;</span><span class="no">T</span><span class="p">,</span> <span class="no">U</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="no">Either</span><span class="p">.</span><span class="nf">init</span><span class="p">(</span><span class="ss">left: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">right: </span><span class="n">right</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="option-类">Option 类</h4>
+<p>有些语言除了 Either 还存在另一个选项即 Option 。Option 类表示了异常处理中较为简化的一种场景，它的取值要么是 none，表示不存在有效值，要么是 some，表示成功返回。</p>
+
+<p>Option 类可以近似的看作 Either 类的一个子集，Option 类一般表示成功和失败两种情况，而 Either 可以容纳任意内容。</p>
+
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2021/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82(%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA)/" title="link to 设计模式之抽象工厂(对象创建)">设计模式之抽象工厂(对象创建)</a></h2>
+       <p class="excerpt">何为抽象工厂抽象工厂提供一个创建一系列相关或相互依赖对象的接口。而无需指定它们的具体类、不必知道其具体类创建细节。甚至产品并不知道谁将负责创建它们。抽象工厂与工厂区别抽象工厂                                       工厂方法通过组合创建抽象产品                             通过类继承创建抽象产品创建多系列产品                                  创建一种产品必须修改父类接口才能支持新的产品    ...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2021-02-09 23:14:30 +0800" class="post-list__meta--date date">2021-02-09</time> &#8226; <span class="post-list__meta--tags tags">设计模式 iOS</span><a class="btn-border-small" href=/2021/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82(%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA)/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%B8%89)/";
+        this.page.identifier = "/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%B8%89)/";
+    };
+
+    var disqus_shortname = 'Zachary';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-02-16 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2021</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>
