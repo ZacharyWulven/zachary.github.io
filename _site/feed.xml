@@ -5,9 +5,226 @@
     <description>Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 16 Feb 2021 17:57:04 +0800</pubDate>
-    <lastBuildDate>Tue, 16 Feb 2021 17:57:04 +0800</lastBuildDate>
+    <pubDate>Mon, 22 Feb 2021 00:46:14 +0800</pubDate>
+    <lastBuildDate>Mon, 22 Feb 2021 00:46:14 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>威士忌入门</title>
+        <description>&lt;h3 id=&quot;威士忌的原料&quot;&gt;威士忌的原料&lt;/h3&gt;
+&lt;p&gt;原料：谷物、大麦也有用玉米或小麦制成。威士忌是蒸馏酒，啤酒、葡萄酒、清酒、琴酒、伏特加也是蒸馏酒。蒸馏技术源自于中古世纪的炼金术师
+，威士忌也称为生命之水。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;蒸馏酒：都是原料经过发酵制成的酿造酒，再经过蒸馏，产生高酒精浓度的酒就称为蒸馏酒。蒸馏后的酒是无色透明的木桶的成分赋予了酒的颜色。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;威士忌五大产地&quot;&gt;威士忌五大产地&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;加拿大  气味平易近人 常被用于调酒&lt;/li&gt;
+  &lt;li&gt;日本      追随苏格兰酿造精髓&lt;/li&gt;
+  &lt;li&gt;美国      玉米作为原料 ，波本威士忌&lt;/li&gt;
+  &lt;li&gt;苏格兰   是威士忌起源地&lt;/li&gt;
+  &lt;li&gt;爱尔兰   比苏格兰更早的进行酿造，蒸馏次数较多&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;威士忌重点&quot;&gt;威士忌重点&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;产地&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;原料&lt;/span&gt; 
+&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;制法&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;和熟成年份&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;苏格兰、波本都是威士忌。苏格兰 老帕尔 （Old Parr）和 起瓦士（chivas regal）适合送礼&lt;/p&gt;
+
+&lt;h3 id=&quot;威士忌分类&quot;&gt;威士忌分类&lt;/h3&gt;
+&lt;p&gt;威士忌分单一麦芽、单一谷物和调和式。苏格兰-威士忌，必须符合在苏格兰境内进行蒸馏，并经过三年以上的熟成程序等制法。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;麦芽威士忌&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;（大麦为原料）&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;谷物威士忌（玉米、黑麦、小麦等谷物为原料）&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;调和式威士忌&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;将数十种麦芽威士忌与数种谷物威士忌混合而成。品牌有顺风、约翰走路、老帕尔。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;单一麦芽&quot;&gt;单一麦芽&lt;/h3&gt;
+&lt;p&gt;单一麦芽，只使用单一蒸馏所产生的麦芽威士忌来装瓶，不混合其他蒸馏所产生的麦芽威士忌。单一麦芽威士忌 ，原料是大麦，一般用蒸馏所的名字命名。&lt;/p&gt;
+
+&lt;p&gt;单一麦芽威士忌口感不一，苏格兰有六大主要区域，约 110 个蒸馏厂，单一麦芽威士忌根据蒸馏年份、熟成年数、酒精浓度等来分类据说有 1000 多种。&lt;/p&gt;
+
+&lt;h4 id=&quot;苏格兰六大产地&quot;&gt;苏格兰六大产地&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;斯贝河畔区（Speyside）- 代表作 克拉格摩尔威士忌&lt;/li&gt;
+  &lt;li&gt;高地区（Highland） - 代表作  达尔威尼&lt;/li&gt;
+  &lt;li&gt;艾雷岛（Islay） - 代表作 拉加维林&lt;/li&gt;
+  &lt;li&gt;坎培尔镇（Campbeltown）&lt;/li&gt;
+  &lt;li&gt;低地区（Lowland） - 代表作 格兰金奇&lt;/li&gt;
+  &lt;li&gt;岛屿区（Highland） - 代表作 大力斯可&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;点酒时候说的&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;straight&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;意思是不加水、冰等掺杂物直接引用。英国用&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;neat&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;等于&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;straight&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;酒标识威士忌的履历表&quot;&gt;酒标识威士忌的履历表&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;Single Malt 表示单一麦芽&lt;/li&gt;
+  &lt;li&gt;熟成年份 蒸馏后再木制酒桶内进行熟成年数，10 表示熟成年数是 10（熟成年份即开始出生年份，年数可以理解为年龄）&lt;/li&gt;
+  &lt;li&gt;容量&lt;/li&gt;
+  &lt;li&gt;酒精浓度&lt;/li&gt;
+  &lt;li&gt;蒸馏厂名称（一般单一麦芽酒名就是蒸馏厂的名称）&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;而&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;single&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;或叫&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;one&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;finger&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;或叫&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;one&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shot&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;指的是量，一指的高度&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;约&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ml&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;的酒量，&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;则是&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ml&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;。&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;苏格兰主要蒸馏厂&quot;&gt;苏格兰主要蒸馏厂&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;格兰花格 Glenfarclas&lt;/li&gt;
+  &lt;li&gt;高原骑士 Highland Park&lt;/li&gt;
+  &lt;li&gt;斯特拉塞斯拉 Strathisla&lt;/li&gt;
+  &lt;li&gt;波摩    Bowmore&lt;/li&gt;
+  &lt;li&gt;格兰洛斯  Glenrothes&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;威士忌从&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;世纪，&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1494&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;年开始酿造，由于课税越来越高，很多都躲在深山中秘密酿酒，到了&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1823&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;年重新修订了酒税法，第二年政府公认的蒸馏厂诞生也就是格兰利威。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;苏格兰单一麦芽-top-5&quot;&gt;苏格兰单一麦芽 top 5&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;格兰菲迪&lt;/li&gt;
+  &lt;li&gt;格兰格兰特&lt;/li&gt;
+  &lt;li&gt;格兰利威&lt;/li&gt;
+  &lt;li&gt;家豪&lt;/li&gt;
+  &lt;li&gt;麦卡伦&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;苏格兰威士忌熟成年份在&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;到&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;之间是最好的&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;酿造水&quot;&gt;酿造水&lt;/h4&gt;
+&lt;p&gt;指各个制酒程序中使用的水，分为软水和硬水&lt;/p&gt;
+
+&lt;p&gt;软水：钙等矿物质成分含量较少。&lt;/p&gt;
+
+&lt;p&gt;硬水：钙等矿物质成分含量较多，一般多用软水酿造，硬水酿造出的明显浓烈刺激风味。&lt;/p&gt;
+
+&lt;p&gt;使用软水品牌&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;克拉格摩尔&lt;/li&gt;
+  &lt;li&gt;格兰菲迪&lt;/li&gt;
+  &lt;li&gt;麦卡伦&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;使用硬水品牌&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;格兰利威&lt;/li&gt;
+  &lt;li&gt;格兰杰 Glenmorangie&lt;/li&gt;
+  &lt;li&gt;高原骑士&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;熟成桶&quot;&gt;熟成桶&lt;/h3&gt;
+&lt;p&gt;熟成桶材料为橡木，有全新也有二手的。苏格兰威士忌通常不用全新的橡木桶，他们认为全新的橡木桶熟成出的酒味道不好。（有点像买新车需要磨合一样）&lt;/p&gt;
+
+&lt;p&gt;常见的橡木桶分&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;雪莉桶 陈放过雪莉酒的橡木桶，感染了了雪莉酒的香气和颜色，有淡淡的甜味和红色。&lt;/li&gt;
+  &lt;li&gt;波本桶 陈放过波本威士忌的木桶，内侧一定有焦褐色的痕迹，产生浓厚风味。&lt;/li&gt;
+  &lt;li&gt;重覆装填桶 用于威士忌熟成，由于其他酒种影响较弱，所以一般不提及原本是波本还是雪莉桶。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;桶的大小&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;barrel          最大口径约 65 公分  长约 86 公分  容量约 180 公升&lt;/li&gt;
+  &lt;li&gt;hogshead   最大口径约 72 公分  长约 82 公分  容量约 230 公升&lt;/li&gt;
+  &lt;li&gt;puncheon   最大口径约 96 公分  长约 107 公分  容量约 480 公升&lt;/li&gt;
+  &lt;li&gt;Sherry Butt  最大口径约 89 公分  长约 128 公分  容量约 480 公升&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;装瓶&quot;&gt;装瓶&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;原厂装瓶（Official bottle）使用蒸馏厂或母公司的设备装瓶&lt;/li&gt;
+  &lt;li&gt;独立装瓶（Bottler‘s brand）只负责进行装瓶、贩卖的公司，它们向蒸馏厂购买以桶为单位的威士忌。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;独立装瓶商&quot;&gt;独立装瓶商&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;Gordon &amp;amp; Macphail&lt;/li&gt;
+  &lt;li&gt;Gadenhead 业界老大，总部在坎培尔镇&lt;/li&gt;
+  &lt;li&gt;Signatory&lt;/li&gt;
+  &lt;li&gt;Wilson &amp;amp; Morgan&lt;/li&gt;
+  &lt;li&gt;Kingsbury’s&lt;/li&gt;
+  &lt;li&gt;Moon Import&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;斯贝河畔区代表麦芽威士忌&quot;&gt;斯贝河畔区代表麦芽威士忌&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;亚伯乐，用苏格兰大麦 适合纯饮&lt;/li&gt;
+  &lt;li&gt;百富 The Balvenie 威士忌产于格兰菲迪第二蒸馏厂&lt;/li&gt;
+  &lt;li&gt;克拉格摩尔 Cragganmore&lt;/li&gt;
+  &lt;li&gt;格兰花格 Glenfarclas 名列前三，有清爽的水果风味, 格兰花格 105 是酒精浓度 60%&lt;/li&gt;
+  &lt;li&gt;格兰菲迪 Glenfiddich，单一麦芽，世界销量第一，三角形酒瓶&lt;/li&gt;
+  &lt;li&gt;格兰利威 The Glenlivet 威士忌之父，口感浓烈刺激，是第一间向政府申请执照的蒸馏厂&lt;/li&gt;
+  &lt;li&gt;麦卡伦 The Macallan 单一麦芽中的劳斯劳斯，微妙散发雪莉酒的芳醇香味，最早使用雪莉酒桶的蒸馏厂&lt;/li&gt;
+  &lt;li&gt;斯特拉塞斯拉 Strathisla，是起瓦士（Chivas Regal）调和原酒，年份一般在 12 年以上&lt;/li&gt;
+  &lt;li&gt;格兰格兰特 Glen Grant&lt;/li&gt;
+  &lt;li&gt;落坎多 Knockando，口感轻柔&lt;/li&gt;
+  &lt;li&gt;斯佩波恩 Syeyburn ，餐前酒&lt;/li&gt;
+  &lt;li&gt;格兰莫雷 Glen Moray 水果风味&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;高地区&quot;&gt;高地区&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;大摩尔 Dalmore，在饭后休息时间来上一杯，曾经以 12 年和 21 年两款威士忌与雪茄组合成礼盒出售。每瓶大摩尔酒瓶上都有一只颇具气势，头上带角的雄鹿团。因为大摩尔蒸馏厂位于玫瑰郡镇郊外一处可以俯瞰整个克罗默蒂海湾美景的地方，昔日此地以猎鹿著名。&lt;/li&gt;
+  &lt;li&gt;格兰杰 Glenmorangie 深受女性喜爱的威士忌，由于均不作为调和用，因此出品全是单一麦芽威士忌，花果般的香味，使用美国肯塔基州波本橡木桶。&lt;/li&gt;
+  &lt;li&gt;皇家蓝勋 Royal Lochnagar 维多利亚女王御用蒸馏厂&lt;/li&gt;
+  &lt;li&gt;欧本 Oban 与艾雷岛威士忌味道相似，有烟熏香气味&lt;/li&gt;
+  &lt;li&gt;达尔威尼 Dalwhinnie 有大麦的甜味，喝起来感觉轻快，有集会场所的意思&lt;/li&gt;
+  &lt;li&gt;格兰陶兰 Glenturret 高地区最小的蒸馏厂&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;艾雷岛&quot;&gt;艾雷岛&lt;/h4&gt;
+&lt;p&gt;烟熏味是其麦芽威士忌一大特色。很多调和威士忌使用艾雷岛麦芽威士忌作为原酒，如顺风 Cutty Sark ，白马牌 White Horse。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;雅柏 Ardbeg 强烈的烟熏味&lt;/li&gt;
+  &lt;li&gt;波摩 Bowmore 1799 年创建，是岛上最古老的蒸馏厂。是少数以地板发麦芽的蒸馏厂之一。 岛上北部口感清淡，南部口感浓厚。波摩口感在两者之间的平衡，同时有着水果和花的香味。适合作为艾雷岛威士忌入门酒。目前位日本三得利公司所有。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;地板发麦芽（&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Floor&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Malting&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;）指威士忌原料中的大麦麦芽，在浸泡过水后，铺在水泥板上，使其发芽的工程。为了确保不会参差不齐，每隔一段固定时间，需要用铁锨将其翻面，是件相当麻烦的事。&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;以下是仍然使用&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Floor&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Malting&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;的品牌，云顶（&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Springbank&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;）、高原骑士、拉佛格（&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Laphroaig&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;）、波摩、百富（&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Balvenie&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;）&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;拉加维林 Lagavulin 带有和谐的烟熏味和浓郁的泥煤味，是白马牌威士忌的原酒。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;泥煤（&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;peat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;peaty&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;）是艾雷岛威士忌个性所在。它是一种生长在寒带地区的石楠、苔藓以及羊齿蕨类等植物，经过数千年甚至万年积累成的泥碳。是麦芽干燥时候的燃料。不过很多蒸馏厂都使用瓦斯等燃料进行替代。&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;麦芽的含水率高，泥煤味重。熏烤时间越长，泥煤味越浓郁。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;拉弗格 Laphroaig&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;坎培尔镇&quot;&gt;坎培尔镇&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;云顶 Springbank 风味甜香，平易近人，女性专属&lt;/li&gt;
+  &lt;li&gt;朗格罗 Longrow 与云顶同一个蒸馏厂，据说比云顶更完美&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;低地区-三次蒸馏是其传统蒸馏次数越多越能减少不必要成分纯粹度越高&quot;&gt;低地区 （三次蒸馏是其传统，蒸馏次数越多，越能减少不必要成分，纯粹度越高）&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;欧肯特轩 Auchentoshan ，口感轻柔，目前由日本三得利 Suntory 公司所有。&lt;/li&gt;
+  &lt;li&gt;格兰金奇 Glenkinchie&lt;/li&gt;
+  &lt;li&gt;小磨坊 Littlemill&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;岛屿区&quot;&gt;岛屿区&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;高原骑士 Highland Park 使用 Floor malting 和泥煤，融合所有古典要素，多层次风味&lt;/li&gt;
+  &lt;li&gt;斯卡帕 Scapa 加水稀释会散发出水果般香气&lt;/li&gt;
+  &lt;li&gt;大力斯可 Talisker&lt;/li&gt;
+  &lt;li&gt;艾伦岛威士忌 Arran&lt;/li&gt;
+  &lt;li&gt;吉拉岛威士忌 Isle of Jura&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Tue, 16 Feb 2021 17:14:30 +0800</pubDate>
+        <link>http://localhost:4000/2021/02/%E5%A8%81%E5%A3%AB%E5%BF%8C%E5%85%A5%E9%97%A8/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/02/%E5%A8%81%E5%A3%AB%E5%BF%8C%E5%85%A5%E9%97%A8/</guid>
+        
+        <category>威士忌 whisky</category>
+        
+        
+      </item>
     
       <item>
         <title>函数式编程思想 (三)</title>
@@ -1399,51 +1616,6 @@ if (ptrValue &amp;lt;= 0) is Tagged Pointer Or nil，相对于两个分支检查
         <guid isPermaLink="true">http://localhost:4000/2020/11/Advancements-in-the-Objective-C-runtime/</guid>
         
         <category>iOS WWDC</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>使用 jekyll 搭建博客总结</title>
-        <description>&lt;p&gt;首先感谢喵神分享的模板. 自己的博客终于搭建完成了.
-开博客的目的其一是为了记录下自己的学习历程，其二为了写一些自己感兴趣的东西.
-书归正传, 开始搭建步骤:&lt;/p&gt;
-
-&lt;h4 id=&quot;一-创建-githubio-库&quot;&gt;一 创建 github.io 库&lt;/h4&gt;
-&lt;p&gt;这个比较简单一帆风顺, github 也有教程.&lt;/p&gt;
-
-&lt;h4 id=&quot;二-安装-jekyll&quot;&gt;二 安装 jekyll&lt;/h4&gt;
-&lt;p&gt;按照官网的 &lt;a href=&quot;http://jekyllcn.com/docs/quickstart/&quot;&gt;快速开始&lt;/a&gt; 按照即可. 若自己的电脑环境有问题如 bundler 未安装, 参考以下步骤解决:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;update&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;system&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bundler&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bundler&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;update&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bundler&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;安装完 bundler 后便可继续创建博客:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bundle&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jekyll&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;博客名称&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h4 id=&quot;三-模板选择&quot;&gt;三 模板选择&lt;/h4&gt;
-&lt;p&gt;可以使用默认模板, 也可以使用别人开发好的模板, 我这里使用的是喵神开发的模板. clone 模板到自己的博客仓库, 对 _config.yml 文件进行修改, 修改成自己想要的样式
-然后把本地仓库推送到自己创建的 github 仓库中即可.&lt;/p&gt;
-
-&lt;h4 id=&quot;四-申请域名&quot;&gt;四 申请域名&lt;/h4&gt;
-&lt;p&gt;若觉得 github.io 的域名太长不好记, 可以自己申请想要的域名.
-这里是笔者购买域名的&lt;a href=&quot;https://porkbun.com/&quot;&gt;站点&lt;/a&gt;.
-若不喜欢 porkbun 可以到 &lt;a href=&quot;https://www.domcomp.com/&quot;&gt;domcomp&lt;/a&gt; 进行对比挑选自己喜欢的站点进行购买.&lt;/p&gt;
-
-&lt;h4 id=&quot;五-调试&quot;&gt;五 调试&lt;/h4&gt;
-&lt;p&gt;文章可以放在 _posts 文件夹下, 可通过以下命令进行本地调试预览:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bundler&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jekyll&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;serve&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h4 id=&quot;六-参考链接&quot;&gt;六 参考链接&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&quot;http://jekyllrb.com/docs/home&quot;&gt;jekyll 文档&lt;/a&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 15 Jun 2020 23:20:26 +0800</pubDate>
-        <link>http://localhost:4000/2020/06/%E4%BD%BF%E7%94%A8-jekyll-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E6%80%BB%E7%BB%93/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/06/%E4%BD%BF%E7%94%A8-jekyll-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E6%80%BB%E7%BB%93/</guid>
         
         
       </item>
