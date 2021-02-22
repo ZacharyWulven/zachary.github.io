@@ -75,7 +75,7 @@ double    双精度                 l            8
 1. 立即数，用来表示常数值，$后跟一个标准 C 表示的整数 例如 $0x1F
 2. 寄存器，它表示某个寄存器的内容，用 r(a) 表示任意寄存器，用引用 R[r(a)] 表示它的值，这是将寄存器集合看成一个数组 R ，用寄存器标示符作为索引
 3. 内存引用，他会根据计算出来的地址(通常称为有效地址)访问某个内存位置，因为将内存看成一个字节数组所以用 M(b)[Addr] 表示对存储在
-内存中从地址 Addr开始 b 个字节值得引用。通常省略 b 为 M[Addr]
+内存中从地址 Addr开始 b 个字节值得引用。通常省略 b 为 M[Addr]。(%rax)
 
 {% highlight ruby %}
 多种不同寻址模式
@@ -97,6 +97,17 @@ Imm(rb, ri, s) 表示最常见的形式
 %rax 的值为 0x100
 (%rax) 的值为 0xFF
 %rax 取地址，(%rax) 取地址的内容也就是值
+{% endhighlight %}
+
+
+### movq 操作
+{% highlight ruby %}
+            Source          Dest                Src    Dest              C analog
+            Imm             Reg            movq $0x4, %rax               temp = 0x4
+                            Mem            movq $-147, (%rax)            *p = -147
+movq        Reg             Reg            movq %rax, %rdx               temp2 = temp1
+                            Mem            movq %rax, (%rdx)             *p = temp
+            Mem             Reg            movq (%rax), %rdx             temp = *p
 {% endhighlight %}
 
 ### 例子

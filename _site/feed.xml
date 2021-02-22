@@ -5,8 +5,8 @@
     <description>Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 22 Feb 2021 00:50:52 +0800</pubDate>
-    <lastBuildDate>Mon, 22 Feb 2021 00:50:52 +0800</lastBuildDate>
+    <pubDate>Mon, 22 Feb 2021 23:20:22 +0800</pubDate>
+    <lastBuildDate>Mon, 22 Feb 2021 23:20:22 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -1277,7 +1277,7 @@ reduce 和 fold 操作在功能上大致重合，两者都用一个积累量来�
   &lt;li&gt;立即数，用来表示常数值，$后跟一个标准 C 表示的整数 例如 $0x1F&lt;/li&gt;
   &lt;li&gt;寄存器，它表示某个寄存器的内容，用 r(a) 表示任意寄存器，用引用 R[r(a)] 表示它的值，这是将寄存器集合看成一个数组 R ，用寄存器标示符作为索引&lt;/li&gt;
   &lt;li&gt;内存引用，他会根据计算出来的地址(通常称为有效地址)访问某个内存位置，因为将内存看成一个字节数组所以用 M(b)[Addr] 表示对存储在
-内存中从地址 Addr开始 b 个字节值得引用。通常省略 b 为 M[Addr]&lt;/li&gt;
+内存中从地址 Addr开始 b 个字节值得引用。通常省略 b 为 M[Addr]。(%rax)&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;多种不同寻址模式&lt;/span&gt;
@@ -1297,6 +1297,15 @@ reduce 和 fold 操作在功能上大致重合，两者都用一个积累量来�
 &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;的值为&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x100&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;的值为&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0xFF&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;取地址，&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;取地址的内容也就是值&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;movq-操作&quot;&gt;movq 操作&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;            &lt;span class=&quot;no&quot;&gt;Source&lt;/span&gt;          &lt;span class=&quot;no&quot;&gt;Dest&lt;/span&gt;                &lt;span class=&quot;no&quot;&gt;Src&lt;/span&gt;    &lt;span class=&quot;no&quot;&gt;Dest&lt;/span&gt;              &lt;span class=&quot;no&quot;&gt;C&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;analog&lt;/span&gt;
+            &lt;span class=&quot;no&quot;&gt;Imm&lt;/span&gt;             &lt;span class=&quot;no&quot;&gt;Reg&lt;/span&gt;            &lt;span class=&quot;n&quot;&gt;movq&lt;/span&gt; &lt;span class=&quot;vg&quot;&gt;$0x4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;               &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x4&lt;/span&gt;
+                            &lt;span class=&quot;no&quot;&gt;Mem&lt;/span&gt;            &lt;span class=&quot;n&quot;&gt;movq&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;147&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;            &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;147&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;movq&lt;/span&gt;        &lt;span class=&quot;no&quot;&gt;Reg&lt;/span&gt;             &lt;span class=&quot;no&quot;&gt;Reg&lt;/span&gt;            &lt;span class=&quot;n&quot;&gt;movq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;               &lt;span class=&quot;n&quot;&gt;temp2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp1&lt;/span&gt;
+                            &lt;span class=&quot;no&quot;&gt;Mem&lt;/span&gt;            &lt;span class=&quot;n&quot;&gt;movq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;             &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;
+            &lt;span class=&quot;no&quot;&gt;Mem&lt;/span&gt;             &lt;span class=&quot;no&quot;&gt;Reg&lt;/span&gt;            &lt;span class=&quot;n&quot;&gt;movq&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;             &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;p&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h3 id=&quot;例子&quot;&gt;例子&lt;/h3&gt;
 
