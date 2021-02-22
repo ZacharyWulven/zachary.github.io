@@ -271,7 +271,7 @@ long *xp 的, *xp 就是 (%rdi), xp 地址放在 %rdi 中, * 就是间接引用<
 <h3 id="当-rsp-为-0x108rax-为-0x123-时">当 %rsp 为 0x108，%rax 为 0x123 时</h3>
 
 <h4 id="压入">压入</h4>
-<p>执行 pushq %rbp ，将一个 4 字值压入栈中 首先将栈指针减 8 (0x108-&gt;0x100) 得到 0x100，然后将 0x123 存入0x100位置（将值写入栈顶地址）
+<p>执行 pushq %rax ，将一个 4 字值压入栈中 首先将栈指针减 8 (0x108-&gt;0x100) 得到 0x100，然后将 0x123 存入0x100位置（将值写入栈顶地址）
 pushq 一个字节，上边的两步是 8 个字节。
 因此 pushq %rbp 行为等于</p>
 <ol>
@@ -281,7 +281,7 @@ pushq 一个字节，上边的两步是 8 个字节。
 
 <h4 id="弹出">弹出</h4>
 <p>弹出一个 4 字的操作包括从栈顶位置读出数据，然后将栈指针 (%rsp) 加 8。
-popq %rdx ，首先从内存读出 0x123 的值，再写到寄存器 rdx，然后 %rsp 的值将增加回到 0x108。</p>
+执行 popq %rdx ，首先从内存读出 0x123 的值，再写到寄存器 rdx，然后 %rsp 的值将增加回到 0x108。</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">值</span> <span class="mh">0x123</span> <span class="err">仍然会保存在内存位置</span> <span class="mh">0x100</span> <span class="err">位置</span> <span class="err">直到被覆盖，</span><span class="o">%</span><span class="n">rsp</span> <span class="err">总是指向栈顶</span></code></pre></figure>
 

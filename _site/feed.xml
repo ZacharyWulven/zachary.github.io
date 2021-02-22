@@ -5,8 +5,8 @@
     <description>Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 22 Feb 2021 23:20:22 +0800</pubDate>
-    <lastBuildDate>Mon, 22 Feb 2021 23:20:22 +0800</lastBuildDate>
+    <pubDate>Mon, 22 Feb 2021 23:46:51 +0800</pubDate>
+    <lastBuildDate>Mon, 22 Feb 2021 23:46:51 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -1360,7 +1360,7 @@ long *xp 的, *xp 就是 (%rdi), xp 地址放在 %rdi 中, * 就是间接引用&
 &lt;h3 id=&quot;当-rsp-为-0x108rax-为-0x123-时&quot;&gt;当 %rsp 为 0x108，%rax 为 0x123 时&lt;/h3&gt;
 
 &lt;h4 id=&quot;压入&quot;&gt;压入&lt;/h4&gt;
-&lt;p&gt;执行 pushq %rbp ，将一个 4 字值压入栈中 首先将栈指针减 8 (0x108-&amp;gt;0x100) 得到 0x100，然后将 0x123 存入0x100位置（将值写入栈顶地址）
+&lt;p&gt;执行 pushq %rax ，将一个 4 字值压入栈中 首先将栈指针减 8 (0x108-&amp;gt;0x100) 得到 0x100，然后将 0x123 存入0x100位置（将值写入栈顶地址）
 pushq 一个字节，上边的两步是 8 个字节。
 因此 pushq %rbp 行为等于&lt;/p&gt;
 &lt;ol&gt;
@@ -1370,7 +1370,7 @@ pushq 一个字节，上边的两步是 8 个字节。
 
 &lt;h4 id=&quot;弹出&quot;&gt;弹出&lt;/h4&gt;
 &lt;p&gt;弹出一个 4 字的操作包括从栈顶位置读出数据，然后将栈指针 (%rsp) 加 8。
-popq %rdx ，首先从内存读出 0x123 的值，再写到寄存器 rdx，然后 %rsp 的值将增加回到 0x108。&lt;/p&gt;
+执行 popq %rdx ，首先从内存读出 0x123 的值，再写到寄存器 rdx，然后 %rsp 的值将增加回到 0x108。&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;值&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x123&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;仍然会保存在内存位置&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x100&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;位置&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;直到被覆盖，&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rsp&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;总是指向栈顶&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
