@@ -5,9 +5,127 @@
     <description>Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 23 Feb 2021 00:40:48 +0800</pubDate>
-    <lastBuildDate>Tue, 23 Feb 2021 00:40:48 +0800</lastBuildDate>
+    <pubDate>Mon, 01 Mar 2021 00:55:17 +0800</pubDate>
+    <lastBuildDate>Mon, 01 Mar 2021 00:55:17 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>程序的机器级表示(三)</title>
+        <description>&lt;h3 id=&quot;算术和逻辑操作&quot;&gt;算术和逻辑操作&lt;/h3&gt;
+&lt;p&gt;大多数操作都分成指令类，这些指令类有各种带不同大小操作数的变种，每个指令类都有四种不同大小数据指令。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;只有&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;leaq&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;没有其他大小变种&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;例如：指令类 add 由四条加法指令组成&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;addb 字节加法&lt;/li&gt;
+  &lt;li&gt;addw 字加法&lt;/li&gt;
+  &lt;li&gt;addl 双字加法&lt;/li&gt;
+  &lt;li&gt;addq 四字加法&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;每个指令类都有对这四种不同大小数据的指令，分为四种：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;加载有效地址&lt;/li&gt;
+  &lt;li&gt;一元操作，有一个操作数&lt;/li&gt;
+  &lt;li&gt;二元操作, 有两个操作数&lt;/li&gt;
+  &lt;li&gt;移位&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;指令&lt;/span&gt;           &lt;span class=&quot;err&quot;&gt;效果&lt;/span&gt;              &lt;span class=&quot;err&quot;&gt;描述&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;leaq&lt;/span&gt;  &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;    &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;          &lt;span class=&quot;err&quot;&gt;加载有效地址&lt;/span&gt;
+
+&lt;span class=&quot;no&quot;&gt;INC&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;       &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;         &lt;span class=&quot;err&quot;&gt;加&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;DEC&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;       &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;         &lt;span class=&quot;err&quot;&gt;减&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;NEG&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;       &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;          &lt;span class=&quot;err&quot;&gt;取负&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;NOT&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;       &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;          &lt;span class=&quot;err&quot;&gt;取补&lt;/span&gt;
+
+&lt;span class=&quot;no&quot;&gt;ADD&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;    &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;       &lt;span class=&quot;err&quot;&gt;加&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;SUB&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;    &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;       &lt;span class=&quot;err&quot;&gt;减&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;IMUL&lt;/span&gt;  &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;    &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;       &lt;span class=&quot;err&quot;&gt;乘&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;XOR&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;    &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;       &lt;span class=&quot;err&quot;&gt;异或&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;OR&lt;/span&gt;    &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;    &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;       &lt;span class=&quot;err&quot;&gt;或&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;AND&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;    &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;       &lt;span class=&quot;err&quot;&gt;与&lt;/span&gt;
+
+&lt;span class=&quot;no&quot;&gt;SAL&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;    &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;      &lt;span class=&quot;err&quot;&gt;左移&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;SHL&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;    &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;      &lt;span class=&quot;err&quot;&gt;左移（等同于&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;SAL&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;）&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;SAR&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;    &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;     &lt;span class=&quot;err&quot;&gt;算术右移&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;SHR&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt;    &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;L&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;     &lt;span class=&quot;err&quot;&gt;逻辑右移&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;加载有效地址&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;leaq&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;指令通常用来执行简单算术操作。&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;表示算术右移。&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;L&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;表示逻辑右移。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;加载有效地址-leaq-本质是把第一个操作数存入目的寄存器中&quot;&gt;加载有效地址 leaq (本质是把第一个操作数存入目的寄存器中)&lt;/h4&gt;
+&lt;p&gt;加载有效地址（load effective address）指令 leaq 实际上是 movq 指令的变形。它的指令形式是从内存读数据到寄存器，但实际上它根本就没有引用内存。它的第一个操作数看上去是一个内存引用，但该指令并不是从指定位置读入数据，而是将有效地址写入到目的操作数。它能执行加法和有限形式的乘法，是很有用的指令。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;这条指令可以为后面内存引用产生指针。目的必须是一个寄存器。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;另外它还可以简洁描述普通算术操作。
+例如：%rdx 的值为 x，则 leaq 7(%rdx, %rdx, 4), %rax 就是将 %rax 值设置为 5x+7&lt;/p&gt;
+
+&lt;h4 id=&quot;一元和二元操作&quot;&gt;一元和二元操作&lt;/h4&gt;
+&lt;h4 id=&quot;一元操作&quot;&gt;一元操作&lt;/h4&gt;
+&lt;p&gt;只有一个操作数，即使源又是目的，这个操作数可以是寄存器，也可以是内存位置。例如指令 incq(%rsp) 会使栈顶的 8 个字节元素加 1。这种语法让人想起了 C 语言的 ++、– 运算符。&lt;/p&gt;
+
+&lt;h4 id=&quot;二元操作&quot;&gt;二元操作&lt;/h4&gt;
+&lt;p&gt;第二个操作数即是源又是目的。这种语法让人想起了 C 语言的赋值运算符，例如 x -= y。源操作数是第一个，目的操作数是第二个。
+例如 subq %rax, %rdx 可以理解为 %rdx 值减去 %rax 值再存到 %rdx 中&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;第一个操作数可以是立即数、寄存器、内存地址。&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;第二个操作数可以是寄存器、内存地址。&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;若第二个操作数是内存地址，处理器必须从内存读出值，执行操作，再把结果写回内存。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;位移操作&quot;&gt;位移操作&lt;/h4&gt;
+&lt;p&gt;先给出位移量，然后第二项给出要位移的数。位移量可以是一个立即数或放在单字节寄存器 %cl 中。这些指令很特别因为只允许以这个特定的寄存器作为操作数。1 个字节的位移量范围是 2^8 -1 = 255。
+在 x86-64 中，移位操作对 w 位长的数据值进行操作，移位量是由 %cl 寄存器低 m 位决定的，这里 2^m = w。高位被忽略，所以当 %cl 的十六进制值为 0xFF时候，指令 salb 会移 7 位，salw 会移 15 位，sall 会移 31 位，salq 会移 63 位。&lt;/p&gt;
+
+&lt;p&gt;左移指令 SAL 和 SHL 两个效果一样都是将右边填上 0。&lt;/p&gt;
+
+&lt;p&gt;右移指令不同，SAR 执行算术右移（填上符号位），SHR 执行逻辑右移（填上 0）&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;位移操作的目的操作数可以是寄存器或内存位置。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;特殊的算术操作&quot;&gt;特殊的算术操作&lt;/h4&gt;
+&lt;p&gt;Intel 把 16 字节数字称为八字（oct word）。两个 64 位有符号或无符号相乘乘积需要 128 位来表示。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;指令&lt;/span&gt;         &lt;span class=&quot;err&quot;&gt;效果&lt;/span&gt;                                     &lt;span class=&quot;err&quot;&gt;描述&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;imulq&lt;/span&gt;  &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;     &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;SxR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;         &lt;span class=&quot;err&quot;&gt;有符号全乘法&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;mulq&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;     &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;SxR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;         &lt;span class=&quot;err&quot;&gt;无符号全乘法&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;cqto&lt;/span&gt;         &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;符号扩展&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;   &lt;span class=&quot;err&quot;&gt;转为八字&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;idivq&lt;/span&gt;  &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;     &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mod&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;      &lt;span class=&quot;err&quot;&gt;有符号除法&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;idivq&lt;/span&gt;  &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;     &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;➗&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;       &lt;span class=&quot;err&quot;&gt;有符号除法&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;divq&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;     &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mod&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;      &lt;span class=&quot;err&quot;&gt;无符号除法&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;divq&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;     &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;➗&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;       &lt;span class=&quot;err&quot;&gt;无符号除法&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;这些操作提供了又符号和无符号数全&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;位乘法和除法，一对寄存器&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;和&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;组成一个&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;位的八字。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;imulq 指令有两种不同形式，单操作数乘法指令，以两个 64 位值的全 128 位乘积，一个是 mulq 无符号乘法，另一个是 imulq（补码乘法）。这俩指令都要求一个参数必须在 %rax 中，而另一个作为指令的源操作数给出。然后乘积放在 %rdx（高 64 位） 和 %rax（低 64 位）中。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;movq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rsi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;mulq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;movq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;      &lt;span class=&quot;n&quot;&gt;store&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lower&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bytes&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;movq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;      &lt;span class=&quot;n&quot;&gt;store&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;upper&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bytes&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;除法&lt;/p&gt;
+
+&lt;p&gt;有符号除法指令 idivl 将寄存器 %rdx（高 64 位） 和 %rax（低 64 位）中 128 位数作为被除数，除数作为指令操作数给出，
+商存在 %rax 中，余数存在 %rdx 中。&lt;/p&gt;
+
+&lt;p&gt;cqto 不需要操作数，它隐含读出 %rax 的符号位，并将它复制到 %rdx 所有位。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;除法操作要使用&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，所以如果入参用了&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，要把入参保存到另一个寄存器如&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r8&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+</description>
+        <pubDate>Sun, 28 Feb 2021 22:45:30 +0800</pubDate>
+        <link>http://localhost:4000/2021/02/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%B8%89)/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/02/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%B8%89)/</guid>
+        
+        <category>CSApp</category>
+        
+        
+      </item>
     
       <item>
         <title>威士忌入门之单一麦芽</title>
@@ -1514,111 +1632,6 @@ pushq 一个字节，上边的两步是 8 个字节。
         <guid isPermaLink="true">http://localhost:4000/2021/01/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%B8%80)/</guid>
         
         <category>CSApp</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Advancements in the objective C runtime</title>
-        <description>&lt;p&gt;距离 WWDC2020 过了也快小半年，由于前段时间项目比较忙事情比较多也没有太多时间更新。
-不过最近节奏还可以抽空把 WWDC2020 自己感兴趣的内容记录一下。
-书归正传, 开始今天的话题，也就是 Objective-C runtime 变化。&lt;/p&gt;
-
-&lt;h4 id=&quot;一三大变化&quot;&gt;一、三大变化&lt;/h4&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;类的运行时数据结构变化&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;方法列表变化&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Tagged&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Pointer&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;格式变化&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h4 id=&quot;二clean-memory-和-dirty-memory&quot;&gt;二、clean memory 和 dirty memory&lt;/h4&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;这次优化都是围绕&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clean&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memory&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;和&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dirty&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memory&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;clean memory 指加载后不会发生更改的内存，class_ro_t 就是 clean memory 因为它是只读的。
-clean memory 可以移除，如果你需要再从磁盘中重新加载。&lt;/p&gt;
-
-&lt;p&gt;dirty memory 指在进程运行时会发生更改的内存，例如创建一个新的方法缓存并从类中指向它，class_rw_t 就是 dirty memeory。
-dirty memory 比 clean memory 代价昂贵，只要进程在运行 它就必须一直存在。&lt;/p&gt;
-
-&lt;h4 id=&quot;三类的运行时数据结构变化&quot;&gt;三、类的运行时数据结构变化&lt;/h4&gt;
-&lt;p&gt;类结构有指向元类，超类和方法缓存的指针, 还有一个指针指向更多数据 class_ro_t，swift 和 oc 使用一样的底层基础结构。&lt;/p&gt;
-
-&lt;p&gt;当一个类首次被使用 运行时会为它分配额外的存储容量，也就是 class_rw_t 用于读取-编写数据, class_rw_t 中存储了只有在运行时才会生成的信息, 所有类都会链接成一个数状结构，这是通过使用 First Subclass 和 Next Sibling Class 指针实现，这允许运行时遍历当前使用的所有类，追踪使用类的信息，这对于方法缓存无效非常有用。&lt;/p&gt;
-
-&lt;p&gt;只有 swift 类会使用 demangled name 字段, swift 一般不需要这个字段，除非有东西询问它们的 OC 名称时候才需要，所以可以拆掉平时不用的部分, 从而减少 class_rw_t 大小。&lt;/p&gt;
-
-&lt;p&gt;根据苹果给出的数据，大约 90% 的类从来不需要这些扩展数据，在系统范围内可节省大约 14 MB。&lt;/p&gt;
-
-&lt;p&gt;你可以运行一个命令，在任何 mac 上都有，叫 heap。heap 允许你检查正在运行的进程所使用的堆内存。
-$heap Mail | egrep ‘class_rw|COUNT’&lt;/p&gt;
-
-&lt;p&gt;于是 class_rw_ext_t 出现了，它节省了 dirty memory 的大小
-现在很多从类中获取数据的代码，必须同时处理那些有扩展和没有扩展（class_rw_ext_t）数据的类，当然运行时会为你想往常一样处理一切，从外部看和往常一样，只是使用更少的内存。任何试图直接访问这些数据结构的代码，都将在今年停止工作。&lt;/p&gt;
-
-&lt;h4 id=&quot;四方法列表变化&quot;&gt;四、方法列表变化&lt;/h4&gt;
-&lt;p&gt;每个方法都包含 3 个信息&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;方法名称或叫选择器，选择器是&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;具有唯一性，所以他们可以使用指针相当来比较。&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;方法类型编码&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;这是表示参数和返回值的字符串，是运行时和消息转发所必需的。&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;指向方法实现的指针，方法实际代码，当你写一个方法时候&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;会被编译成一个&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;函数。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;以 init 为例子：
-有三个方法表条目，每一个都是一个指针 所以在 64 位 就是 8+8+8 = 24 字节。
-相当于每个方法表条目占 24 字节, 属于 clean memory 它并不是免费的，它必须从磁盘中加载并且使用时会占用内存。
-虚拟地址空间它需要 64 位来寻址, 在这个地址内存中分了几个部分堆、栈，可执行文件和库二进制图像。而二进制图像可以加载到内存中任何位置，这取决于动态链接器决定把它放在哪里,  这意味着链接器需要将指针解析到图像中，并在加载时将其修正为指向其在内存中的实际位置，这也是有代价的。&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;一个来自二进制文件的类方法条目&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;永远只指向该二进制文件内的方法实现，不可能使一个方法的元数据存在于一个二进制文件中，而实现它的代码在另一个二进制文件中。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;这意味着方法列表条目实际上不需要能够引用整个&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;为地址空间，它只要能引用自己的二进制中的函数，而这些函数总是在附近的&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;因此&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;无需使用绝对的&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;位地址，它们可以使用&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;位的相对偏移。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;这样做的好处：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;偏移量总是相同的&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;不管镜像在哪里加载到内存中，所以他们从磁盘加载后不需要进行修正，而由于他们不需要修正了所以他们可以存储在真正的只读内存中这样更安全，当然使用&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;位偏移&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;意味着将&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;位内存量减少了一半。&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;在一台经典&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iPhone&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;中系统范围内测量了大约&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;MB&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;的这些方法，他们的尺寸节省了&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;MB&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;。&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;swizzling&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;二进制中的方法列表，现在不能引用完整的地址空间，但如果你&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;swizzling&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;一个方法它就可以在任何地方实施&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;而且苹果希望保持这些方法列表为只读&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;所以创建了一个全局表，这全局表将方法映射到它们被&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;swizzle&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;的实施上。&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;swizzle&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;用的相对较少，所以全局表最终变化不会很大，内存每次都是按页面来&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;“弄脏”。&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;使用旧的方法列表&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;swizzle&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;一个方法会&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;“弄脏”&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;它所在的整个页面，一次&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;swizzle&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;就会导致产生千字节的&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dirty&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memory&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;。&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;有了整个全局表&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;我们只需要位一个额外的表的条目付出代价&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;但一切都会按照和以前一样运行。&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;这些相对的方法列表&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;在新的&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;OS&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;版本上是受支持的&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iOS&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;、&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;macOS&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Big&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Sur&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;、&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tvOS&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;、&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;watchOS7&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;。&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;当你使用相应的最小部署&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;target&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;进行构建时候&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;工具会自动在你的二进制文件中生成相对方法列表。&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;如果你需要针对旧的&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;OS&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;版本的方法列表也不用担心，&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Xcode&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;也会生成旧方式的方法列表格式，系统可以在同一个&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;支持新旧两种方式的方法列表&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;不过如果你针对&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iOS&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;、&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;macOS&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Big&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Sur&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;、&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tvOS&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;、&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;watchOS7&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;进行部署构建&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;，你的二进制文件会变小&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;而且使用的内存也会变少。&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;最小部署&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;不仅仅关系到你有哪些&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;SDK&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;可以使用&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;如果&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Xcode&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;知道不需要支持旧的&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;OS&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;版本，那它可以发布更好的优化代码或数据。&lt;/span&gt;
-
-&lt;span class=&quot;err&quot;&gt;有一个事情注意，使用一个比你打算使用的更新的部署目标进行构建，&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Xcode&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;一般会阻止这种&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;但也可能漏掉，比如你在其他地方构建自己的库或框架然后把它带进来&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;在旧的&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;OS&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;中运行时&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;可能造成&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;旧的&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;OS&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;对新的一无所知&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;旧方式试图基于指针的方法来解释他们，意味着&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;它将尝试把一对&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;位的字段作为&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;位的指针来读取，这样的结果是两个整数作为一个指针粘在一起，这样就会造成&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;crash&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;。&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;这个时候&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;坏指针就像两个&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bit&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;值平滑在一起&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;所以如果对数据进行挖掘的话，就会有问题&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;推荐总是使用&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;runtime&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;提供的&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;API&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，如&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method_getName&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;等。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h4 id=&quot;五tagged-pointer&quot;&gt;五、Tagged Pointer&lt;/h4&gt;
-&lt;p&gt;由于对齐要求 低位始终为 0
-在 Inter 平台低位为标志位：
-对象总在指针大小倍数的一个地址中, 由于地址空间有限高位始终为 0，实际上不会用到 2^64, 高位和低位总是 0，选择一位并把它们设置为 1 ，可以让我们知道它不是一个指针，这些值实际上是通过与进程启动时初始化的随机值相结合而被混淆的。&lt;/p&gt;
-
-&lt;p&gt;低位设置为 1 表示 Tagged Pointer，接下来 3 位是标签号，用来表示 Tagged Pointer 类型， 如 3 表示它是一个 NSNumber， 6 为 NSDate，由于有 3 个标签位 所以有 8 种可能的标签类型，剩下的位是有效负载 payload ，这是特定类型可以随意使用的数据，对于 NSNumber 有些特殊 使用额外 8 位来作为扩展标签 来编码类型，但是会减少 payload 空间。&lt;/p&gt;
-
-&lt;p&gt;在 ARM 平台高位为标志位：
-高位 1 位 Tagged Pointer ，同 Inter 平台一样，也是有扩展标签的。
-为什么 ARM 平台是高位为 1 ？这是对 objc_msgSend 的一个小优化, 苹果希望 msgSend 中最常见的路径可以尽可能的快，而最常见的路径是一个普通指针。
-当使用高位时候 可以通过一次比较对这两个进行检查。
-if (ptrValue &amp;lt;= 0) is Tagged Pointer Or nil，相对于两个分支检查 nil 和 tagged 这样就节省了一个条件分支。&lt;/p&gt;
-
-&lt;p&gt;2020 改变&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;标签位保持在最高位，这样做高位还是为了&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;msgSend&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;优化&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;标签号现在移到了最小边&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;个位&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;扩展标签随在标签位后。&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;现有工具&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;比如动态链接&lt;/span&gt;  &lt;span class=&quot;err&quot;&gt;会忽略普通指针前&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;位&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;这是由于&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;一个名为&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Top&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Byte&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Ignore&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;的&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ARM&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;特性，苹果会把扩展标签放在&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Top&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Byte&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Ignore&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;位。&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;对于一个对齐的指针&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;底部&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;个位总是&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，但我们可以改变这点&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;只要通过在指针上添加一个小数字，我们将添加&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;将低位设置为&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;表示这是一个扩展标签，这意味着可以将上面的这个指针放入一个扩展标签指针有效负载中，这个结果是一个&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Tagged&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Pointer&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;以及其有效负载中包含一个正常指针，它开启了&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Tagged&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Pointer&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;能力&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;引用二进制文件中的常量数据能力，如字符串或其他数据结构，否则他们将不得不占用&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dirty&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memory&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h4 id=&quot;六总结&quot;&gt;六、总结&lt;/h4&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;你不需做什么就能获得改进，如果说要做应该只是最小部署的问题&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;不要直接读取内部的位，总是使用苹果的&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;API&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-</description>
-        <pubDate>Sun, 15 Nov 2020 21:23:30 +0800</pubDate>
-        <link>http://localhost:4000/2020/11/Advancements-in-the-Objective-C-runtime/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/11/Advancements-in-the-Objective-C-runtime/</guid>
-        
-        <category>iOS WWDC</category>
         
         
       </item>

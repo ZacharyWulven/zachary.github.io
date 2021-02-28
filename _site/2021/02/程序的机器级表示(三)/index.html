@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>程序的机器级表示(三)</title>
+  <meta name="description" content="算术和逻辑操作大多数操作都分成指令类，这些指令类有各种带不同大小操作数的变种，每个指令类都有四种不同大小数据指令。只有 leaq 没有其他大小变种">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="程序的机器级表示(三)">
+  <meta name="twitter:description" content="算术和逻辑操作大多数操作都分成指令类，这些指令类有各种带不同大小操作数的变种，每个指令类都有四种不同大小数据指令。只有 leaq 没有其他大小变种">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="程序的机器级表示(三)">
+  <meta property="og:description" content="算术和逻辑操作大多数操作都分成指令类，这些指令类有各种带不同大小操作数的变种，每个指令类都有四种不同大小数据指令。只有 leaq 没有其他大小变种">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2021/02/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%B8%89)/">
+  <link rel="alternate" type="application/rss+xml" title="Zachary" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Zachary 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Zachary logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Zachary" class="blog-button">Zachary</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">生于忧患，死于安乐</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description">这里不限于谈论技术，同时也会涉及个人兴趣爱好，如魂系列游戏、克苏鲁文学等。</p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+
+  
+  
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:poisontusk@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-slate"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2021-02-28 22:45:30 +0800" itemprop="datePublished" class="post-meta__date date">2021-02-28</time> &#8226; <span class="post-meta__tags tags">CSApp</span>
+    </div>
+    <h1 class="post-title">程序的机器级表示(三)</h1>
+  </header>
+
+  <section class="post">
+    <h3 id="算术和逻辑操作">算术和逻辑操作</h3>
+<p>大多数操作都分成指令类，这些指令类有各种带不同大小操作数的变种，每个指令类都有四种不同大小数据指令。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">只有</span> <span class="n">leaq</span> <span class="err">没有其他大小变种</span></code></pre></figure>
+
+<p>例如：指令类 add 由四条加法指令组成</p>
+<ol>
+  <li>addb 字节加法</li>
+  <li>addw 字加法</li>
+  <li>addl 双字加法</li>
+  <li>addq 四字加法</li>
+</ol>
+
+<p>每个指令类都有对这四种不同大小数据的指令，分为四种：</p>
+<ol>
+  <li>加载有效地址</li>
+  <li>一元操作，有一个操作数</li>
+  <li>二元操作, 有两个操作数</li>
+  <li>移位</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">指令</span>           <span class="err">效果</span>              <span class="err">描述</span>
+<span class="n">leaq</span>  <span class="no">S</span><span class="p">,</span> <span class="no">D</span>    <span class="no">D</span> <span class="o">&lt;-</span> <span class="o">&amp;</span><span class="no">S</span>          <span class="err">加载有效地址</span>
+
+<span class="no">INC</span>   <span class="no">D</span>       <span class="no">D</span> <span class="o">&lt;-</span> <span class="no">D</span><span class="o">+</span><span class="mi">1</span>         <span class="err">加</span> <span class="mi">1</span>
+<span class="no">DEC</span>   <span class="no">D</span>       <span class="no">D</span> <span class="o">&lt;-</span> <span class="no">D</span><span class="o">-</span><span class="mi">1</span>         <span class="err">减</span> <span class="mi">1</span>
+<span class="no">NEG</span>   <span class="no">D</span>       <span class="no">D</span> <span class="o">&lt;-</span> <span class="o">-</span><span class="no">D</span>          <span class="err">取负</span>
+<span class="no">NOT</span>   <span class="no">D</span>       <span class="no">D</span> <span class="o">&lt;-</span> <span class="o">~</span><span class="no">D</span>          <span class="err">取补</span>
+
+<span class="no">ADD</span>   <span class="no">S</span><span class="p">,</span> <span class="no">D</span>    <span class="no">D</span> <span class="o">&lt;-</span> <span class="no">D</span> <span class="o">+</span> <span class="no">S</span>       <span class="err">加</span>
+<span class="no">SUB</span>   <span class="no">S</span><span class="p">,</span> <span class="no">D</span>    <span class="no">D</span> <span class="o">&lt;-</span> <span class="no">D</span> <span class="o">-</span> <span class="no">S</span>       <span class="err">减</span> 
+<span class="no">IMUL</span>  <span class="no">S</span><span class="p">,</span> <span class="no">D</span>    <span class="no">D</span> <span class="o">&lt;-</span> <span class="no">D</span> <span class="o">*</span> <span class="no">S</span>       <span class="err">乘</span>
+<span class="no">XOR</span>   <span class="no">S</span><span class="p">,</span> <span class="no">D</span>    <span class="no">D</span> <span class="o">&lt;-</span> <span class="no">D</span> <span class="o">^</span> <span class="no">S</span>       <span class="err">异或</span>
+<span class="no">OR</span>    <span class="no">S</span><span class="p">,</span> <span class="no">D</span>    <span class="no">D</span> <span class="o">&lt;-</span> <span class="no">D</span> <span class="o">|</span> <span class="no">S</span>       <span class="err">或</span>
+<span class="no">AND</span>   <span class="no">S</span><span class="p">,</span> <span class="no">D</span>    <span class="no">D</span> <span class="o">&lt;-</span> <span class="no">D</span> <span class="o">&amp;</span> <span class="no">S</span>       <span class="err">与</span>
+
+<span class="no">SAL</span>   <span class="n">k</span><span class="p">,</span> <span class="no">D</span>    <span class="no">D</span> <span class="o">&lt;-</span> <span class="no">D</span> <span class="o">&lt;&lt;</span> <span class="n">k</span>      <span class="err">左移</span>
+<span class="no">SHL</span>   <span class="n">k</span><span class="p">,</span> <span class="no">D</span>    <span class="no">D</span> <span class="o">&lt;-</span> <span class="no">D</span> <span class="o">&lt;&lt;</span> <span class="n">k</span>      <span class="err">左移（等同于</span> <span class="no">SAL</span><span class="err">）</span>
+<span class="no">SAR</span>   <span class="n">k</span><span class="p">,</span> <span class="no">D</span>    <span class="no">D</span> <span class="o">&lt;-</span> <span class="no">D</span> <span class="o">&gt;&gt;</span><span class="no">A</span> <span class="n">k</span>     <span class="err">算术右移</span>
+<span class="no">SHR</span>   <span class="n">k</span><span class="p">,</span> <span class="no">D</span>    <span class="no">D</span> <span class="o">&lt;-</span> <span class="no">D</span> <span class="o">&gt;&gt;</span><span class="no">L</span> <span class="n">k</span>     <span class="err">逻辑右移</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">加载有效地址</span> <span class="n">leaq</span> <span class="err">指令通常用来执行简单算术操作。</span><span class="o">&gt;&gt;</span><span class="no">A</span> <span class="err">表示算术右移。</span><span class="o">&gt;&gt;</span><span class="no">L</span> <span class="err">表示逻辑右移。</span></code></pre></figure>
+
+<h4 id="加载有效地址-leaq-本质是把第一个操作数存入目的寄存器中">加载有效地址 leaq (本质是把第一个操作数存入目的寄存器中)</h4>
+<p>加载有效地址（load effective address）指令 leaq 实际上是 movq 指令的变形。它的指令形式是从内存读数据到寄存器，但实际上它根本就没有引用内存。它的第一个操作数看上去是一个内存引用，但该指令并不是从指定位置读入数据，而是将有效地址写入到目的操作数。它能执行加法和有限形式的乘法，是很有用的指令。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">这条指令可以为后面内存引用产生指针。目的必须是一个寄存器。</span></code></pre></figure>
+
+<p>另外它还可以简洁描述普通算术操作。
+例如：%rdx 的值为 x，则 leaq 7(%rdx, %rdx, 4), %rax 就是将 %rax 值设置为 5x+7</p>
+
+<h4 id="一元和二元操作">一元和二元操作</h4>
+<h4 id="一元操作">一元操作</h4>
+<p>只有一个操作数，即使源又是目的，这个操作数可以是寄存器，也可以是内存位置。例如指令 incq(%rsp) 会使栈顶的 8 个字节元素加 1。这种语法让人想起了 C 语言的 ++、– 运算符。</p>
+
+<h4 id="二元操作">二元操作</h4>
+<p>第二个操作数即是源又是目的。这种语法让人想起了 C 语言的赋值运算符，例如 x -= y。源操作数是第一个，目的操作数是第二个。
+例如 subq %rax, %rdx 可以理解为 %rdx 值减去 %rax 值再存到 %rdx 中</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">第一个操作数可以是立即数、寄存器、内存地址。</span>
+<span class="err">第二个操作数可以是寄存器、内存地址。</span>
+<span class="err">若第二个操作数是内存地址，处理器必须从内存读出值，执行操作，再把结果写回内存。</span></code></pre></figure>
+
+<h4 id="位移操作">位移操作</h4>
+<p>先给出位移量，然后第二项给出要位移的数。位移量可以是一个立即数或放在单字节寄存器 %cl 中。这些指令很特别因为只允许以这个特定的寄存器作为操作数。1 个字节的位移量范围是 2^8 -1 = 255。
+在 x86-64 中，移位操作对 w 位长的数据值进行操作，移位量是由 %cl 寄存器低 m 位决定的，这里 2^m = w。高位被忽略，所以当 %cl 的十六进制值为 0xFF时候，指令 salb 会移 7 位，salw 会移 15 位，sall 会移 31 位，salq 会移 63 位。</p>
+
+<p>左移指令 SAL 和 SHL 两个效果一样都是将右边填上 0。</p>
+
+<p>右移指令不同，SAR 执行算术右移（填上符号位），SHR 执行逻辑右移（填上 0）</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">位移操作的目的操作数可以是寄存器或内存位置。</span></code></pre></figure>
+
+<h4 id="特殊的算术操作">特殊的算术操作</h4>
+<p>Intel 把 16 字节数字称为八字（oct word）。两个 64 位有符号或无符号相乘乘积需要 128 位来表示。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">指令</span>         <span class="err">效果</span>                                     <span class="err">描述</span>
+<span class="n">imulq</span>  <span class="no">S</span>     <span class="no">R</span><span class="p">[</span><span class="o">%</span><span class="n">rdx</span><span class="p">]:</span> <span class="no">R</span><span class="p">[</span><span class="o">%</span><span class="n">rax</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="no">SxR</span><span class="p">[</span><span class="o">%</span><span class="n">rax</span><span class="p">]</span>         <span class="err">有符号全乘法</span>
+<span class="n">mulq</span>   <span class="no">S</span>     <span class="no">R</span><span class="p">[</span><span class="o">%</span><span class="n">rdx</span><span class="p">]:</span> <span class="no">R</span><span class="p">[</span><span class="o">%</span><span class="n">rax</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="no">SxR</span><span class="p">[</span><span class="o">%</span><span class="n">rax</span><span class="p">]</span>         <span class="err">无符号全乘法</span>
+
+<span class="n">cqto</span>         <span class="no">R</span><span class="p">[</span><span class="o">%</span><span class="n">rdx</span><span class="p">]:</span> <span class="no">R</span><span class="p">[</span><span class="o">%</span><span class="n">rax</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="err">符号扩展</span><span class="p">(</span><span class="no">R</span><span class="p">[</span><span class="o">%</span><span class="n">rax</span><span class="p">])</span>   <span class="err">转为八字</span>
+
+<span class="n">idivq</span>  <span class="no">S</span>     <span class="no">R</span><span class="p">[</span><span class="o">%</span><span class="n">rdx</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="no">R</span><span class="p">[</span><span class="o">%</span><span class="n">rdx</span><span class="p">]</span><span class="ss">:R</span><span class="p">[</span><span class="o">%</span><span class="n">rax</span><span class="p">]</span> <span class="n">mod</span> <span class="no">S</span>      <span class="err">有符号除法</span>
+<span class="n">idivq</span>  <span class="no">S</span>     <span class="no">R</span><span class="p">[</span><span class="o">%</span><span class="n">rax</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="no">R</span><span class="p">[</span><span class="o">%</span><span class="n">rdx</span><span class="p">]</span><span class="ss">:R</span><span class="p">[</span><span class="o">%</span><span class="n">rax</span><span class="p">]</span> <span class="err">➗</span> <span class="no">S</span>       <span class="err">有符号除法</span>
+
+<span class="n">divq</span>   <span class="no">S</span>     <span class="no">R</span><span class="p">[</span><span class="o">%</span><span class="n">rdx</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="no">R</span><span class="p">[</span><span class="o">%</span><span class="n">rdx</span><span class="p">]</span><span class="ss">:R</span><span class="p">[</span><span class="o">%</span><span class="n">rax</span><span class="p">]</span> <span class="n">mod</span> <span class="no">S</span>      <span class="err">无符号除法</span>
+<span class="n">divq</span>   <span class="no">S</span>     <span class="no">R</span><span class="p">[</span><span class="o">%</span><span class="n">rax</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="no">R</span><span class="p">[</span><span class="o">%</span><span class="n">rdx</span><span class="p">]</span><span class="ss">:R</span><span class="p">[</span><span class="o">%</span><span class="n">rax</span><span class="p">]</span> <span class="err">➗</span> <span class="no">S</span>       <span class="err">无符号除法</span>
+<span class="err">这些操作提供了又符号和无符号数全</span><span class="mi">128</span><span class="err">位乘法和除法，一对寄存器</span> <span class="o">%</span><span class="n">rdx</span> <span class="err">和</span> <span class="o">%</span><span class="n">rax</span> <span class="err">组成一个</span> <span class="mi">128</span> <span class="err">位的八字。</span></code></pre></figure>
+
+<p>imulq 指令有两种不同形式，单操作数乘法指令，以两个 64 位值的全 128 位乘积，一个是 mulq 无符号乘法，另一个是 imulq（补码乘法）。这俩指令都要求一个参数必须在 %rax 中，而另一个作为指令的源操作数给出。然后乘积放在 %rdx（高 64 位） 和 %rax（低 64 位）中。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
+<span class="n">movq</span> <span class="o">%</span><span class="n">rsi</span><span class="p">,</span> <span class="o">%</span><span class="n">rax</span>
+<span class="n">mulq</span> <span class="o">%</span><span class="n">rdx</span>
+<span class="n">movq</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span> <span class="p">(</span><span class="o">%</span><span class="n">rdi</span><span class="p">)</span>      <span class="n">store</span> <span class="n">lower</span> <span class="mi">8</span> <span class="n">bytes</span> 
+<span class="n">movq</span> <span class="o">%</span><span class="n">rdx</span><span class="p">,</span> <span class="mi">8</span><span class="o">%</span><span class="n">rdi</span><span class="p">)</span>      <span class="n">store</span> <span class="n">upper</span> <span class="mi">8</span> <span class="n">bytes</span> </code></pre></figure>
+
+<p>除法</p>
+
+<p>有符号除法指令 idivl 将寄存器 %rdx（高 64 位） 和 %rax（低 64 位）中 128 位数作为被除数，除数作为指令操作数给出，
+商存在 %rax 中，余数存在 %rdx 中。</p>
+
+<p>cqto 不需要操作数，它隐含读出 %rax 的符号位，并将它复制到 %rdx 所有位。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">除法操作要使用</span> <span class="o">%</span><span class="n">rdx</span><span class="err">，所以如果入参用了</span> <span class="o">%</span><span class="n">rdx</span><span class="err">，要把入参保存到另一个寄存器如</span> <span class="o">%</span><span class="n">r8</span><span class="err">。</span></code></pre></figure>
+
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2021/02/%E5%A8%81%E5%A3%AB%E5%BF%8C%E5%85%A5%E9%97%A8%E4%B9%8B%E5%8D%95%E4%B8%80%E9%BA%A6%E8%8A%BD/" title="link to 威士忌入门之单一麦芽">威士忌入门之单一麦芽</a></h2>
+       <p class="excerpt">威士忌的原料原料：谷物、大麦也有用玉米或小麦制成。威士忌是蒸馏酒，啤酒、葡萄酒、清酒、琴酒、伏特加也是蒸馏酒。蒸馏技术源自于中古世纪的炼金术师，威士忌也称为生命之水。蒸馏酒：都是原料经过发酵制成的酿造酒，再经过蒸馏，产生高酒精浓度的酒就称为蒸馏酒。蒸馏后的酒是无色透明的木桶的成分赋予了酒的颜色。威士忌五大产地  加拿大  气味平易近人 常被用于调酒  日本      追随苏格兰酿造精髓  美国      玉米作为原料 ，波本威士忌  苏格兰   是威士忌起源地  爱尔兰   比苏格兰更早的...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2021-02-16 17:14:30 +0800" class="post-list__meta--date date">2021-02-16</time> &#8226; <span class="post-list__meta--tags tags">威士忌 whisky</span><a class="btn-border-small" href=/2021/02/%E5%A8%81%E5%A3%AB%E5%BF%8C%E5%85%A5%E9%97%A8%E4%B9%8B%E5%8D%95%E4%B8%80%E9%BA%A6%E8%8A%BD/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2021/02/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%B8%89)/";
+        this.page.identifier = "/2021/02/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%B8%89)/";
+    };
+
+    var disqus_shortname = 'Zachary';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-03-01 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2021</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>
