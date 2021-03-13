@@ -5,9 +5,71 @@
     <description>Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 13 Mar 2021 15:47:47 +0800</pubDate>
-    <lastBuildDate>Sat, 13 Mar 2021 15:47:47 +0800</lastBuildDate>
+    <pubDate>Sun, 14 Mar 2021 00:17:40 +0800</pubDate>
+    <lastBuildDate>Sun, 14 Mar 2021 00:17:40 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>威士忌入门之日本威士忌</title>
+        <description>&lt;h3 id=&quot;日本威士忌&quot;&gt;日本威士忌&lt;/h3&gt;
+&lt;p&gt;同苏格兰威士忌一样也分单一麦芽和调和式。口味与苏格兰威士忌相似。除了降低了烟熏味外，加水稀释液不会破坏其风味。&lt;/p&gt;
+
+&lt;p&gt;日本第一瓶国产威士忌是白札（Shirohuda）即三得利威士忌的前身。&lt;/p&gt;
+
+&lt;p&gt;日本独有的“水割”喝法&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;水割指在酒杯中放进冰块、威士忌、和适量水调成的稀释威士忌。许多日本威士忌（特别是调和式）都是配合水割喝法酿造的。&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;不过要想享受单一麦芽威士忌的香味，在饮用前最好不要加冰块。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;日本威士忌类型&quot;&gt;日本威士忌类型&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;麦芽威士忌 以大麦为原料，使用单式蒸馏器进行二次蒸馏再放入橡木桶中熟成，烟熏味少。&lt;/li&gt;
+  &lt;li&gt;谷物威士忌 以玉米等为原料，使用连续蒸馏器进行蒸馏再放入橡木桶中熟成，主要作为调和用。&lt;/li&gt;
+  &lt;li&gt;调和式威士忌 比苏格兰调和式烟熏味少。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;日本威士忌主要蒸馏厂&quot;&gt;日本威士忌主要蒸馏厂&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;Nikka 威士忌 余市蒸馏厂&lt;/li&gt;
+  &lt;li&gt;Nikka 威士忌 宫城峡蒸馏厂&lt;/li&gt;
+  &lt;li&gt;美露香威士忌 轻井蒸馏厂&lt;/li&gt;
+  &lt;li&gt;麒麟威士忌 御殿场蒸馏厂&lt;/li&gt;
+  &lt;li&gt;三得利威士忌 山崎蒸馏厂&lt;/li&gt;
+  &lt;li&gt;三得利威士忌 白州蒸馏厂&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;调酒师工作职责&quot;&gt;调酒师工作职责&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;管理数百桶以上的原酒，除了味道与库存数量确认外，尽可能能预知未来，思考酒桶能放多久，长期规划&lt;/li&gt;
+  &lt;li&gt;确保上市调和式威士忌风味都能有一定的品质。克服每年条件不同而酿造出风味不变的威士忌&lt;/li&gt;
+  &lt;li&gt;与时俱进，开发新的调和式威士忌&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;代表作&quot;&gt;代表作&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;山崎 Yamazaki 三得利旗下第一个蒸馏厂，优良的水质，1923 年，三得利的前身寿屋洋酒店的创办人鸟井信治郎选定了京都西南方的山崎，建立了日本第一个蒸馏厂。日本第一支威士忌诞生 “白札”。&lt;/li&gt;
+  &lt;li&gt;白州 Hakushu 三得利旗下第二个蒸馏厂，相对于山崎口感清爽，可以加苏打水混合后饮用。两大天然要素：来自甲斐驹岳山的融雪流入白川形成的水，空气冷凉湿气充分的森林位熟成环境。&lt;/li&gt;
+  &lt;li&gt;得利思 Torys 调和威士忌&lt;/li&gt;
+  &lt;li&gt;角瓶 Kakubin 调和威士忌 三得利旗下，瓶身龟甲样子&lt;/li&gt;
+  &lt;li&gt;三得利 Old 也称“球体” “黑丸”&lt;/li&gt;
+  &lt;li&gt;响 Hibiki 主要以山崎蒸馏厂的原酒为根本，由不同种类酒桶，不同熟成年份不同品牌的 33~39 种原酒调和而成。响的酒瓶有 24 个切面，据说代表一天 24 个小时以及 24 节气&lt;/li&gt;
+  &lt;li&gt;余市 Yoichi 以 Nikka 创办人竹鹤政孝在北海道的余市蒸馏厂酿造，竹鹤曾留学苏格兰，因此习得了苏格兰威士忌酿造方法，学成归国后加入了寿屋洋酒店工作，负责山崎蒸馏厂的设计和总指挥。但因为想要酿造苏格兰风格的威士忌与鸟井信治郎在想法上有分歧，鸟井则希望酿造适合日本本地口味的威士忌。
+最终独立挑选了北海道的余市设立蒸馏厂。Nikka 的第二蒸馏厂是宫城峡，位于宫城县仙台市，生产单一麦芽。&lt;/li&gt;
+  &lt;li&gt;Black Nikka 调和式威士忌，诞生于1965 年，是日本首瓶以国产谷物威士忌调出的调和威士忌，俗称 “老 K”，没有泥煤烟熏味&lt;/li&gt;
+  &lt;li&gt;鹤 Tsuru 由 Nikka 威士忌创始人竹鹤政孝所命名，由余市和仙台蒸馏厂原酒为基底，与谷物威士忌调和而成&lt;/li&gt;
+  &lt;li&gt;轻井泽 Karuizawa 调和威士忌&lt;/li&gt;
+  &lt;li&gt;Evermore 调和威士忌，产自麒麟蒸馏厂&lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+        <pubDate>Sat, 13 Mar 2021 22:14:30 +0800</pubDate>
+        <link>http://localhost:4000/2021/03/%E5%A8%81%E5%A3%AB%E5%BF%8C%E5%85%A5%E9%97%A8%E4%B9%8B%E6%97%A5%E6%9C%AC%E5%A8%81%E5%A3%AB%E5%BF%8C/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/03/%E5%A8%81%E5%A3%AB%E5%BF%8C%E5%85%A5%E9%97%A8%E4%B9%8B%E6%97%A5%E6%9C%AC%E5%A8%81%E5%A3%AB%E5%BF%8C/</guid>
+        
+        <category>威士忌 whisky</category>
+        
+        
+      </item>
     
       <item>
         <title>程序的机器级表示(三)</title>
@@ -1493,132 +1555,6 @@ pushq 一个字节，上边的两步是 8 个字节。
         <pubDate>Wed, 27 Jan 2021 22:45:30 +0800</pubDate>
         <link>http://localhost:4000/2021/01/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%BA%8C)/</link>
         <guid isPermaLink="true">http://localhost:4000/2021/01/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%BA%8C)/</guid>
-        
-        <category>CSApp</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>程序的机器级表示(一)</title>
-        <description>&lt;h3 id=&quot;机器代码&quot;&gt;机器代码&lt;/h3&gt;
-&lt;p&gt;有时指目标代码，有时指文本格式的汇编代码。ARM 是 Acorn RISC Machine 的缩写。RISC 精简指令集计算机。
-汇编代码表示非常接近机器代码，与机器代码的二进制相比，具有更好的可读性文本格式。&lt;/p&gt;
-&lt;h4 id=&quot;对机器编程来说其中两种抽象尤为重要&quot;&gt;对机器编程来说其中两种抽象尤为重要：&lt;/h4&gt;
-&lt;ol&gt;
-  &lt;li&gt;由指令集体系结构或指令架构(Instruction Set Architecture，ISA) 来定义机器级程序的格式和行为，它定义了处理器状态，指令的格式以及每条指令对状态的影响，大多数 ISA 将程序的行为描述成好像每条指令都是按顺序执行的，一条指令结束下一条再开始。处理器硬件远比描述的精细复杂，他们并发地执行许多指令，但是可以采取措施保证整体行为与 ISA 指定的顺序完全一致。&lt;/li&gt;
-  &lt;li&gt;机器级程序使用的内存地址是虚拟地址，提供的内存模型看上去是一个非常大的字节数组。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;机器编程的基本原理主要思想是通过访问寄存器到的一些状态&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;其实&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cc&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;就是&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;GCC&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;编译器，可以用&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cc&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;启动&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;处理器状态&quot;&gt;处理器状态&lt;/h3&gt;
-&lt;ol&gt;
-  &lt;li&gt;程序计数器（通常称为 PC）在 x86-64 中用 %rip 表示，给出将要执行的下一条指令在内存中的地址&lt;/li&gt;
-  &lt;li&gt;整数寄存器文件包含 16 个命名位置，分别存储 64 位的值，这些寄存器可以存储地址(类似 c 指针)或整数数据，有些寄存器用来记录某些重要的程序状态，其他的寄存器用来保存临时数据，如过程的参数和局部变量以及函数返回值&lt;/li&gt;
-  &lt;li&gt;条件码寄存器保存着最近执行的算术或逻辑指令的状态和信息，用来实现控制或数据流中的条件变化，如 if、while&lt;/li&gt;
-  &lt;li&gt;一组向量寄存器可以存放一个或多个整数或浮点数的值&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;内存&quot;&gt;内存&lt;/h3&gt;
-&lt;p&gt;内存实际是用不同方式实现的虚构对象，操作系统和硬件之间存在一种协作称为虚拟内存，让每个程序看起来像有自己独立的字节数组。&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;没有操作缓存的指令，你无法之间访问缓存&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;内存是你可以逻辑的认为只是一个字节数组，这就是机器级程序员看到的&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;生成程序的过程&quot;&gt;生成程序的过程&lt;/h3&gt;
-&lt;ol&gt;
-  &lt;li&gt;采用 C 并实际生成汇编代码 （编译 gcc -Og -S）&lt;/li&gt;
-  &lt;li&gt;通过汇编程序运行它，接受文本表示的指令并将其转换为实际的字节形式 （汇编 gcc or as）&lt;/li&gt;
-  &lt;li&gt;链接器将不同文件融合在一起，包含你的单独文件 （Linker gcc or ld）&lt;/li&gt;
-  &lt;li&gt;实际运行程序时，有一些库在程序首次开始时动态导入&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;机器代码重要的一点就是程序计数器&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;PC&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;告诉你&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;下一个指令是什么&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;下一个指令在内存中的位置&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;然后有一组寄存器供使用，可以把它们看成非常小的内存位置&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;介绍几个指令&quot;&gt;介绍几个指令&lt;/h3&gt;
-&lt;ol&gt;
-  &lt;li&gt;pushq 将东西推到栈中&lt;/li&gt;
-  &lt;li&gt;mov 将它从一个地方复制到另一个地方&lt;/li&gt;
-  &lt;li&gt;call 调用&lt;/li&gt;
-  &lt;li&gt;pop pushq 的反操作&lt;/li&gt;
-  &lt;li&gt;ret 从一个函数返回&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;生成汇编&quot;&gt;生成汇编&lt;/h3&gt;
-&lt;p&gt;$ gcc -Og -S sum.c （将 c 代码转化为汇编生成 sum.s 调用 gcc 是调用整个编译序列）&lt;/p&gt;
-&lt;h4 id=&quot;参数&quot;&gt;参数：&lt;/h4&gt;
-&lt;ol&gt;
-  &lt;li&gt;-S stop 只做第一部，把 c 转为汇编&lt;/li&gt;
-  &lt;li&gt;-Og 告诉编译器做什么优化规范，如果什么都不加 会产出无优化过的代码，非常难读&lt;/li&gt;
-  &lt;li&gt;-O1 打开优化器&lt;/li&gt;
-  &lt;li&gt;-O2 打开优化器&lt;/li&gt;
-  &lt;li&gt;-O Optimize&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;都是汇编文件&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;后缀是反汇编文件&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;汇编与-c-有什么不同&quot;&gt;汇编与 C 有什么不同？&lt;/h3&gt;
-&lt;ol&gt;
-  &lt;li&gt;汇编有很多不同类型的整数数据类型，有 1、2、4、8 字节的&lt;/li&gt;
-  &lt;li&gt;在整数数据类型中它们不区分有符号与无符号的存储方式，甚至地址或指针都是以数字形式在计算机中存储的&lt;/li&gt;
-  &lt;li&gt;浮点数以非常不同的方式处理事宜不同的寄存器组&lt;/li&gt;
-  &lt;li&gt;x86 下有的指令只有 1 个字节，有的可能最多 15 字节&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;数组和结构体不存在于机器语言&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;反汇编&quot;&gt;反汇编&lt;/h3&gt;
-&lt;p&gt;将工程从目标代码转回到汇编代码，会有所丢失跟正常的汇编代码有些不同&lt;/p&gt;
-&lt;h4 id=&quot;-gcc--og-sumc--o-sum-sum-是一个二进制&quot;&gt;$ gcc -Og sum.c -o sum (sum 是一个二进制)&lt;/h4&gt;
-&lt;h4 id=&quot;-objdump--d-sum--sumd-会输出程序的反汇编结果&quot;&gt;$ objdump -d sum &amp;gt; sum.d (会输出程序的反汇编结果)&lt;/h4&gt;
-&lt;h4 id=&quot;所有以开头的行都是指导汇编器和链接器工作的伪指令可以忽略&quot;&gt;所有以“.”开头的行都是指导汇编器和链接器工作的伪指令，可以忽略&lt;/h4&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;push&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rbx&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;mov&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rbx&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;callq&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;multstore&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x9&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;mov&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rbx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pop&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rbx&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;retq&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;反汇编代码会省略指令后边的 “q” 如 pushq 变成 push，但 call 和 ret 指令后会加 “q” 变成 callq，retq&lt;/p&gt;
-
-&lt;h3 id=&quot;链接器&quot;&gt;链接器&lt;/h3&gt;
-&lt;p&gt;链接器将地址显示了出来 如第四行&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;push&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rbx&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;mov&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rbx&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;callq&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;40058&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mult2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;mov&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rbx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pop&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rbx&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;retq&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;nop&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;nop&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h4 id=&quot;链接器的作用之一就是为函数调用找到匹配的函数可执行代码的位置&quot;&gt;链接器的作用之一就是为函数调用找到匹配的函数可执行代码的位置&lt;/h4&gt;
-&lt;h4 id=&quot;反汇编可能生成-nop-指令但如果在-ret-后就不影响因为函数已经-return-如第-89行&quot;&gt;反汇编可能生成 nop 指令，但如果在 ret 后就不影响，因为函数已经 return 如第 8、9行&lt;/h4&gt;
-
-&lt;h3 id=&quot;gdb-调试&quot;&gt;GDB 调试&lt;/h3&gt;
-&lt;p&gt;(gdb)disassemble sumstore （sumstore 是个函数，输出 sumstore 反汇编代码，multstore.o 文件）&lt;/p&gt;
-&lt;h4 id=&quot;x14xb-sumstore&quot;&gt;x/14xb sumstore&lt;/h4&gt;
-&lt;h4 id=&quot;x-表示从函数-multstore-所处的地址开始的-14-个十六进制格式表示-简写-x的字节简写-b&quot;&gt;x 表示从函数 multstore 所处的地址开始的 14 个十六进制格式表示 (简写 x)的字节(简写 b)&lt;/h4&gt;
-
-&lt;h3 id=&quot;寄存器&quot;&gt;寄存器&lt;/h3&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;使用&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;版本将得到&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;位&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;使用&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;版本将得到&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;位，&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;版本只是&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;版本的实体的低&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;位&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rsp&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;是栈指针&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;不把它作为任何旧用途&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;PC&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;是&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rip&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-</description>
-        <pubDate>Thu, 07 Jan 2021 21:45:30 +0800</pubDate>
-        <link>http://localhost:4000/2021/01/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%B8%80)/</link>
-        <guid isPermaLink="true">http://localhost:4000/2021/01/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%B8%80)/</guid>
         
         <category>CSApp</category>
         
