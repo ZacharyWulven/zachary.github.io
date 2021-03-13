@@ -164,8 +164,7 @@ reduce 和 fold 操作在功能上大致重合，两者都用一个积累量来�
 <p>fold left 含义是用一个二元函数或运算符来结合列表的首元素和累积量的初始值，重复上一步直到列表耗尽，此时累积值的取值为折叠运算结果。
 由于加法交换律，fold left 和 fold right 结果是一样的，但有些运算不能随便调换顺序，这时 fold right 就会派上用场。</p>
 
-<p>在纯函数式语言里，fold left 和 fold right 的实现并不同，fold right 允许操作无限长度的列表，fold left 则不允许
-需要把集合分成一小块来处理的时候用 reduce 或 fold。</p>
+<p>在纯函数式语言里，fold left 和 fold right 的实现并不同，fold right 允许操作无限长度的列表，fold left 则不允许，需要把集合分成一小块来处理的时候用 reduce 或 fold。</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="mi">1</span> <span class="err">函数式编程以参数传递和函数的复合作为主要表现手段，我们不需要掌握太多作为</span> <span class="err">“不确定因素”存在的其他语言构造之间的交互规则，这点对于我们学习很重要</span>
 <span class="mi">2</span> <span class="err">懂得什么什么时候应该使用像</span> <span class="err">“</span><span class="n">reduce</span><span class="err">”</span> <span class="err">这样的高层次抽象，是掌握函数式编程的关键所在</span></code></pre></figure>
@@ -180,7 +179,7 @@ reduce 和 fold 操作在功能上大致重合，两者都用一个积累量来�
    <div class="read-more-item">
        <span class="read-more-item-dim">最近的文章</span>
        <h2 class="post-list__post-title post-title"><a href="/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%BA%8C)/" title="link to 函数式编程思想 (二)">函数式编程思想 (二)</a></h2>
-       <p class="excerpt">权责让渡函数式思维的好处之一，是能够将底层次细节（如垃圾机制）的控制权移交给运行时，从而消除一大批注定会发生的程序错误。下面将讲述向语言和运行时让渡控制权的五各种途径。一、迭代让位于高阶函数用 map 等函数替换了迭代。用高阶函数把希望之星的操作表达出来，语言将会把操作安排得更高效。{% highlight ruby %}理解掌握的抽象层次永远要比日常使用的抽象层次更深一层{% endhighlight %}二、闭包 closure闭包是所有函数式语言都具备的一项平等特性。所谓闭包实际上是...&hellip;</p>
+       <p class="excerpt">权责让渡函数式思维的好处之一，是能够将底层次细节（如垃圾机制）的控制权移交给运行时，从而消除一大批注定会发生的程序错误。下面将讲述向语言和运行时让渡控制权的五各种途径。一、迭代让位于高阶函数用 map 等函数替换了迭代。用高阶函数的操作表达出来，语言将会把操作安排得更高效。{% highlight ruby %}理解掌握的抽象层次永远要比日常使用的抽象层次更深一层{% endhighlight %}二、闭包 closure闭包是所有函数式语言都具备的一项平等特性。所谓闭包实际上是一种特殊的...&hellip;</p>
        <div class="post-list__meta"><time datetime="2021-02-07 22:14:30 +0800" class="post-list__meta--date date">2021-02-07</time> &#8226; <span class="post-list__meta--tags tags">函数式编程 Swift</span><a class="btn-border-small" href=/2021/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-(%E4%BA%8C)/>继续阅读</a></div>
    </div>
    
@@ -227,7 +226,7 @@ reduce 和 fold 操作在功能上大致重合，两者都用一个积累量来�
             <section class="footer">
     <footer>
     	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
-        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-03-01 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-03-13 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
         <span class="footer__copyright">本站采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2021</span>
     </footer>
 </section>

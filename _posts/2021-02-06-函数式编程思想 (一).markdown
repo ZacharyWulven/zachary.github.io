@@ -54,8 +54,7 @@ let sum = list.reduce(0) { (result, x) -> Int in result + x }
 fold left 含义是用一个二元函数或运算符来结合列表的首元素和累积量的初始值，重复上一步直到列表耗尽，此时累积值的取值为折叠运算结果。
 由于加法交换律，fold left 和 fold right 结果是一样的，但有些运算不能随便调换顺序，这时 fold right 就会派上用场。
 
-在纯函数式语言里，fold left 和 fold right 的实现并不同，fold right 允许操作无限长度的列表，fold left 则不允许
-需要把集合分成一小块来处理的时候用 reduce 或 fold。
+在纯函数式语言里，fold left 和 fold right 的实现并不同，fold right 允许操作无限长度的列表，fold left 则不允许，需要把集合分成一小块来处理的时候用 reduce 或 fold。
 
 {% highlight ruby %}
 1 函数式编程以参数传递和函数的复合作为主要表现手段，我们不需要掌握太多作为 “不确定因素”存在的其他语言构造之间的交互规则，这点对于我们学习很重要

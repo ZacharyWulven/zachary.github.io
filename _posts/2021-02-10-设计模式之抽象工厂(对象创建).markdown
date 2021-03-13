@@ -22,7 +22,7 @@ NSNumber 中的类工厂方法定义了决定实例化何种私有具体子类�
 类簇（Class Cluster）是基于抽象工厂的思想。是抽象工厂的一种形式。将若干相关的私有具体工厂子类集合到一个公有的抽象超类下。
 
 NSNumber 自然的成为这些数子类型的超类型。NSNumber 本身是一个高度抽象的工厂，而 NSCFBoolean 和 NSCFNumber 是具体工厂子类。
-其他类簇 NSData、NSArray、NSDictionary、NSString
+其他类簇 NSData、NSArray、NSDictionary、NSString。
 
 ### 代码
 {% highlight ruby %}

@@ -150,7 +150,7 @@
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">一个</span> <span class="n">x86</span><span class="o">-</span><span class="mi">64</span> <span class="err">的</span> <span class="no">CPU</span> <span class="err">包含一组</span> <span class="mi">16</span> <span class="err">个存储</span> <span class="mi">64</span> <span class="err">位值的通用目的寄存器，他们用了存储整数数据和指针</span></code></pre></figure>
 
-<h4 id="指令可以对这个-16-个寄存器的低位字节中存放的不同大小的数据进行操作-字节级操作可以访问最低的字节">指令可以对这个 16 个寄存器的低位字节中存放的不同大小的数据进行操作 字节级操作可以访问最低的字节</h4>
+<h4 id="指令可以对这个-16-个寄存器的低位字节中存放的不同大小的数据进行操作字节级操作可以访问最低的字节">指令可以对这个 16 个寄存器的低位字节中存放的不同大小的数据进行操作，字节级操作可以访问最低的字节</h4>
 <h4 id="指令会复制和生成-1-字节2-字节4-字节和-8-字节值">指令会复制、和生成 1 字节、2 字节、4 字节和 8 字节值</h4>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="mi">1</span> <span class="err">生成</span> <span class="mi">1</span> <span class="err">字节和</span> <span class="mi">2</span> <span class="err">字节数字的指令会保持剩下的字节不变</span>
@@ -178,7 +178,7 @@
 
 <h4 id="栈指针">栈指针</h4>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">在常见的程序里不同的寄存器扮演不同的角色</span> <span class="err">其中最特别的是</span> <span class="o">%</span><span class="n">rsp</span> <span class="err">指明运行时栈的结束位置</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">在常见的程序里不同的寄存器扮演不同的角色，其中最特别的是</span> <span class="o">%</span><span class="n">rsp</span> <span class="err">指明运行时栈的结束位置</span></code></pre></figure>
 
 <h4 id="操作数指示符">操作数指示符</h4>
 <p>大多数指令有一个或多个操作数，指示出执行一个操作中要使用的源数据值，以及放置结果的目的位置。
@@ -187,8 +187,7 @@
 <ol>
   <li>立即数，用来表示常数值，$后跟一个标准 C 表示的整数 例如 $0x1F</li>
   <li>寄存器，它表示某个寄存器的内容，用 r(a) 表示任意寄存器，用引用 R[r(a)] 表示它的值，这是将寄存器集合看成一个数组 R ，用寄存器标示符作为索引</li>
-  <li>内存引用，他会根据计算出来的地址(通常称为有效地址)访问某个内存位置，因为将内存看成一个字节数组所以用 M(b)[Addr] 表示对存储在
-内存中从地址 Addr开始 b 个字节值得引用。通常省略 b 为 M[Addr]。(%rax)</li>
+  <li>内存引用，他会根据计算出来的地址(通常称为有效地址)访问某个内存位置，因为将内存看成一个字节数组所以用 M(b)[Addr] 表示对存储在内存中从地址 Addr开始 b 个字节值得引用。通常省略 b 为 M[Addr]。(%rax)</li>
 </ol>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">多种不同寻址模式</span>
@@ -233,8 +232,7 @@
 
 <h4 id="数据传送指令">数据传送指令</h4>
 <p>最频繁使用的指令是将数据从一个位置复制到另一个位置的指令，它们或者源和目的类型不同，或者执行的转换不同，
-或者具有一些副作用
-把许多不同指令划分为指令类，每一类中的指令执行相同的操作，只不过操作数大小不同</p>
+或者具有一些副作用，把许多不同指令划分为指令类，每一类中的指令执行相同的操作，只不过操作数大小不同。</p>
 <h3 id="例如mov-把数据从源位置复制到目的位置不做任何变化">例如，MOV 把数据从源位置复制到目的位置，不做任何变化。</h3>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">movb</span>    <span class="err">传送字节</span>    <span class="mi">1</span>
@@ -242,13 +240,12 @@
 <span class="n">movl</span>    <span class="err">传送双字</span>    <span class="mi">4</span>
 <span class="n">movq</span>    <span class="err">传送四字</span>    <span class="mi">8</span></code></pre></figure>
 
-<p>源操作数可以是立即数、寄存器、内存地址。目的操作数是寄存器或内存地址</p>
+<p>x86-64 有个限制，将一个值从内存位置复制到另一个内存位置需要两条指令，第一条指令将源值加载到寄存器，第二条将寄存器值写入目的位置。寄存器大小必须与 mov 末尾的字符（b、w、l、q）一致。
+mov 指令只会更新目的操作数指定的那个寄存器字节或内存位置。唯一例外的是 movl 以寄存器作为目的时，会把该寄存器高位 4 字节设置为 0 这是 x86-64 的惯例，即任何寄存器生成 32 位指令都会把该寄存器高位部分设置成 0。</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">x86</span><span class="o">-</span><span class="mi">64</span> <span class="err">有个限制</span> <span class="err">将一个值从内存位置复制到另一个内存位置需要两条指令，第一条指令将源值加载到寄存器，第二条将寄存器值写入目的位置。寄存器大小必须与</span> <span class="n">mov</span> <span class="err">末尾的字符（</span><span class="n">b</span><span class="err">、</span><span class="n">w</span><span class="err">、</span><span class="n">l</span><span class="err">、</span><span class="n">q</span><span class="err">）一致。</span>
-<span class="n">mov</span> <span class="err">指令只会更新目的操作数指定的那个寄存器字节或内存位置。唯一例外的是</span> <span class="n">movl</span> <span class="err">以寄存器作为目的时，会把该寄存器高位</span> <span class="mi">4</span> <span class="err">字节设置为</span> <span class="mi">0</span> <span class="err">这是</span> <span class="n">x86</span><span class="o">-</span><span class="mi">64</span> <span class="err">的惯例，即任何寄存器生成</span> <span class="mi">32</span> <span class="err">位指令都会把该寄存器高位部分设置成</span> <span class="mi">0</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">源操作数可以是立即数、寄存器、内存地址。目的操作数是寄存器或内存地址</span></code></pre></figure>
 
-<p>movabsq 能以任意 64 位立即数作为源操作数，并且只能以寄存器作为目的
-常规 mov 指令只能以 32 位补码数字的立即数作为源操作数，然后把这个值符号扩展到 64 位的值放到目的位置</p>
+<p>movabsq 能以任意 64 位立即数作为源操作数，并且只能以寄存器作为目的，常规 mov 指令只能以 32 位补码数字的立即数作为源操作数，然后把这个值符号扩展到 64 位的值放到目的位置。</p>
 
 <h4 id="将较小的源值复制到较大的目的使用指令-movzmovs把数据从源寄存器或内存复制到目的寄存器">将较小的源值复制到较大的目的使用指令 MOVZ、MOVS，把数据从源（寄存器或内存）复制到目的寄存器</h4>
 <h4 id="movz-类中指令把目的中剩余的字节填充为-0movzbw结尾-b-表示源大小w-表示目的大小">MOVZ 类中指令把目的中剩余的字节填充为 0，movzbw，结尾 b 表示源大小，w 表示目的大小</h4>
@@ -259,19 +256,14 @@
 long *xp 的, *xp 就是 (%rdi), xp 地址放在 %rdi 中, * 就是间接引用</span></code></pre></figure>
 
 <h3 id="压入和弹出栈">压入和弹出栈</h3>
-<p>通过 push 操作将数据压入程序栈中
-通过 pop 操作从程序栈中弹出数据(删除数据)，弹出的值永远是最近被压入而且乃然在栈中的值
-栈可以实现为一个数组，总是从数组一端插入和删除元素 这一端被称为栈顶
-栈向下增长，栈顶元素地址是所有栈中地址中最低的
-在 x86-64 中 栈向低地址方向增长，所以压栈是减小栈指针 %rsp 的值 并将数据存放到内存中，
-出栈是从内存中读数据 并增加栈指针的值.</p>
+<p>通过 push 操作将数据压入程序栈中，通过 pop 操作从程序栈中弹出数据(删除数据)，弹出的值永远是最近被压入而且乃然在栈中的值。栈可以实现为一个数组，总是从数组一端插入和删除元素，这一端被称为栈顶。栈向下增长，栈顶元素地址是所有栈中地址中最低的。在 x86-64 中，栈向低地址方向增长，所以压栈是减小栈指针 %rsp 的值，并将数据存放到内存中，出栈是从内存中读数据，并增加栈指针的值。</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">%</span><span class="n">rsp</span> <span class="err">保存着栈顶元素地址</span></code></pre></figure>
 
 <h3 id="当-rsp-为-0x108rax-为-0x123-时">当 %rsp 为 0x108，%rax 为 0x123 时</h3>
 
 <h4 id="压入">压入</h4>
-<p>执行 pushq %rax ，将一个 4 字值压入栈中 首先将栈指针减 8 (0x108-&gt;0x100) 得到 0x100，然后将 0x123 存入0x100位置（将值写入栈顶地址）
+<p>执行 pushq %rax ，将一个 4 字值压入栈中。首先将栈指针减 8 (0x108-&gt;0x100) 得到 0x100，然后将 0x123 存入0x100位置（将值写入栈顶地址）
 pushq 一个字节，上边的两步是 8 个字节。
 因此 pushq %rbp 行为等于</p>
 <ol>
@@ -311,7 +303,7 @@ pushq 一个字节，上边的两步是 8 个字节。
    <div class="read-more-item">
        <span class="read-more-item-dim">更早的文章</span>
        <h2 class="post-list__post-title post-title"><a href="/2021/01/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%B8%80)/" title="link to 程序的机器级表示(一)">程序的机器级表示(一)</a></h2>
-       <p class="excerpt">机器代码有时指目标代码，有时指文本格式的汇编代码。ARM 是 Acorn RISC Machine 的缩写。RISC 精简指令集计算机。汇编代码表示非常接近机器代码 与机器代码的二进制相比 具有更好的可读性文本格式对机器编程来说其中两种抽象尤为重要：  由指令集体系结构或指令架构(Instruction Set Architecture，ISA) 来定义机器级程序的格式和行为，它定义了处理器状态，指令的格式以及每条指令对状态的影响，大多数 ISA 将程序的行为描述成好像每条指令都是按顺序执...&hellip;</p>
+       <p class="excerpt">机器代码有时指目标代码，有时指文本格式的汇编代码。ARM 是 Acorn RISC Machine 的缩写。RISC 精简指令集计算机。汇编代码表示非常接近机器代码，与机器代码的二进制相比，具有更好的可读性文本格式。对机器编程来说其中两种抽象尤为重要：  由指令集体系结构或指令架构(Instruction Set Architecture，ISA) 来定义机器级程序的格式和行为，它定义了处理器状态，指令的格式以及每条指令对状态的影响，大多数 ISA 将程序的行为描述成好像每条指令都是按顺序...&hellip;</p>
        <div class="post-list__meta"><time datetime="2021-01-07 21:45:30 +0800" class="post-list__meta--date date">2021-01-07</time> &#8226; <span class="post-list__meta--tags tags">CSApp</span><a class="btn-border-small" href=/2021/01/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E4%B8%80)/>继续阅读</a></div>
    </div>
    
@@ -348,7 +340,7 @@ pushq 一个字节，上边的两步是 8 个字节。
             <section class="footer">
     <footer>
     	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
-        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-03-01 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-03-13 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
         <span class="footer__copyright">本站采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2021</span>
     </footer>
 </section>
