@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>程序的机器级表示(四) 控制</title>
+  <meta name="description" content="目前为止，我们只考虑直线代码行为，也就是指令一条接着一条的顺序的执行。C 语言中某些结构如条件语句、循环语句、分支语句，根据测试数据的结果决定操作执行的顺序。机器代码提供两种基本的低级机制来实现有条件的行为: 测试数据值，然后根据测试结果改变控制流或数据流。jump 指令可以改变一组机器代码指令的执行顺序， ju...">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="程序的机器级表示(四) 控制">
+  <meta name="twitter:description" content="目前为止，我们只考虑直线代码行为，也就是指令一条接着一条的顺序的执行。C 语言中某些结构如条件语句、循环语句、分支语句，根据测试数据的结果决定操作执行的顺序。机器代码提供两种基本的低级机制来实现有条件的行为: 测试数据值，然后根据测试结果改变控制流或数据流。jump 指令可以改变一组机器代码指令的执行顺序， ju...">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="程序的机器级表示(四) 控制">
+  <meta property="og:description" content="目前为止，我们只考虑直线代码行为，也就是指令一条接着一条的顺序的执行。C 语言中某些结构如条件语句、循环语句、分支语句，根据测试数据的结果决定操作执行的顺序。机器代码提供两种基本的低级机制来实现有条件的行为: 测试数据值，然后根据测试结果改变控制流或数据流。jump 指令可以改变一组机器代码指令的执行顺序， ju...">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2021/03/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E5%9B%9B)-%E6%8E%A7%E5%88%B6/">
+  <link rel="alternate" type="application/rss+xml" title="Zachary" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 Zachary 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="Zachary logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Zachary" class="blog-button">Zachary</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">生于忧患，死于安乐</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description">这里不限于谈论技术，同时也会涉及个人兴趣爱好，如魂系列游戏、克苏鲁文学等。</p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+
+  
+  
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:poisontusk@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-slate"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2021-03-28 14:45:30 +0800" itemprop="datePublished" class="post-meta__date date">2021-03-28</time> &#8226; <span class="post-meta__tags tags">CSApp</span>
+    </div>
+    <h1 class="post-title">程序的机器级表示(四) 控制</h1>
+  </header>
+
+  <section class="post">
+    <p>目前为止，我们只考虑直线代码行为，也就是指令一条接着一条的顺序的执行。C 语言中某些结构如条件语句、循环语句、分支语句，根据测试数据的结果决定操作执行的顺序。机器代码提供两种基本的低级机制来实现有条件的行为: 测试数据值，然后根据测试结果改变控制流或数据流。jump 指令可以改变一组机器代码指令的执行顺序， jump 指令指定控制应该被传递到程序的某个其他部分，可能是依赖于某个测试结果。编译器必须产生构建在这种低级机制基础之上的指令序列来实现 c 语言的控制结构。</p>
+
+<h3 id="条件码">条件码</h3>
+<p>除了整数寄存器，CPU 还维护着一组单个位的条件码寄存器，它们描述了最近的算术或逻辑操作属性，可以检测这些寄存器来执行条件分支指令</p>
+<ol>
+  <li>CF: 进位标志 最近的操作使最高位产生了进位，可以用来检测无符号操作的溢出</li>
+  <li>ZF: 零标志 最近的操作得出的结果为 0</li>
+  <li>SF: 符号标志 最近的操作得到的结果为负数</li>
+  <li>OF: 溢出标志 最近的操作导致一个补码溢出–正溢出或负溢出</li>
+</ol>
+
+<p>例如： t = a + b，a b t 都是整型然后下面 C 表达式来设置条件码</p>
+<ol>
+  <li>CF: (unsigned) t &lt; (unsigned) a         无符号溢出</li>
+  <li>ZF: t == 0                              零</li>
+  <li>SF: t &lt; 0                               负数</li>
+  <li>OF: (a&lt;0==b&lt;0) &amp;&amp; (t&lt;0 !=a&lt;0)           有符号溢出</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">leaq</span> <span class="err">指令不改变任何条件码，因为它是用来进行地址计算的。</span></code></pre></figure>
+
+<p>上一篇列出的 INC、DEC、NEG、NOT 等指令都会设置条件码。例如 XOR 进位标志和溢出标志会设置为 0。对于位移操作进位标志将设置为最后一个被移出的位，而溢出标志设置为 0。INC、DEC 指令会设置溢出和零标志 但是不会改变进位标志。</p>
+
+<p>除了这些指令会设置条件码，还有两类指令(有8，16，32，64位形式) 只设置条件码而不改变任何其他寄存器。</p>
+<ol>
+  <li>CMP 指令根据两个操作数之差来设置条件码，除只设置条件码而不更新寄存器外 CMP 指令与 SUB 指令行为是一样的，在 ATT 格式中，列出操作数的顺序是相反的，如果两个操作数相等，这些指令会将零标志设置为 1，其他的标志可以用来确定两个操作数之间的大小关系。cmpb、cmpw、cmpl、cmpq</li>
+  <li>TEST 指令与 AND 指令一样，典型用法两个操作数是一样的，如 testq %rax, %rax 用来检测 %rax 是负数、0 还是正数，或其中一个操作数是掩码，用来指示哪些位应该被测试。testb、testw、testl、testq</li>
+</ol>
+
+<h3 id="访问条件码">访问条件码</h3>
+<p>条件码通常不会直接读取，常用的使用方法有三种：</p>
+<ol>
+  <li>可以根据条件码的某种组合，将一个字节设置为 0 或 1，我们将这一整类指令称为 SET。它们之间的区别在于它们考虑的条件码组合是什么，这些指令的后缀指明了它们所考虑的条件码组合，这些指令后缀表示不同的条件而不是操作数大小。了解这些很重要。例如指令 setl 和 setb 表示小于时设置 set less 即 setl，低于时设置 set below 即 setb，而不是设置长字和设置字节。一条 SET 指令的目的操作数是低位单字节寄存器元素之一（如 %al、%bl 等）， 或是一个字节的内存位置，指令会将这个字节设置为 0 或 1。</li>
+  <li>可以条件跳转到程序的某个其他的部分</li>
+  <li>可以有条件的传送数据</li>
+</ol>
+
+<p>SET 指令根据条件码的某个组合将一个字节设置为 0 或 1</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">指令</span>             <span class="err">同义名</span>         <span class="err">效果</span>                        <span class="err">设置条件</span>
+<span class="n">sete</span>   <span class="no">D</span>        <span class="n">setz</span>          <span class="no">D</span><span class="o">&lt;-</span> <span class="no">ZF</span>                      <span class="err">相等</span><span class="o">/</span><span class="err">零</span> 
+<span class="n">setne</span>  <span class="no">D</span>        <span class="n">setnz</span>         <span class="no">D</span><span class="o">&lt;-</span> <span class="o">~</span><span class="no">ZF</span>                     <span class="err">不等</span><span class="o">/</span><span class="err">非零</span>
+
+<span class="n">sets</span>   <span class="no">D</span>                      <span class="no">D</span><span class="o">&lt;-</span> <span class="no">SF</span>                      <span class="err">负数</span>
+<span class="n">setns</span>  <span class="no">D</span>                      <span class="no">D</span><span class="o">&lt;-</span> <span class="o">~</span><span class="no">SF</span>                     <span class="err">非负数</span>
+
+<span class="n">setg</span>   <span class="no">D</span>        <span class="n">setnle</span>        <span class="no">D</span><span class="o">&lt;-</span> <span class="o">~</span><span class="p">(</span><span class="no">SF</span> <span class="o">^</span> <span class="no">OF</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="no">ZF</span>        <span class="err">大于</span><span class="p">(</span><span class="err">有符号</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="n">setge</span>  <span class="no">D</span>        <span class="n">setnl</span>         <span class="no">D</span><span class="o">&lt;-</span> <span class="o">~</span><span class="p">(</span><span class="no">SF</span> <span class="o">^</span> <span class="no">OF</span><span class="p">)</span>              <span class="err">大于等于</span><span class="p">(</span><span class="err">有符号</span><span class="o">&gt;=</span><span class="p">)</span>
+<span class="n">setl</span>   <span class="no">D</span>        <span class="n">setnge</span>        <span class="no">D</span><span class="o">&lt;-</span> <span class="no">SF</span> <span class="o">^</span> <span class="no">OF</span>                 <span class="err">小于</span><span class="p">(</span><span class="err">有符号</span><span class="o">&lt;</span><span class="p">)</span>
+<span class="n">setle</span>  <span class="no">D</span>        <span class="n">setng</span>         <span class="no">D</span><span class="o">&lt;-</span> <span class="p">(</span><span class="no">SF</span> <span class="o">^</span> <span class="no">OF</span><span class="p">)</span> <span class="o">|</span> <span class="no">ZF</span>          <span class="err">小于等于</span><span class="p">(</span><span class="err">有符号</span><span class="o">&lt;=</span><span class="p">)</span>
+
+<span class="n">seta</span>   <span class="no">D</span>        <span class="n">setnbe</span>        <span class="no">D</span><span class="o">&lt;-</span> <span class="o">~</span><span class="no">CF</span> <span class="o">&amp;</span> <span class="o">~</span><span class="no">ZF</span>               <span class="err">超过</span><span class="p">(</span><span class="err">无符号</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="n">setae</span>  <span class="no">D</span>        <span class="n">setnb</span>         <span class="no">D</span><span class="o">&lt;-</span> <span class="o">~</span><span class="no">CF</span>                     <span class="err">超过或相等</span><span class="p">(</span><span class="err">无符号</span><span class="o">&gt;=</span><span class="p">)</span>
+<span class="n">setb</span>   <span class="no">D</span>        <span class="n">setnae</span>        <span class="no">D</span><span class="o">&lt;-</span> <span class="no">CF</span>                      <span class="err">低于</span><span class="p">(</span><span class="err">无符号</span><span class="o">&lt;</span><span class="p">)</span>
+<span class="n">setbe</span>  <span class="no">D</span>        <span class="n">setna</span>         <span class="no">D</span><span class="o">&lt;-</span> <span class="no">CF</span> <span class="o">|</span> <span class="no">ZF</span>                 <span class="err">低于或相等</span><span class="p">(</span><span class="err">无符号</span><span class="o">&lt;=</span><span class="p">)</span></code></pre></figure>
+
+<p>一个 C 语言表达式 a &lt; b 典型指令</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span>
+<span class="n">int</span> <span class="n">comp</span><span class="p">(</span><span class="n">data_t</span> <span class="n">a</span><span class="p">,</span> <span class="n">data_t</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">a</span> <span class="k">in</span> <span class="o">%</span><span class="n">rdi</span><span class="p">,</span> <span class="n">b</span> <span class="k">in</span> <span class="o">%</span><span class="n">rsi</span>
+<span class="ss">comp:
+</span><span class="n">cmpq</span>     <span class="o">%</span><span class="n">rsi</span><span class="p">,</span><span class="o">%</span><span class="n">rdi</span>            <span class="n">compare</span> <span class="n">a</span><span class="ss">:b</span>
+<span class="n">setl</span>     <span class="o">%</span><span class="n">al</span>                  <span class="n">set</span> <span class="n">low</span><span class="o">-</span><span class="n">order</span> <span class="n">byte</span> <span class="n">of</span> <span class="o">%</span><span class="n">eax</span> <span class="n">to</span> <span class="mi">0</span> <span class="n">or</span> <span class="mi">1</span>
+<span class="n">movzbl</span>   <span class="o">%</span><span class="n">al</span><span class="p">,</span> <span class="o">%</span><span class="n">eax</span>            <span class="n">clear</span> <span class="n">rest</span> <span class="n">of</span> <span class="o">%</span><span class="n">eax</span> <span class="p">(</span><span class="n">and</span> <span class="n">rest</span> <span class="n">of</span> <span class="o">%</span><span class="n">rax</span><span class="p">)</span>
+<span class="n">ret</span>
+<span class="n">movzbl</span> <span class="err">指令不仅会把</span> <span class="o">%</span><span class="n">eax</span> <span class="err">的高</span><span class="mi">3</span><span class="err">个字节清零，还会把寄存器</span> <span class="o">%</span><span class="n">rax</span> <span class="err">高</span> <span class="mi">4</span> <span class="err">个字节都清零。底层机器指令可能有多个名字·，称为同义名</span> <span class="n">setg</span> <span class="err">表示“设置大于”</span> <span class="err">和</span> <span class="n">setnle</span> <span class="err">表示“设置不小于等于”</span> <span class="err">就是同一个指令。</span></code></pre></figure>
+
+<p>对于无符号比较，CMP 指令会设置进位标志，因而无符号比较使用的是进位标志和零标志的组合。注意到机器代码如何区分有符号和无符号是很重要的，同 C 语言不通机器代码不会将每个程序值都和一个数据类型联系起来，相反大多情况机器代码对于有符号和无符号都使用一样的指令，这是因为许多算术运算对无符号和补码算术都有一样的位级行为。有些情况要用不同指令处理有符号和无符号操作，如不同版本的右移、除法、乘法等。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">汇编代码不会记录程序值的类型，理解这点很重要。不同指令确定操作数的大小以及是有符号还是无符号。</span></code></pre></figure>
+
+<p>例如下边汇编代码确定 a 的类型</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">int</span> <span class="nb">test</span><span class="p">(</span><span class="n">data_t</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">return</span> <span class="n">a</span> <span class="no">TEST</span> <span class="mi">0</span>
+<span class="p">}</span>
+<span class="n">testq</span>  <span class="o">%</span><span class="n">rdi</span><span class="p">,</span> <span class="o">%</span><span class="n">rdi</span>
+<span class="n">setge</span>  <span class="o">%</span><span class="n">al</span>
+
+<span class="err">解析：</span><span class="n">testq</span> <span class="err">确定是</span> <span class="mi">64</span> <span class="err">位操作，</span><span class="n">a</span> <span class="err">应该是</span> <span class="mi">64</span> <span class="err">位的，</span><span class="n">setge</span> <span class="err">表示对有符号的比较所以</span> <span class="n">a</span> <span class="err">可能类型是</span> <span class="n">long</span></code></pre></figure>
+
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2021/03/%E5%A8%81%E5%A3%AB%E5%BF%8C%E5%85%A5%E9%97%A8%E4%B9%8B%E6%97%A5%E6%9C%AC%E5%A8%81%E5%A3%AB%E5%BF%8C/" title="link to 威士忌入门之日本威士忌">威士忌入门之日本威士忌</a></h2>
+       <p class="excerpt">日本威士忌同苏格兰威士忌一样也分单一麦芽和调和式。口味与苏格兰威士忌相似。除了降低了烟熏味外，加水稀释液不会破坏其风味。日本第一瓶国产威士忌是白札（Shirohuda）即三得利威士忌的前身。日本独有的“水割”喝法水割指在酒杯中放进冰块、威士忌、和适量水调成的稀释威士忌。许多日本威士忌（特别是调和式）都是配合水割喝法酿造的。不过要想享受单一麦芽威士忌的香味，在饮用前最好不要加冰块。日本威士忌类型  麦芽威士忌 以大麦为原料，使用单式蒸馏器进行二次蒸馏再放入橡木桶中熟成，烟熏味少。  谷物威士...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2021-03-13 22:14:30 +0800" class="post-list__meta--date date">2021-03-13</time> &#8226; <span class="post-list__meta--tags tags">威士忌 whisky</span><a class="btn-border-small" href=/2021/03/%E5%A8%81%E5%A3%AB%E5%BF%8C%E5%85%A5%E9%97%A8%E4%B9%8B%E6%97%A5%E6%9C%AC%E5%A8%81%E5%A3%AB%E5%BF%8C/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2021/03/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E5%9B%9B)-%E6%8E%A7%E5%88%B6/";
+        this.page.identifier = "/2021/03/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E5%9B%9B)-%E6%8E%A7%E5%88%B6/";
+    };
+
+    var disqus_shortname = 'Zachary';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-03-29 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2021</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>
