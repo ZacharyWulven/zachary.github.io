@@ -5,8 +5,8 @@
     <description>Hi，我是 Zachary，一名 iOS 开发者，欢迎来到我的博客。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 29 Mar 2021 23:54:46 +0800</pubDate>
-    <lastBuildDate>Mon, 29 Mar 2021 23:54:46 +0800</lastBuildDate>
+    <pubDate>Tue, 30 Mar 2021 00:52:38 +0800</pubDate>
+    <lastBuildDate>Tue, 30 Mar 2021 00:52:38 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -290,6 +290,60 @@
 
 &lt;span class=&quot;err&quot;&gt;解析：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;testq&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;确定是&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;位操作，&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;应该是&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;位的，&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setge&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;表示对有符号的比较所以&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;可能类型是&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;long&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
+&lt;h3 id=&quot;跳转指令&quot;&gt;跳转指令&lt;/h3&gt;
+&lt;p&gt;跳转 jump 指令会导致执行切换到程序中一个全新的位置。在汇编代码中，这些跳转目的地通常用一个标号（label）指明。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;movq&lt;/span&gt;  &lt;span class=&quot;vg&quot;&gt;$0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;              &lt;span class=&quot;n&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;jmp&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;L1&lt;/span&gt;                   &lt;span class=&quot;n&quot;&gt;goto&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;L1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;movq&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;           &lt;span class=&quot;no&quot;&gt;Null&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pointer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dereference&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;skipped&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;L1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;popq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdx&lt;/span&gt;                   &lt;span class=&quot;no&quot;&gt;Jump&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;指令 jmp .L1 会导致程序跳过 movq 指令，而从 popq 指令开始继续执行。在产生目标代码文件时，汇编器会确定所有带标号指令的地址，并将跳转目标(目的指令的地址)编码为跳转指令的一部分。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;jmp&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;指令是无条件跳转，可以直接跳转，即跳转目标是作为指令的一部分编码，也可以是间接跳转，即跳转目标是从寄存器或内存位置中读出的。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;直接跳转间接跳转&quot;&gt;直接跳转/间接跳转&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;直接跳转时给出一个标号作为跳转目标的，例如上边代码 .L1&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;间接跳转的写法是 * 后边跟一个操作指示符，例如 jmp *%rax 以寄存器 %rax 中的值作为跳转目的。而  jmp *(%rax) 以读 %rax 中的值（地址）从内存中读出跳转目的。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;指令&lt;/span&gt;              &lt;span class=&quot;err&quot;&gt;同义名&lt;/span&gt;    &lt;span class=&quot;err&quot;&gt;跳转条件&lt;/span&gt;           &lt;span class=&quot;err&quot;&gt;描述&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;jmp&lt;/span&gt;  &lt;span class=&quot;no&quot;&gt;Label&lt;/span&gt;                 &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;                &lt;span class=&quot;err&quot;&gt;直接跳转&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;jmp&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Operand&lt;/span&gt;              &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;                &lt;span class=&quot;err&quot;&gt;间接跳转&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;je&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;Label&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;jz&lt;/span&gt;       &lt;span class=&quot;no&quot;&gt;ZF&lt;/span&gt;               &lt;span class=&quot;err&quot;&gt;相等&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;零&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;jne&lt;/span&gt;  &lt;span class=&quot;no&quot;&gt;Label&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;jnz&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ZF&lt;/span&gt;               &lt;span class=&quot;err&quot;&gt;不等&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;非零&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;js&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;Label&lt;/span&gt;                 &lt;span class=&quot;no&quot;&gt;SF&lt;/span&gt;               &lt;span class=&quot;err&quot;&gt;负数&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;jns&lt;/span&gt;  &lt;span class=&quot;no&quot;&gt;Label&lt;/span&gt;                &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SF&lt;/span&gt;               &lt;span class=&quot;err&quot;&gt;非负数&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;jg&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;Label&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;jnle&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;OF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ZF&lt;/span&gt;   &lt;span class=&quot;err&quot;&gt;大于&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;有符号&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;jge&lt;/span&gt;  &lt;span class=&quot;no&quot;&gt;Label&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;jnl&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;OF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;         &lt;span class=&quot;err&quot;&gt;大于等于&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;有符号&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;jl&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;Label&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;jnge&lt;/span&gt;     &lt;span class=&quot;no&quot;&gt;SF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;OF&lt;/span&gt;          &lt;span class=&quot;err&quot;&gt;小于&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;有符号&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;jle&lt;/span&gt;  &lt;span class=&quot;no&quot;&gt;Label&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;jng&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;OF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ZF&lt;/span&gt;    &lt;span class=&quot;err&quot;&gt;小于等于&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;有符号&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;ja&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;Label&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;jnbe&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;CF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ZF&lt;/span&gt;         &lt;span class=&quot;err&quot;&gt;超过&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;无符号&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;jae&lt;/span&gt;  &lt;span class=&quot;no&quot;&gt;Label&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;jnb&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;CF&lt;/span&gt;               &lt;span class=&quot;err&quot;&gt;超过或相等&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;无符号&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;jb&lt;/span&gt;   &lt;span class=&quot;no&quot;&gt;Label&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;jnae&lt;/span&gt;     &lt;span class=&quot;no&quot;&gt;CF&lt;/span&gt;               &lt;span class=&quot;err&quot;&gt;低于&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;无符号&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;jbe&lt;/span&gt;  &lt;span class=&quot;no&quot;&gt;Label&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;jna&lt;/span&gt;      &lt;span class=&quot;no&quot;&gt;CF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ZF&lt;/span&gt;          &lt;span class=&quot;err&quot;&gt;低于或相等&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;无符号&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;上表中其他跳转指令都是由条件的，它们根据条件码的某种组合，或跳转或继续执行代码序列中的下一条指令。&lt;/p&gt;
+
+&lt;h3 id=&quot;跳转指令编码&quot;&gt;跳转指令编码&lt;/h3&gt;
+&lt;p&gt;理解跳转指令目标如何编码对研究链接非常重要，同时也能帮助我们理解反汇编的输出。&lt;/p&gt;
+
+&lt;p&gt;跳转指令有几种不同的编码，最常用的都是 PC 相对的(PC-relative)&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;它们会将目标指令地址与紧跟在跳转指令后面那条指令的地址之间的差作为编码，这些地址偏移量可以编码为 1、2、4个字节&lt;/li&gt;
+  &lt;li&gt;给出绝对地址，用 4 个字节直接指定目标，汇编器和链接器会选择适当的跳转目的编码&lt;/li&gt;
+&lt;/ol&gt;
 </description>
         <pubDate>Sun, 28 Mar 2021 14:45:30 +0800</pubDate>
         <link>http://localhost:4000/2021/03/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA(%E5%9B%9B)-%E6%8E%A7%E5%88%B6/</link>
