@@ -259,6 +259,62 @@
   <li>给出绝对地址，用 4 个字节直接指定目标，汇编器和链接器会选择适当的跳转目的编码</li>
 </ol>
 
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="mi">0</span><span class="p">:</span>  <span class="mi">48</span> <span class="mi">89</span> <span class="n">f8</span>    <span class="n">mov</span> <span class="o">%</span><span class="n">rdi</span><span class="p">,</span> <span class="o">%</span><span class="n">rax</span>
+<span class="mi">3</span><span class="p">:</span>  <span class="n">eb</span> <span class="mo">03</span>        <span class="n">jmp</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="kp">loop</span><span class="o">+</span><span class="mh">0x8</span><span class="o">&gt;</span>
+<span class="mi">5</span><span class="p">:</span>  <span class="mi">48</span> <span class="n">d1</span> <span class="n">f8</span>    <span class="n">sar</span> <span class="o">%</span><span class="n">rax</span>
+<span class="mi">8</span><span class="p">:</span>  <span class="mi">48</span> <span class="mi">58</span> <span class="n">c0</span>   <span class="nb">test</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span> <span class="o">%</span><span class="n">rax</span>
+<span class="ss">b:  </span><span class="mi">7</span><span class="n">f</span> <span class="n">f8</span>          <span class="n">jg</span>    <span class="mi">5</span> <span class="o">&lt;</span><span class="kp">loop</span><span class="o">+</span><span class="mh">0x5</span><span class="o">&gt;</span>
+<span class="ss">d:  </span><span class="n">f3</span> <span class="n">c3</span>         <span class="n">repz</span> <span class="n">retq</span></code></pre></figure>
+
+<p>观察指令的字节编码，会看到第一条跳转指令的目标编码为 0x3，把它加上 0x5 就是目的跳转地址 0x8 就是第四行的指令</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">当执行</span> <span class="no">PC</span> <span class="err">相对寻址时，程序计数器的值是跳转指令后面那条指令的地址，而不是跳转指令本身的地址</span></code></pre></figure>
+
+<p>指令 repz 是 rep 的同义名，retq 是 ret 的同义名, 遇到 repz 或 rep 可以忽视它们。</p>
+
+<h3 id="用条件控制来实现条件分支">用条件控制来实现条件分支</h3>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">GCC</span> <span class="err">产生如下汇编代码</span>
+<span class="n">long</span> <span class="nb">test</span><span class="p">(</span><span class="n">long</span> <span class="n">x</span><span class="p">,</span> <span class="n">long</span> <span class="n">y</span><span class="p">,</span> <span class="n">long</span> <span class="n">z</span><span class="p">)</span>
+<span class="n">x</span> <span class="k">in</span> <span class="o">%</span><span class="n">rdi</span><span class="p">,</span> <span class="n">y</span> <span class="k">in</span> <span class="o">%</span><span class="n">rsi</span><span class="p">,</span> <span class="n">z</span> <span class="k">in</span> <span class="o">%</span><span class="n">rdx</span>
+<span class="ss">test:
+   </span><span class="n">leaq</span> <span class="p">(</span><span class="o">%</span><span class="n">rdi</span><span class="p">,</span> <span class="o">%</span><span class="n">rsi</span><span class="p">),</span> <span class="o">%</span><span class="n">rax</span>
+   <span class="n">addq</span> <span class="o">%</span><span class="n">rdx</span><span class="p">,</span> <span class="o">%</span><span class="n">rax</span>
+   <span class="n">cmpq</span> <span class="err">$</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">%</span><span class="n">rdi</span>
+   <span class="n">jge</span>  <span class="o">.</span><span class="no">L2</span>
+   <span class="n">cmpq</span> <span class="o">%</span><span class="n">rdx</span><span class="p">,</span> <span class="o">%</span><span class="n">rsi</span>
+   <span class="n">jge</span>  <span class="o">.</span><span class="no">L3</span>
+   <span class="n">movq</span> <span class="o">%</span><span class="n">rdi</span><span class="p">,</span> <span class="o">%</span><span class="n">rax</span>
+   <span class="n">imulq</span> <span class="o">%</span><span class="n">rsi</span><span class="p">,</span> <span class="o">%</span><span class="n">rax</span>
+   <span class="n">ret</span>
+<span class="o">.</span><span class="no">L3</span><span class="p">:</span>
+   <span class="n">movq</span> <span class="o">%</span><span class="n">rsi</span><span class="p">,</span> <span class="o">%</span><span class="n">rax</span>
+   <span class="n">imulq</span> <span class="o">%</span><span class="n">rdx</span><span class="p">,</span> <span class="o">%</span><span class="n">rax</span>
+   <span class="n">ret</span>
+<span class="o">.</span><span class="no">L2</span><span class="p">:</span>
+   <span class="n">cmpq</span> <span class="vg">$2</span><span class="p">,</span> <span class="o">%</span><span class="n">rdi</span>
+   <span class="n">jle</span>  <span class="o">.</span><span class="no">L4</span>
+   <span class="n">movq</span> <span class="o">%</span><span class="n">rdi</span><span class="p">,</span> <span class="o">%</span><span class="n">rax</span>
+   <span class="n">imulq</span> <span class="o">%</span><span class="n">rdx</span><span class="p">,</span> <span class="o">%</span><span class="n">rax</span>
+<span class="o">.</span><span class="no">L4</span><span class="p">:</span>
+   <span class="n">rep</span><span class="p">;</span> <span class="n">ret</span>
+  
+<span class="no">C</span> <span class="err">代码</span>
+<span class="n">long</span> <span class="nb">test</span><span class="p">(</span><span class="n">long</span> <span class="n">x</span><span class="p">,</span> <span class="n">long</span> <span class="n">y</span><span class="p">,</span> <span class="n">long</span> <span class="n">z</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">long</span> <span class="n">val</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">3</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">z</span> <span class="p">{</span>
+         <span class="n">val</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+         <span class="n">val</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">z</span>
+      <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="p">{</span>
+      <span class="n">val</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">z</span>  
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">val</span>
+<span class="p">}</span></code></pre></figure>
+
+
   </section>
 </article>
 
@@ -315,7 +371,7 @@
             <section class="footer">
     <footer>
     	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
-        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-03-30 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-03-31 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
         <span class="footer__copyright">本站采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2021</span>
     </footer>
 </section>

@@ -137,3 +137,60 @@ jbe  Label        jna      CF | ZF          低于或相等(无符号<=)
 跳转指令有几种不同的编码，最常用的都是 PC 相对的(PC-relative)
 1. 它们会将目标指令地址与紧跟在跳转指令后面那条指令的地址之间的差作为编码，这些地址偏移量可以编码为 1、2、4个字节
 2. 给出绝对地址，用 4 个字节直接指定目标，汇编器和链接器会选择适当的跳转目的编码
+
+{% highlight ruby %}
+0:  48 89 f8    mov %rdi, %rax
+3:  eb 03        jmp 8 <loop+0x8>
+5:  48 d1 f8    sar %rax
+8:  48 58 c0   test %rax, %rax
+b:  7f f8          jg    5 <loop+0x5>
+d:  f3 c3         repz retq
+{% endhighlight %}
+观察指令的字节编码，会看到第一条跳转指令的目标编码为 0x3，把它加上 0x5 就是目的跳转地址 0x8 就是第四行的指令
+{% highlight ruby %}
+当执行 PC 相对寻址时，程序计数器的值是跳转指令后面那条指令的地址，而不是跳转指令本身的地址
+{% endhighlight %}
+指令 repz 是 rep 的同义名，retq 是 ret 的同义名, 遇到 repz 或 rep 可以忽视它们。
+
+### 用条件控制来实现条件分支
+{% highlight ruby %}
+GCC 产生如下汇编代码
+long test(long x, long y, long z)
+x in %rdi, y in %rsi, z in %rdx
+test:
+   leaq (%rdi, %rsi), %rax
+   addq %rdx, %rax
+   cmpq $-3, %rdi
+   jge  .L2
+   cmpq %rdx, %rsi
+   jge  .L3
+   movq %rdi, %rax
+   imulq %rsi, %rax
+   ret
+.L3:
+   movq %rsi, %rax
+   imulq %rdx, %rax
+   ret
+.L2:
+   cmpq $2, %rdi
+   jle  .L4
+   movq %rdi, %rax
+   imulq %rdx, %rax
+.L4:
+   rep; ret
+  
+C 代码
+long test(long x, long y, long z) {
+    long val = x + y + z
+    if x < -3 {
+      if y < z {
+         val = x * y
+      } else {
+         val = y * z
+      }
+  } else if x > 2 {
+      val = x * z  
+  }
+  return val
+}
+{% endhighlight %}
