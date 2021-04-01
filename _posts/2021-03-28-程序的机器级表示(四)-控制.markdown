@@ -311,5 +311,10 @@ long test(long x, long y) {
                      if (!t) v = ve
 {% endhighlight %}
 
+Tips：
+{% highlight ruby %}
+%rax 可以作为返回值寄存器
+{% endhighlight %}
+
 ### 循环
 
