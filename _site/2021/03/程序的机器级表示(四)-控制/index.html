@@ -367,6 +367,8 @@
 
 <p>不是所有条件表达式都可以用条件传送来编译。使用条件传送也不总是高效率的，如果 then-expr 或 else-expr 的求值需要大量计算，那么当条件不满足时，这些工作就白费了。</p>
 
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">只在计算简单并且没有副作用时，才会使用条件传送</span></code></pre></figure>
+
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">long</span> <span class="nb">test</span><span class="p">(</span><span class="n">long</span> <span class="n">x</span><span class="p">,</span> <span class="n">long</span> <span class="n">y</span><span class="p">)</span> 
 <span class="n">x</span> <span class="k">in</span> <span class="o">%</span><span class="n">rdi</span><span class="p">,</span> <span class="n">y</span> <span class="k">in</span> <span class="o">%</span><span class="n">rsi</span>
 <span class="ss">test:
@@ -419,6 +421,123 @@
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">%</span><span class="n">rax</span> <span class="err">可以作为返回值寄存器</span></code></pre></figure>
 
 <h3 id="循环">循环</h3>
+<p>汇编中没有相应的循环指令存在，可以用条件测试和跳转组合起来实现循环的效果。</p>
+<h4 id="do-while">do-while</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">do</span>
+  <span class="n">body</span><span class="o">-</span><span class="n">statement</span>
+  <span class="k">while</span> <span class="p">(</span><span class="nb">test</span><span class="o">-</span><span class="n">expr</span><span class="p">)</span></code></pre></figure>
+
+<p>goto 版本</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="ss">loop: 
+    </span><span class="n">body</span><span class="o">-</span><span class="n">statement</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="nb">test</span><span class="o">-</span><span class="n">expr</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">)</span> 
+      <span class="n">goto</span> <span class="kp">loop</span><span class="p">;</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">理解产生的汇编代码与原始源代码之间的关系，关键是找到程序值和寄存器之间的映射关系。</span></code></pre></figure>
+
+<h4 id="while">while</h4>
+<p>有很多中方法将 while 翻译成机器代码，GCC 使用其中两种
+第一种叫跳转的到中间，它执行一个无条件跳转跳到循环结尾处的测试，以此来执行初始的测试。GCC 的 -Og 选择会使用这个策略。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">goto</span> <span class="nb">test</span><span class="p">;</span>       <span class="sr">//</span> <span class="err">先跳转则是跳转的到中间</span>
+<span class="ss">loop: 
+    </span><span class="n">body</span><span class="o">-</span><span class="n">statement</span>
+<span class="ss">test:
+    </span><span class="n">t</span> <span class="o">=</span> <span class="nb">test</span><span class="o">-</span><span class="n">expr</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">)</span> 
+      <span class="n">goto</span> <span class="kp">loop</span><span class="p">;</span></code></pre></figure>
+
+<p>第二种叫 guarded-do，首先用条件分支，如果初始条件不成立就跳过循环，把代码变换位 do-while 循环。GCC 的 -O1 选择会使用这个策略。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">t</span> <span class="o">=</span> <span class="nb">test</span><span class="o">-</span><span class="n">expr</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">t</span><span class="p">)</span> 
+  <span class="n">goto</span> <span class="n">done</span><span class="p">;</span>
+<span class="ss">loop: 
+    </span><span class="n">body</span><span class="o">-</span><span class="n">statement</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="nb">test</span><span class="o">-</span><span class="n">expr</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">)</span> 
+      <span class="n">goto</span> <span class="kp">loop</span><span class="p">;</span>
+<span class="n">done</span><span class="p">:</span></code></pre></figure>
+
+<h4 id="for">for</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">for</span> <span class="p">(</span><span class="n">init</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span> <span class="nb">test</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span> <span class="n">update</span><span class="o">-</span><span class="n">expr</span><span class="p">)</span>
+<span class="n">body</span><span class="o">-</span><span class="n">statement</span></code></pre></figure>
+
+<p>转成 while 版本</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">init</span><span class="o">-</span><span class="n">expr</span>
+<span class="k">while</span> <span class="p">(</span><span class="nb">test</span><span class="o">-</span><span class="n">expr</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">body</span><span class="o">-</span><span class="n">statement</span>
+  <span class="n">update</span><span class="o">-</span><span class="n">expr</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>GCC 为 for 循环产生的代码是 while 两种翻译之一，这取决于优化等级。</p>
+
+<p>跳转到中间策略的 goto 代码</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">init</span><span class="o">-</span><span class="n">expr</span>
+<span class="n">goto</span> <span class="nb">test</span>
+<span class="ss">loop:
+  </span><span class="n">body</span><span class="o">-</span><span class="n">statement</span>
+  <span class="n">update</span><span class="o">-</span><span class="n">expr</span>
+<span class="ss">test:
+  </span><span class="n">t</span> <span class="o">=</span> <span class="nb">test</span><span class="o">-</span><span class="n">expr</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">goto</span> <span class="kp">loop</span></code></pre></figure>
+
+<p>guarded-do 版本</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">init</span><span class="o">-</span><span class="n">expr</span>
+<span class="n">t</span> <span class="o">=</span> <span class="nb">test</span><span class="o">-</span><span class="n">expr</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">t</span><span class="p">)</span>
+  <span class="n">goto</span> <span class="n">done</span>
+<span class="ss">loop:
+  </span><span class="n">body</span><span class="o">-</span><span class="n">statement</span>
+  <span class="n">update</span><span class="o">-</span><span class="n">expr</span>
+  <span class="n">t</span> <span class="o">=</span> <span class="nb">test</span><span class="o">-</span><span class="n">expr</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">goto</span> <span class="kp">loop</span>
+<span class="n">done</span><span class="p">:</span></code></pre></figure>
+
+<h4 id="循环中出现-continue-的处理">循环中出现 continue 的处理</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">long</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">long</span> <span class="n">i</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">continue</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">sum</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>转为 while 错误例子，因为没有改变 i 的值这将会是一个无限循环</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">long</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">long</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">continue</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">sum</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>解决方法是使用 goto</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">long</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">long</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">goto</span> <span class="n">update</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">sum</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="ss">update:
+  </span><span class="n">i</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
 
 
   </section>
@@ -477,7 +596,7 @@
             <section class="footer">
     <footer>
     	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
-        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-04-02 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-04-05 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
         <span class="footer__copyright">本站采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2021</span>
     </footer>
 </section>

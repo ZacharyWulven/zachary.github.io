@@ -259,6 +259,9 @@ cmovbe  S, R        cmovna         CF | ZF                低于或相等(无符
 {% endhighlight %}
 
 不是所有条件表达式都可以用条件传送来编译。使用条件传送也不总是高效率的，如果 then-expr 或 else-expr 的求值需要大量计算，那么当条件不满足时，这些工作就白费了。
+{% highlight ruby %}
+只在计算简单并且没有副作用时，才会使用条件传送
+{% endhighlight %}
 
 {% highlight ruby %}
 long test(long x, long y) 
@@ -317,4 +320,135 @@ Tips：
 {% endhighlight %}
 
 ### 循环
+汇编中没有相应的循环指令存在，可以用条件测试和跳转组合起来实现循环的效果。
+#### do-while
+{% highlight ruby %}
+do
+  body-statement
+  while (test-expr)
+{% endhighlight %}
 
+
+goto 版本
+{% highlight ruby %}
+loop: 
+    body-statement
+    t = test-expr
+    if (t) 
+      goto loop;
+{% endhighlight %}
+
+{% highlight ruby %}
+理解产生的汇编代码与原始源代码之间的关系，关键是找到程序值和寄存器之间的映射关系。
+{% endhighlight %}
+
+#### while 
+有很多中方法将 while 翻译成机器代码，GCC 使用其中两种
+第一种叫跳转的到中间，它执行一个无条件跳转跳到循环结尾处的测试，以此来执行初始的测试。GCC 的 -Og 选择会使用这个策略。
+{% highlight ruby %}
+goto test;       // 先跳转则是跳转的到中间
+loop: 
+    body-statement
+test:
+    t = test-expr
+    if (t) 
+      goto loop;
+{% endhighlight %}
+
+第二种叫 guarded-do，首先用条件分支，如果初始条件不成立就跳过循环，把代码变换位 do-while 循环。GCC 的 -O1 选择会使用这个策略。
+{% highlight ruby %}
+t = test-expr
+if (!t) 
+  goto done;
+loop: 
+    body-statement
+    t = test-expr
+    if (t) 
+      goto loop;
+done:
+{% endhighlight %}
+
+#### for
+{% highlight ruby %}
+for (init-expr; test-expr; update-expr)
+body-statement
+{% endhighlight %}
+
+转成 while 版本
+{% highlight ruby %}
+init-expr
+while (test-expr) {
+  body-statement
+  update-expr
+}
+{% endhighlight %}
+
+GCC 为 for 循环产生的代码是 while 两种翻译之一，这取决于优化等级。
+
+跳转到中间策略的 goto 代码
+{% highlight ruby %}
+init-expr
+goto test
+loop:
+  body-statement
+  update-expr
+test:
+  t = test-expr
+  if (t)
+    goto loop
+{% endhighlight %}
+
+guarded-do 版本
+{% highlight ruby %}
+init-expr
+t = test-expr
+if (!t)
+  goto done
+loop:
+  body-statement
+  update-expr
+  t = test-expr
+  if (t)
+    goto loop
+done:
+{% endhighlight %}
+
+#### 循环中出现 continue 的处理
+{% highlight ruby %}
+long sum = 0;
+long i;
+for (i = 0; i<10; i++) {
+  if (i & 1) {
+    continue;
+  }
+  sum += 1;
+}
+{% endhighlight %}
+
+转为 while 错误例子，因为没有改变 i 的值这将会是一个无限循环
+{% highlight ruby %}
+long sum = 0;
+long i = 0;
+while (i < 10) {
+  if (i & 1) {
+    continue;
+  }
+  sum += 1;
+  i++;
+}
+
+{% endhighlight %}
+
+解决方法是使用 goto
+{% highlight ruby %}
+long sum = 0;
+long i = 0;
+while (i < 10) {
+  if (i & 1) {
+    goto update;
+  }
+  sum += 1;
+update:
+  i++;
+}
+{% endhighlight %}
