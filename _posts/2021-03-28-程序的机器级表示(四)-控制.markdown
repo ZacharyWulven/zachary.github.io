@@ -14,10 +14,10 @@ tag: CSApp
 
 ### 条件码
 除了整数寄存器，CPU 还维护着一组单个位的条件码寄存器，它们描述了最近的算术或逻辑操作属性，根据其他指令操作后结果设置的，可以检测这些寄存器来执行条件分支指令
-1. CF: Carry Flag 进位标志 表示无符号数运算溢出的位
-2. ZF: Zero Flag 零标志 最近的操作得出的结果为 0
-3. SF: Sign Flag 符号标志 最近的操作得到的结果为负数，即运算结果最高有效位为 1, SF 会被置为 1
-4. OF: Overflow Flag 溢出标志 最近的操作导致一个补码溢出--正溢出或负溢出，即有符号数运算溢出的位，如果操作数的符号相同，但结果的符号与操作数符号不同
+1. CF: Carry Flag  进位标志 表示无符号数运算溢出的位
+2. ZF: Zero Flag  零标志 最近的操作得出的结果为 0
+3. SF: Sign Flag  符号标志 最近的操作得到的结果为负数，即运算结果最高有效位为 1, SF 会被置为 1
+4. OF: Overflow Flag  溢出标志 最近的操作导致一个补码溢出--正溢出或负溢出，即有符号数运算溢出的位，如果操作数的符号相同，但结果的符号与操作数符号不同
 
 例如： t = a + b，a b t 都是整型然后下面 C 表达式来设置条件码
  1. CF: (unsigned) t < (unsigned) a         无符号溢出
@@ -155,12 +155,12 @@ jbe  Label        jna      CF | ZF          低于或相等(无符号<=)
 2. 给出绝对地址，用 4 个字节直接指定目标，汇编器和链接器会选择适当的跳转目的编码
 
 {% highlight ruby %}
-0:  48 89 f8    mov %rdi, %rax
+0:  48 89 f8     mov %rdi, %rax
 3:  eb 03        jmp 8 <loop+0x8>
-5:  48 d1 f8    sar %rax
-8:  48 58 c0   test %rax, %rax
-b:  7f f8          jg    5 <loop+0x5>
-d:  f3 c3         repz retq
+5:  48 d1 f8     sar %rax
+8:  48 58 c0     test %rax, %rax
+b:  7f f8        jg    5 <loop+0x5>
+d:  f3 c3        repz retq
 {% endhighlight %}
 观察指令的字节编码，会看到第一条跳转指令的目标编码为 0x3，把它加上 0x5 就是目的跳转地址 0x8 就是第四行的指令
 {% highlight ruby %}
@@ -292,7 +292,7 @@ long test(long x, long y) {
        val = x & y
     }
   } else if y < -2 {
-       val = x + y
+    val = x + y
   }
   return val
 }
@@ -301,7 +301,7 @@ long test(long x, long y) {
 ### 条件控制和条件传送区别
 
 {% highlight ruby %}
-                                模式                 执行
+                        模式                 执行
 条件控制              if (test-expr)                 只执行一个分支
                         then-expr
                      else 
@@ -319,9 +319,9 @@ Tips：
 %rax 可以作为返回值寄存器
 {% endhighlight %}
 
-### 循环
+## 循环
 汇编中没有相应的循环指令存在，可以用条件测试和跳转组合起来实现循环的效果。
-#### do-while
+### do-while
 {% highlight ruby %}
 do
   body-statement
@@ -342,7 +342,7 @@ loop:
 理解产生的汇编代码与原始源代码之间的关系，关键是找到程序值和寄存器之间的映射关系。
 {% endhighlight %}
 
-#### while 
+### while 
 有很多中方法将 while 翻译成机器代码，GCC 使用其中两种
 第一种叫跳转的到中间，它执行一个无条件跳转跳到循环结尾处的测试，以此来执行初始的测试。GCC 的 -Og 选择会使用这个策略。
 {% highlight ruby %}
@@ -368,10 +368,10 @@ loop:
 done:
 {% endhighlight %}
 
-#### for
+### for
 {% highlight ruby %}
 for (init-expr; test-expr; update-expr)
-body-statement
+  body-statement
 {% endhighlight %}
 
 转成 while 版本
@@ -413,7 +413,7 @@ loop:
 done:
 {% endhighlight %}
 
-#### 循环中出现 continue 的处理
+### 循环中出现 continue 的处理
 {% highlight ruby %}
 long sum = 0;
 long i;
@@ -452,3 +452,119 @@ update:
   i++;
 }
 {% endhighlight %}
+
+## Switch
+不仅提高了 C 代码可读性，而且通过使用跳转表（jump table）这种数据结构使得实现更加高效。跳转表示一个数组，表项 i 是一个代码段地址，这个代码段实现当前 switch 索引值等于 i 时程序应该采取的行动。程序代码用于 switch 索引值来执行一个跳转表内的数组引用，确定跳转指令的目标。和使用一组很长的 if-else 语句相比，使用跳转表的优点是执行 switch 语句的时间与 switch case 数量无关。当 switch case 数量在 4 个以上，并且值的范围跨度比较小时就会使用跳转表。
+
+switch 语句示例代码
+{% highlight ruby %}
+void switch_eg(long x, long n, long *dest) {
+  long val = x;
+  switch(n) {
+  case 100: 
+      val *= 13;
+      break;
+      case 102: 
+          val += 10;
+      case 103: 
+          val *= 11;
+          break;
+      case 104: 
+      case 106: 
+          val *= val;
+          break;
+      default: 
+          val = 0;
+  }
+  *dest = val;
+}
+{% endhighlight %}
+
+翻译到扩展 c 代码
+{% highlight ruby %}
+void switch_eg_impl(long x, long n, long *dest) {
+static void *jt[7] = {
+&&loc_A, &&loc_def, &&loc_B, &&loc_C, &&loc_D, &&loc_def, &&loc_D,
+}
+
+unsigned long index = n - 100;
+long val;
+if index > 6 
+  goto loa_def;
+  goto *jt[index]
+
+&&loc_A:
+  val *= 13;
+  goto done;
+  
+&&loc_B:
+  val += 10;
+  // fall through
+
+&&loc_C:
+  val += 11;
+  goto done;
+
+&&loc_D:
+  val *= val;
+  goto done;
+
+&&loc_def:
+  val = 0;
+
+done:
+  *dest = val;
+}
+&& 创建一个指向代码位置的指针。
+{% endhighlight %}
+
+汇编代码
+{% highlight ruby %}
+x in %rdi, n in %rsi, dest in %rdx
+switch_eg:
+  subq  $100, %rsi                    比计算 index = n - 100
+  cmpq $6, %rsi                       比较 index ：6
+  ja   .L8                            if > goto loc_def
+  jmp   *.L4(, %rsi, 8)               goto *jt[index]
+.L3                                   loc_A:
+  leaq (%rdi, %rdi, 2), %rax          3 * x
+  leaq (%rdi, %rax, 4), %rdi          val = 13 * x
+  jmp .L2                             goto done
+.L5                                   loc_B:
+  addq $10, %rdi                       x = x + 10
+.L6                                   loc_C:
+  addq $11, %rdi                      val = x + 11
+  jmp   .L2                           goto done
+.L7                                   loc_D:
+ imulq %rdi, %rdi                     val = x * x
+ jmp  .L2                             goto done
+.L8                                   loc_def:
+ movl $0, %edi                        val = 0
+.L2                                   done:
+ movq %rdi, (%rdx)                    *dest = val
+ret                                   return
+
+jmp *.L4(, %rsi, 8)     jmp 指令的操作数有个 * 表明这是一个间接跳转，操作数指定一个内存位置。
+{% endhighlight %}
+
+跳转表，标号 .L4 标记了整个分配地址的起始
+{% highlight ruby %}
+.section  .rodata        只读数据的目标代码文件的段中
+.align 8           align address to multiple of 8   
+.L4    
+.quad  .L3     Case 100: loc_A
+.quad  .L8     Case 101: loc_def
+.quad  .L5     Case 102: loc_B
+.quad  .L6     Case 103: loc_C
+.quad  .L7     Case 104: loc_D
+.quad  .L8     Case 105: loc_def
+.quad  .L7     Case 106: loc_D
+
+{% endhighlight %}
+
+#### 小结
+先确定最大最小标号，再根据跳转表索引逐个定位
+1. cmpq $7, %rdi, 则最大标号是 7 ，最小标号是 0
+2. addq $1, %rdi ; cmpq $8, %rdi 则 x + 1 = 0，最小标号位 -1，
+
+

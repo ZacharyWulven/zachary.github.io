@@ -130,10 +130,10 @@
 <h3 id="条件码">条件码</h3>
 <p>除了整数寄存器，CPU 还维护着一组单个位的条件码寄存器，它们描述了最近的算术或逻辑操作属性，根据其他指令操作后结果设置的，可以检测这些寄存器来执行条件分支指令</p>
 <ol>
-  <li>CF: Carry Flag 进位标志 表示无符号数运算溢出的位</li>
-  <li>ZF: Zero Flag 零标志 最近的操作得出的结果为 0</li>
-  <li>SF: Sign Flag 符号标志 最近的操作得到的结果为负数，即运算结果最高有效位为 1, SF 会被置为 1</li>
-  <li>OF: Overflow Flag 溢出标志 最近的操作导致一个补码溢出–正溢出或负溢出，即有符号数运算溢出的位，如果操作数的符号相同，但结果的符号与操作数符号不同</li>
+  <li>CF: Carry Flag  进位标志 表示无符号数运算溢出的位</li>
+  <li>ZF: Zero Flag  零标志 最近的操作得出的结果为 0</li>
+  <li>SF: Sign Flag  符号标志 最近的操作得到的结果为负数，即运算结果最高有效位为 1, SF 会被置为 1</li>
+  <li>OF: Overflow Flag  溢出标志 最近的操作导致一个补码溢出–正溢出或负溢出，即有符号数运算溢出的位，如果操作数的符号相同，但结果的符号与操作数符号不同</li>
 </ol>
 
 <p>例如： t = a + b，a b t 都是整型然后下面 C 表达式来设置条件码</p>
@@ -270,12 +270,12 @@
   <li>给出绝对地址，用 4 个字节直接指定目标，汇编器和链接器会选择适当的跳转目的编码</li>
 </ol>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="mi">0</span><span class="p">:</span>  <span class="mi">48</span> <span class="mi">89</span> <span class="n">f8</span>    <span class="n">mov</span> <span class="o">%</span><span class="n">rdi</span><span class="p">,</span> <span class="o">%</span><span class="n">rax</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="mi">0</span><span class="p">:</span>  <span class="mi">48</span> <span class="mi">89</span> <span class="n">f8</span>     <span class="n">mov</span> <span class="o">%</span><span class="n">rdi</span><span class="p">,</span> <span class="o">%</span><span class="n">rax</span>
 <span class="mi">3</span><span class="p">:</span>  <span class="n">eb</span> <span class="mo">03</span>        <span class="n">jmp</span> <span class="mi">8</span> <span class="o">&lt;</span><span class="kp">loop</span><span class="o">+</span><span class="mh">0x8</span><span class="o">&gt;</span>
-<span class="mi">5</span><span class="p">:</span>  <span class="mi">48</span> <span class="n">d1</span> <span class="n">f8</span>    <span class="n">sar</span> <span class="o">%</span><span class="n">rax</span>
-<span class="mi">8</span><span class="p">:</span>  <span class="mi">48</span> <span class="mi">58</span> <span class="n">c0</span>   <span class="nb">test</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span> <span class="o">%</span><span class="n">rax</span>
-<span class="ss">b:  </span><span class="mi">7</span><span class="n">f</span> <span class="n">f8</span>          <span class="n">jg</span>    <span class="mi">5</span> <span class="o">&lt;</span><span class="kp">loop</span><span class="o">+</span><span class="mh">0x5</span><span class="o">&gt;</span>
-<span class="ss">d:  </span><span class="n">f3</span> <span class="n">c3</span>         <span class="n">repz</span> <span class="n">retq</span></code></pre></figure>
+<span class="mi">5</span><span class="p">:</span>  <span class="mi">48</span> <span class="n">d1</span> <span class="n">f8</span>     <span class="n">sar</span> <span class="o">%</span><span class="n">rax</span>
+<span class="mi">8</span><span class="p">:</span>  <span class="mi">48</span> <span class="mi">58</span> <span class="n">c0</span>     <span class="nb">test</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span> <span class="o">%</span><span class="n">rax</span>
+<span class="ss">b:  </span><span class="mi">7</span><span class="n">f</span> <span class="n">f8</span>        <span class="n">jg</span>    <span class="mi">5</span> <span class="o">&lt;</span><span class="kp">loop</span><span class="o">+</span><span class="mh">0x5</span><span class="o">&gt;</span>
+<span class="ss">d:  </span><span class="n">f3</span> <span class="n">c3</span>        <span class="n">repz</span> <span class="n">retq</span></code></pre></figure>
 
 <p>观察指令的字节编码，会看到第一条跳转指令的目标编码为 0x3，把它加上 0x5 就是目的跳转地址 0x8 就是第四行的指令</p>
 
@@ -397,14 +397,14 @@
        <span class="n">val</span> <span class="o">=</span> <span class="n">x</span> <span class="o">&amp;</span> <span class="n">y</span>
     <span class="p">}</span>
   <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">2</span> <span class="p">{</span>
-       <span class="n">val</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
   <span class="p">}</span>
   <span class="k">return</span> <span class="n">val</span>
 <span class="p">}</span></code></pre></figure>
 
 <h3 id="条件控制和条件传送区别">条件控制和条件传送区别</h3>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">                                <span class="err">模式</span>                 <span class="err">执行</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">                        <span class="err">模式</span>                 <span class="err">执行</span>
 <span class="err">条件控制</span>              <span class="k">if</span> <span class="p">(</span><span class="nb">test</span><span class="o">-</span><span class="n">expr</span><span class="p">)</span>                 <span class="err">只执行一个分支</span>
                         <span class="k">then</span><span class="o">-</span><span class="n">expr</span>
                      <span class="k">else</span> 
@@ -420,9 +420,9 @@
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">%</span><span class="n">rax</span> <span class="err">可以作为返回值寄存器</span></code></pre></figure>
 
-<h3 id="循环">循环</h3>
+<h2 id="循环">循环</h2>
 <p>汇编中没有相应的循环指令存在，可以用条件测试和跳转组合起来实现循环的效果。</p>
-<h4 id="do-while">do-while</h4>
+<h3 id="do-while">do-while</h3>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">do</span>
   <span class="n">body</span><span class="o">-</span><span class="n">statement</span>
@@ -438,7 +438,7 @@
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">理解产生的汇编代码与原始源代码之间的关系，关键是找到程序值和寄存器之间的映射关系。</span></code></pre></figure>
 
-<h4 id="while">while</h4>
+<h3 id="while">while</h3>
 <p>有很多中方法将 while 翻译成机器代码，GCC 使用其中两种
 第一种叫跳转的到中间，它执行一个无条件跳转跳到循环结尾处的测试，以此来执行初始的测试。GCC 的 -Og 选择会使用这个策略。</p>
 
@@ -462,10 +462,10 @@
       <span class="n">goto</span> <span class="kp">loop</span><span class="p">;</span>
 <span class="n">done</span><span class="p">:</span></code></pre></figure>
 
-<h4 id="for">for</h4>
+<h3 id="for">for</h3>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">for</span> <span class="p">(</span><span class="n">init</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span> <span class="nb">test</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span> <span class="n">update</span><span class="o">-</span><span class="n">expr</span><span class="p">)</span>
-<span class="n">body</span><span class="o">-</span><span class="n">statement</span></code></pre></figure>
+  <span class="n">body</span><span class="o">-</span><span class="n">statement</span></code></pre></figure>
 
 <p>转成 while 版本</p>
 
@@ -503,7 +503,7 @@
     <span class="n">goto</span> <span class="kp">loop</span>
 <span class="n">done</span><span class="p">:</span></code></pre></figure>
 
-<h4 id="循环中出现-continue-的处理">循环中出现 continue 的处理</h4>
+<h3 id="循环中出现-continue-的处理">循环中出现 continue 的处理</h3>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">long</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="n">long</span> <span class="n">i</span><span class="p">;</span>
@@ -538,6 +538,117 @@
 <span class="ss">update:
   </span><span class="n">i</span><span class="o">++</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
+
+<h2 id="switch">Switch</h2>
+<p>不仅提高了 C 代码可读性，而且通过使用跳转表（jump table）这种数据结构使得实现更加高效。跳转表示一个数组，表项 i 是一个代码段地址，这个代码段实现当前 switch 索引值等于 i 时程序应该采取的行动。程序代码用于 switch 索引值来执行一个跳转表内的数组引用，确定跳转指令的目标。和使用一组很长的 if-else 语句相比，使用跳转表的优点是执行 switch 语句的时间与 switch case 数量无关。当 switch case 数量在 4 个以上，并且值的范围跨度比较小时就会使用跳转表。</p>
+
+<p>switch 语句示例代码</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">void</span> <span class="n">switch_eg</span><span class="p">(</span><span class="n">long</span> <span class="n">x</span><span class="p">,</span> <span class="n">long</span> <span class="n">n</span><span class="p">,</span> <span class="n">long</span> <span class="o">*</span><span class="n">dest</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">long</span> <span class="n">val</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+  <span class="n">switch</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="mi">100</span><span class="p">:</span> 
+      <span class="n">val</span> <span class="o">*=</span> <span class="mi">13</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="mi">102</span><span class="p">:</span> 
+          <span class="n">val</span> <span class="o">+=</span> <span class="mi">10</span><span class="p">;</span>
+      <span class="k">case</span> <span class="mi">103</span><span class="p">:</span> 
+          <span class="n">val</span> <span class="o">*=</span> <span class="mi">11</span><span class="p">;</span>
+          <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="mi">104</span><span class="p">:</span> 
+      <span class="k">case</span> <span class="mi">106</span><span class="p">:</span> 
+          <span class="n">val</span> <span class="o">*=</span> <span class="n">val</span><span class="p">;</span>
+          <span class="k">break</span><span class="p">;</span>
+      <span class="ss">default: 
+          </span><span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="o">*</span><span class="n">dest</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>翻译到扩展 c 代码</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">void</span> <span class="n">switch_eg_impl</span><span class="p">(</span><span class="n">long</span> <span class="n">x</span><span class="p">,</span> <span class="n">long</span> <span class="n">n</span><span class="p">,</span> <span class="n">long</span> <span class="o">*</span><span class="n">dest</span><span class="p">)</span> <span class="p">{</span>
+<span class="n">static</span> <span class="n">void</span> <span class="o">*</span><span class="n">jt</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+<span class="o">&amp;&amp;</span><span class="n">loc_A</span><span class="p">,</span> <span class="o">&amp;&amp;</span><span class="n">loc_def</span><span class="p">,</span> <span class="o">&amp;&amp;</span><span class="n">loc_B</span><span class="p">,</span> <span class="o">&amp;&amp;</span><span class="n">loc_C</span><span class="p">,</span> <span class="o">&amp;&amp;</span><span class="n">loc_D</span><span class="p">,</span> <span class="o">&amp;&amp;</span><span class="n">loc_def</span><span class="p">,</span> <span class="o">&amp;&amp;</span><span class="n">loc_D</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">unsigned</span> <span class="n">long</span> <span class="n">index</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">100</span><span class="p">;</span>
+<span class="n">long</span> <span class="n">val</span><span class="p">;</span>
+<span class="k">if</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="mi">6</span> 
+  <span class="n">goto</span> <span class="n">loa_def</span><span class="p">;</span>
+  <span class="n">goto</span> <span class="o">*</span><span class="n">jt</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+<span class="o">&amp;&amp;</span><span class="ss">loc_A:
+  </span><span class="n">val</span> <span class="o">*=</span> <span class="mi">13</span><span class="p">;</span>
+  <span class="n">goto</span> <span class="n">done</span><span class="p">;</span>
+  
+<span class="o">&amp;&amp;</span><span class="ss">loc_B:
+  </span><span class="n">val</span> <span class="o">+=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="sr">//</span> <span class="n">fall</span> <span class="n">through</span>
+
+<span class="o">&amp;&amp;</span><span class="ss">loc_C:
+  </span><span class="n">val</span> <span class="o">+=</span> <span class="mi">11</span><span class="p">;</span>
+  <span class="n">goto</span> <span class="n">done</span><span class="p">;</span>
+
+<span class="o">&amp;&amp;</span><span class="ss">loc_D:
+  </span><span class="n">val</span> <span class="o">*=</span> <span class="n">val</span><span class="p">;</span>
+  <span class="n">goto</span> <span class="n">done</span><span class="p">;</span>
+
+<span class="o">&amp;&amp;</span><span class="ss">loc_def:
+  </span><span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="ss">done:
+  </span><span class="o">*</span><span class="n">dest</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="o">&amp;&amp;</span> <span class="err">创建一个指向代码位置的指针。</span></code></pre></figure>
+
+<p>汇编代码</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">x</span> <span class="k">in</span> <span class="o">%</span><span class="n">rdi</span><span class="p">,</span> <span class="n">n</span> <span class="k">in</span> <span class="o">%</span><span class="n">rsi</span><span class="p">,</span> <span class="n">dest</span> <span class="k">in</span> <span class="o">%</span><span class="n">rdx</span>
+<span class="ss">switch_eg:
+  </span><span class="n">subq</span>  <span class="vg">$100</span><span class="p">,</span> <span class="o">%</span><span class="n">rsi</span>                    <span class="err">比计算</span> <span class="n">index</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">100</span>
+  <span class="n">cmpq</span> <span class="vg">$6</span><span class="p">,</span> <span class="o">%</span><span class="n">rsi</span>                       <span class="err">比较</span> <span class="n">index</span> <span class="err">：</span><span class="mi">6</span>
+  <span class="n">ja</span>   <span class="o">.</span><span class="no">L8</span>                            <span class="k">if</span> <span class="o">&gt;</span> <span class="n">goto</span> <span class="n">loc_def</span>
+  <span class="n">jmp</span>   <span class="o">*.</span><span class="no">L4</span><span class="p">(,</span> <span class="o">%</span><span class="n">rsi</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>               <span class="n">goto</span> <span class="o">*</span><span class="n">jt</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+<span class="o">.</span><span class="no">L3</span>                                   <span class="ss">loc_A:
+  </span><span class="n">leaq</span> <span class="p">(</span><span class="o">%</span><span class="n">rdi</span><span class="p">,</span> <span class="o">%</span><span class="n">rdi</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="o">%</span><span class="n">rax</span>          <span class="mi">3</span> <span class="o">*</span> <span class="n">x</span>
+  <span class="n">leaq</span> <span class="p">(</span><span class="o">%</span><span class="n">rdi</span><span class="p">,</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="o">%</span><span class="n">rdi</span>          <span class="n">val</span> <span class="o">=</span> <span class="mi">13</span> <span class="o">*</span> <span class="n">x</span>
+  <span class="n">jmp</span> <span class="o">.</span><span class="no">L2</span>                             <span class="n">goto</span> <span class="n">done</span>
+<span class="o">.</span><span class="no">L5</span>                                   <span class="ss">loc_B:
+  </span><span class="n">addq</span> <span class="vg">$10</span><span class="p">,</span> <span class="o">%</span><span class="n">rdi</span>                       <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">10</span>
+<span class="o">.</span><span class="no">L6</span>                                   <span class="ss">loc_C:
+  </span><span class="n">addq</span> <span class="vg">$11</span><span class="p">,</span> <span class="o">%</span><span class="n">rdi</span>                      <span class="n">val</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">11</span>
+  <span class="n">jmp</span>   <span class="o">.</span><span class="no">L2</span>                           <span class="n">goto</span> <span class="n">done</span>
+<span class="o">.</span><span class="no">L7</span>                                   <span class="ss">loc_D:
+ </span><span class="n">imulq</span> <span class="o">%</span><span class="n">rdi</span><span class="p">,</span> <span class="o">%</span><span class="n">rdi</span>                     <span class="n">val</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+ <span class="n">jmp</span>  <span class="o">.</span><span class="no">L2</span>                             <span class="n">goto</span> <span class="n">done</span>
+<span class="o">.</span><span class="no">L8</span>                                   <span class="ss">loc_def:
+ </span><span class="n">movl</span> <span class="vg">$0</span><span class="p">,</span> <span class="o">%</span><span class="n">edi</span>                        <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">.</span><span class="no">L2</span>                                   <span class="ss">done:
+ </span><span class="n">movq</span> <span class="o">%</span><span class="n">rdi</span><span class="p">,</span> <span class="p">(</span><span class="o">%</span><span class="n">rdx</span><span class="p">)</span>                    <span class="o">*</span><span class="n">dest</span> <span class="o">=</span> <span class="n">val</span>
+<span class="n">ret</span>                                   <span class="k">return</span>
+
+<span class="n">jmp</span> <span class="o">*.</span><span class="no">L4</span><span class="p">(,</span> <span class="o">%</span><span class="n">rsi</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>     <span class="n">jmp</span> <span class="err">指令的操作数有个</span> <span class="o">*</span> <span class="err">表明这是一个间接跳转，操作数指定一个内存位置。</span></code></pre></figure>
+
+<p>跳转表，标号 .L4 标记了整个分配地址的起始</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">.</span><span class="nf">section</span>  <span class="p">.</span><span class="nf">rodata</span>        <span class="err">只读数据的目标代码文件的段中</span>
+<span class="p">.</span><span class="nf">align</span> <span class="mi">8</span>           <span class="n">align</span> <span class="n">address</span> <span class="n">to</span> <span class="n">multiple</span> <span class="n">of</span> <span class="mi">8</span>   
+<span class="o">.</span><span class="no">L4</span>    
+<span class="p">.</span><span class="nf">quad</span>  <span class="o">.</span><span class="no">L3</span>     <span class="no">Case</span> <span class="mi">100</span><span class="p">:</span> <span class="n">loc_A</span>
+<span class="p">.</span><span class="nf">quad</span>  <span class="o">.</span><span class="no">L8</span>     <span class="no">Case</span> <span class="mi">101</span><span class="p">:</span> <span class="n">loc_def</span>
+<span class="p">.</span><span class="nf">quad</span>  <span class="o">.</span><span class="no">L5</span>     <span class="no">Case</span> <span class="mi">102</span><span class="p">:</span> <span class="n">loc_B</span>
+<span class="p">.</span><span class="nf">quad</span>  <span class="o">.</span><span class="no">L6</span>     <span class="no">Case</span> <span class="mi">103</span><span class="p">:</span> <span class="n">loc_C</span>
+<span class="p">.</span><span class="nf">quad</span>  <span class="o">.</span><span class="no">L7</span>     <span class="no">Case</span> <span class="mi">104</span><span class="p">:</span> <span class="n">loc_D</span>
+<span class="p">.</span><span class="nf">quad</span>  <span class="o">.</span><span class="no">L8</span>     <span class="no">Case</span> <span class="mi">105</span><span class="p">:</span> <span class="n">loc_def</span>
+<span class="p">.</span><span class="nf">quad</span>  <span class="o">.</span><span class="no">L7</span>     <span class="no">Case</span> <span class="mi">106</span><span class="p">:</span> <span class="n">loc_D</span></code></pre></figure>
+
+<h4 id="小结">小结</h4>
+<p>先确定最大最小标号，再根据跳转表索引逐个定位</p>
+<ol>
+  <li>cmpq $7, %rdi, 则最大标号是 7 ，最小标号是 0</li>
+  <li>addq $1, %rdi ; cmpq $8, %rdi 则 x + 1 = 0，最小标号位 -1，</li>
+</ol>
 
 
   </section>
@@ -596,7 +707,7 @@
             <section class="footer">
     <footer>
     	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
-        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-04-05 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-04-17 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
         <span class="footer__copyright">本站采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2021</span>
     </footer>
 </section>
