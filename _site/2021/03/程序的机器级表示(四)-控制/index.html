@@ -644,7 +644,8 @@
 <span class="p">.</span><span class="nf">quad</span>  <span class="o">.</span><span class="no">L7</span>     <span class="no">Case</span> <span class="mi">106</span><span class="p">:</span> <span class="n">loc_D</span></code></pre></figure>
 
 <h4 id="小结">小结</h4>
-<p>先确定最大最小标号，再根据跳转表索引逐个定位</p>
+<p>先确定最大最小标号，再根据跳转表索引逐个定位
+switch 遗漏 case 就是 default case</p>
 <ol>
   <li>cmpq $7, %rdi, 则最大标号是 7 ，最小标号是 0</li>
   <li>addq $1, %rdi ; cmpq $8, %rdi 则 x + 1 = 0，最小标号位 -1，</li>
@@ -707,7 +708,7 @@
             <section class="footer">
     <footer>
     	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
-        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-06-04 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2021-06-14 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
         <span class="footer__copyright">本站采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2021</span>
     </footer>
 </section>

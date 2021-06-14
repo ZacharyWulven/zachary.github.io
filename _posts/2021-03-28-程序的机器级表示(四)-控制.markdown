@@ -564,6 +564,7 @@ jmp *.L4(, %rsi, 8)     jmp 指令的操作数有个 * 表明这是一个间接�
 
 #### 小结
 先确定最大最小标号，再根据跳转表索引逐个定位
+switch 遗漏 case 就是 default case
 1. cmpq $7, %rdi, 则最大标号是 7 ，最小标号是 0
 2. addq $1, %rdi ; cmpq $8, %rdi 则 x + 1 = 0，最小标号位 -1，
 
